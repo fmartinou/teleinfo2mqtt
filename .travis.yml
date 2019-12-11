@@ -53,6 +53,6 @@ after_script:
 
   # Tag? -> push tag & latest
   - if [ ! -z "$TRAVIS_TAG" ] ; then
-    docker tag $DOCKER_USERNAME/teleinfo-mqtt:$TRAVIS_BRANCH $DOCKER_USERNAME/teleinfo-mqtt:latest-$TRAVIS_CPU_ARCH;
+    docker tag $DOCKER_USERNAME/teleinfo-mqtt:$TRAVIS_BRANCH-$TRAVIS_CPU_ARCH $DOCKER_USERNAME/teleinfo-mqtt:latest-$TRAVIS_CPU_ARCH;
     docker push $DOCKER_USERNAME/teleinfo-mqtt:latest-$TRAVIS_CPU_ARCH;
     fi
