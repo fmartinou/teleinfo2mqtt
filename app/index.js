@@ -10,7 +10,6 @@ async function disconnect() {
 async function run() {
     try {
         // Connect to MQTT
-
         await mqtt.connect();
 
         // Connect to serial port
@@ -22,11 +21,12 @@ async function run() {
         });
 
         // Graceful exit
-        process.on('exit', disconnect);
+        process.on('SIGTERM', disconnect);
         process.on('SIGINT', disconnect);
     } catch (e) {
-        log.error('Error');
+        log.error('Unable to run => See errors below');
         log.error(e);
+        process.exit(1);
     }
 }
 

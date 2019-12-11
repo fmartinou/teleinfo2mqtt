@@ -1,41 +1,53 @@
-const mqtt = require('mqtt');
-const { mqttUrl, mqttTopic } = require('../config');
+const mqtt = require('async-mqtt');
 const log = require('../log');
+const {
+    mqttUrl,
+    mqttTopic,
+    mqttUser,
+    mqttPassword,
+} = require('../config');
 
 let client;
 
+/**
+ * Connect to MQTT broker.
+ */
 async function connect() {
-    return new Promise((resolve, reject) => {
-        log.info(`Connecting to MQTT broker [${mqttUrl}]`);
-        client = mqtt.connect(mqttUrl);
-
-        client.on('connect', () => {
-            log.info(`Connected to MQTT broker [${mqttUrl}]`);
-            resolve();
-        });
-
-        client.on('error', (e) => {
-            log.info('MQTT connection error');
-            reject(e);
-        });
-    });
+    const options = {};
+    if (mqttUser) {
+        options.username = mqttUser;
+    }
+    if (mqttPassword) {
+        options.password = mqttPassword;
+    }
+    log.info(`Connecting to MQTT broker [${mqttUrl}]`);
+    try {
+        client = await mqtt.connectAsync(mqttUrl, options);
+        log.info(`Connected to MQTT broker [${mqttUrl}]`);
+    } catch (e) {
+        log.error(`MQTT connection error [${e.message}]`);
+        throw e;
+    }
 }
 
+/**
+ * Disconnect from MQTT broker.
+ */
 async function disconnect() {
-    return new Promise((resolve, reject) => {
-        log.info(`Disconnecting from MQTT broker [${mqttUrl}]`);
-        client.end((e) => {
-            if (e) {
-                log.info(`Error on disconnecting from MQTT broker [${mqttUrl}]`);
-                reject(e);
-            } else {
-                log.info(`Disconnected from MQTT broker [${mqttUrl}]`);
-                resolve();
-            }
-        });
-    });
+    log.info(`Disconnecting from MQTT broker [${mqttUrl}]`);
+    try {
+        await client.end();
+        log.info(`Disconnected from MQTT broker [${mqttUrl}]`);
+    } catch (e) {
+        log.error(`Error on disconnecting from MQTT broker [${mqttUrl}]`);
+        throw e;
+    }
 }
 
+/**
+ * Publish teleinfo frame to MQTT broker.
+ * @param {*} frame
+ */
 function publishFrame(frame) {
     log.debug(`Publish frame to topic [${mqttTopic}]`);
     client.publish(mqttTopic, JSON.stringify(frame));
