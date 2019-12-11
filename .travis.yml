@@ -33,7 +33,7 @@ script:
   - npm run lint
 
   # Run Unit tests
-  # - npm test
+  - npm test
 
 after_script:
 
