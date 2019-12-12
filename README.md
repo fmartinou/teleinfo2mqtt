@@ -1,4 +1,5 @@
-teleinfo-mqtt
+# teleinfo-mqtt
+
   [![Build Status](https://travis-ci.org/fmartinou/teleinfo-mqtt.svg?branch=master)](https://travis-ci.org/fmartinou/teleinfo-mqtt)
   [![Maintainability](https://api.codeclimate.com/v1/badges/68abc62f1bd8a748273b/maintainability)](https://codeclimate.com/github/fmartinou/teleinfo-mqtt/maintainability)
   [![Test Coverage](https://api.codeclimate.com/v1/badges/68abc62f1bd8a748273b/test_coverage)](https://codeclimate.com/github/fmartinou/teleinfo-mqtt/test_coverage)
