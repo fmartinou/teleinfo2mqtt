@@ -14,7 +14,7 @@ Run the official Docker image (amd64 & arm64).
 docker run -d --name teleinfo-mqtt          \
     --device=/dev/ttyUSB0:/dev/ttyUSB0      \ # add serial port device from host
     - e MQTT_URL=mqtt://my_mqtt_broker:1883 \ # set mqtt broker url
-    fmartinou/teleinfo-mqtt:latest-amd64
+    fmartinou/teleinfo-mqtt:1.0.0-amd64
 ```
 
 ### Configure
