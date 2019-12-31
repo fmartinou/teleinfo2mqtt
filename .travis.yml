@@ -1,33 +1,38 @@
-sudo: required
-
-arch:
-  - amd64
-  - arm64
+language: shell
+os: linux
 
 env:
   global:
+    - NODE_VERSION=12
     - CC_TEST_REPORTER_ID=054a8c4f2007b9299933b67221504554462eed6cbb06c364c926a9869dfd4020
+    - DOCKER_CLI_EXPERIMENTAL=enabled
+    - IMAGE_VERSION=latest
 
-language: node_js
-node_js:
-  - "12"
+before_install:
 
-services:
-  - docker
+  # Install docker with buildx
+  - sudo rm -rf /var/lib/apt/lists/*
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - lsb_release -cs
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  #- docker run --rm --privileged multiarch/qemu-user-static:register --reset
+  - docker run --rm --privileged docker/binfmt:820fdd95a9972a5308930a2bdfb8573dd4447ad3
+  - cat /proc/sys/fs/binfmt_misc/qemu-aarch64
 
-install:
-  - npm ci
-
-before_script:
+  # Install Nodejs
+  - nvm install $NODE_VERSION
 
   # Init Code Climate
-  - if [ "$TRAVIS_CPU_ARCH" == "amd64" ]; then
-    curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter;
-    chmod +x ./cc-test-reporter;
-    ./cc-test-reporter before-build;
-    fi
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 script:
+
+  # Install npm dependencies
+  - npm ci
 
   # Run Linter
   - npm run lint
@@ -35,24 +40,17 @@ script:
   # Run Unit tests
   - npm test
 
+  # Report to Code Climate
+  - ./cc-test-reporter after-build -t lcov --debug --exit-code $TRAVIS_TEST_RESULT;
+
 after_script:
 
-  # Report to Code Climate
-  - if [ "$TRAVIS_CPU_ARCH" == "amd64" ]; then
-    ./cc-test-reporter after-build -t lcov --debug --exit-code $TRAVIS_TEST_RESULT;
-    fi
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+  - docker version
+  - make prepare
 
-    # Build docker image
-  - docker build -t $DOCKER_USERNAME/teleinfo-mqtt:$TRAVIS_BRANCH-$TRAVIS_CPU_ARCH -f Dockerfile .
+  # Override image version with tag name if any
+  - if [ ! -z "$TRAVIS_TAG" ] ; then export IMAGE_VERSION=latest; fi
 
-  # Tag or master branch? -> push
-  - if [ ! -z "$TRAVIS_TAG" ] || [ "$TRAVIS_BRANCH" == "master" ] ; then
-    docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
-    docker push $DOCKER_USERNAME/teleinfo-mqtt:$TRAVIS_BRANCH-$TRAVIS_CPU_ARCH;
-    fi
-
-  # Tag? -> push tag & latest
-  - if [ ! -z "$TRAVIS_TAG" ] ; then
-    docker tag $DOCKER_USERNAME/teleinfo-mqtt:$TRAVIS_BRANCH-$TRAVIS_CPU_ARCH $DOCKER_USERNAME/teleinfo-mqtt:latest-$TRAVIS_CPU_ARCH;
-    docker push $DOCKER_USERNAME/teleinfo-mqtt:latest-$TRAVIS_CPU_ARCH;
-    fi
+  # Buils & push image
+  - make build IMAGE_NAME=$DOCKER_USERNAME/teleinfo-mqtt IMAGE_VERSION=$IMAGE_VERSION
