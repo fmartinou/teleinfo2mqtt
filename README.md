@@ -10,14 +10,14 @@
 Read teleinfo from serial port and publish with mqtt.
 
 ## Usage
-Run the official Docker image (amd64 & arm64).
+Run the official Docker image (i386, amd64, armv7, arm64).
 
 ### Run
 ```
 docker run -d --name teleinfo-mqtt          \
     --device=/dev/ttyUSB0:/dev/ttyUSB0      \ # add serial port device from host
     - e MQTT_URL=mqtt://my_mqtt_broker:1883 \ # set mqtt broker url
-    fmartinou/teleinfo-mqtt:1.0.0-amd64
+    fmartinou/teleinfo-mqtt:2.0.0
 ```
 
 ### Configure

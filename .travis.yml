@@ -50,7 +50,7 @@ after_script:
   - make prepare
 
   # Override image version with tag name if any
-  - if [ ! -z "$TRAVIS_TAG" ] ; then export IMAGE_VERSION=latest; fi
+  - if [ ! -z "$TRAVIS_TAG" ] ; then export IMAGE_VERSION=$TRAVIS_TAG; fi
 
   # Buils & push image
   - make build IMAGE_NAME=$DOCKER_USERNAME/teleinfo-mqtt IMAGE_VERSION=$IMAGE_VERSION
