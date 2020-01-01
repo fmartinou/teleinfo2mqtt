@@ -8,6 +8,7 @@ async function disconnect() {
 }
 
 async function run() {
+    log.info('Starting teleinfo-mqtt');
     try {
         // Connect to MQTT
         await mqtt.connect();

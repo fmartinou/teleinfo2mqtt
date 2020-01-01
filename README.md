@@ -10,7 +10,7 @@
 Read teleinfo from serial port and publish with mqtt.
 
 ## Usage
-Run the official Docker image (i386, amd64, armv7, arm64).
+Run the official Docker image (i386, amd64, armv6, armv7, arm64).
 
 ### Run
 ```
