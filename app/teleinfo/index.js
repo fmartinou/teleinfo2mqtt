@@ -1,11 +1,17 @@
 const Readline = require('@serialport/parser-readline');
 const SerialPort = require('serialport');
 const events = require('events');
+const deepEqual = require('deep-equal');
 const log = require('../log');
 const { serial } = require('../config');
 
 let serialPort;
+let previousFrame = {};
 let currentFrame = {};
+
+function isSameFrame(frame1, frame2) {
+    return deepEqual(frame1, frame2);
+}
 
 /**
  * Process data.
@@ -27,13 +33,18 @@ function processData(data, teleInfoEventEmitter) {
 
     // Frame end? -> Dispatch frame event
     if (label === 'MOTDETAT' && currentFrame.ADCO) {
-        log.debug(`Dispatch frame ${JSON.stringify(currentFrame)}`);
-        teleInfoEventEmitter.emit('frame', currentFrame);
+        if (!isSameFrame(currentFrame, previousFrame)) {
+            log.debug(`Dispatch frame ${JSON.stringify(currentFrame)}`);
+            teleInfoEventEmitter.emit('frame', currentFrame);
+        } else {
+            log.debug(`Ignoring identical frame ${JSON.stringify(currentFrame)}`);
+        }
         return;
     }
 
     // Frame start? -> Reset frame object
     if (label === 'ADCO') {
+        previousFrame = currentFrame;
         currentFrame = {};
     }
 

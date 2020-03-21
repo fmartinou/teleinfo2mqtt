@@ -3,7 +3,7 @@ os: linux
 
 env:
   global:
-    - NODE_VERSION=12
+    - NODE_VERSION=12.15.0 # rewire bug prevent to upgrade so far
     - CC_TEST_REPORTER_ID=054a8c4f2007b9299933b67221504554462eed6cbb06c364c926a9869dfd4020
     - DOCKER_CLI_EXPERIMENTAL=enabled
     - IMAGE_VERSION=develop
