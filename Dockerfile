@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=node:12-alpine
+ARG BASE_IMAGE=node:current-alpine
 FROM $BASE_IMAGE
 
 LABEL maintainer="fmartinou"

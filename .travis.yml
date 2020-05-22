@@ -3,7 +3,7 @@ os: linux
 
 env:
   global:
-    - NODE_VERSION=12.15.0 # rewire bug prevent to upgrade so far
+    - NODE_VERSION=14
     - CC_TEST_REPORTER_ID=054a8c4f2007b9299933b67221504554462eed6cbb06c364c926a9869dfd4020
     - DOCKER_CLI_EXPERIMENTAL=enabled
     - IMAGE_VERSION=develop
@@ -56,7 +56,4 @@ after_script:
   - if [ ! -z "$TRAVIS_TAG" ] ; then export IMAGE_VERSION=$TRAVIS_TAG; fi
 
   # Build & push image
-  - make build IMAGE_NAME=$DOCKER_USERNAME/teleinfo-mqtt BASE_IMAGE=node:12-alpine IMAGE_VERSION=$IMAGE_VERSION PLATFORMS=linux/arm/v7,linux/arm64/v8,linux/386,linux/amd64
-
-  # Build & push image (armv6)
-  - make build IMAGE_NAME=$DOCKER_USERNAME/teleinfo-mqtt BASE_IMAGE=arm32v6/node:12-alpine IMAGE_VERSION=$IMAGE_VERSION-armv6 PLATFORMS=linux/arm/v6
+  - make build IMAGE_NAME=$DOCKER_USERNAME/teleinfo-mqtt BASE_IMAGE=node:current-alpine IMAGE_VERSION=$IMAGE_VERSION PLATFORMS=linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/386,linux/amd64

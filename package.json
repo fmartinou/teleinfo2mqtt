@@ -4,6 +4,7 @@
   "description": "Publish teleinfo to mqtt topics",
   "main": "app/index.js",
   "scripts": {
+    "postinstall": "grep -rl '#!/usr/bin/env node' node_modules/async-mqtt/node_modules/mqtt/ | xargs sed -i 's|#!/usr/bin/env node|// Shebang removed|g'",
     "start": "node app/index",
     "lint": "eslint '**/*.js'",
     "test": "jest --coverage"
@@ -23,18 +24,18 @@
   },
   "homepage": "https://github.com/fmartinou/teleinfo-mqtt#readme",
   "dependencies": {
-    "@serialport/parser-readline": "8.0.6",
+    "@serialport/parser-readline": "9.0.0",
     "async-mqtt": "^2.5.0",
     "bunyan": "1.8.12",
-    "deep-equal": "^2.0.1",
-    "serialport": "8.0.7"
+    "deep-equal": "^2.0.3",
+    "serialport": "9.0.0"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
+    "eslint": "^7.0.0",
     "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-jest": "^23.8.2",
-    "jest": "^25.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.13.1",
+    "jest": "^26.0.1",
     "rewire": "^5.0.0"
   }
 }
