@@ -23,18 +23,18 @@
   },
   "homepage": "https://github.com/fmartinou/teleinfo-mqtt#readme",
   "dependencies": {
-    "@serialport/parser-readline": "9.0.0",
-    "async-mqtt": "^2.6.1",
+    "@serialport/parser-readline": "9.0.1",
+    "async-mqtt": "2.6.1",
     "bunyan": "1.8.14",
-    "deep-equal": "^2.0.3",
-    "serialport": "9.0.0"
+    "deep-equal": "2.0.4",
+    "serialport": "9.0.2"
   },
   "devDependencies": {
-    "eslint": "^7.5.0",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jest": "^23.18.0",
-    "jest": "^26.1.0",
-    "rewire": "^5.0.0"
+    "eslint": "7.12.1",
+    "eslint-config-airbnb-base": "14.2.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jest": "24.1.0",
+    "jest": "26.6.3",
+    "rewire": "5.0.0"
   }
 }
