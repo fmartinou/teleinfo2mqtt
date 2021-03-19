@@ -6,4 +6,5 @@ module.exports = {
     mqttPassword: process.env.MQTT_PASSWORD,
     identifier: process.env.IDENTIFIER,
     discoveryPrefix: process.env.DISCOVERY_PREFIX || 'homeassistant',
+    emitInterval: process.env.EMIT_INTERVAL || 0,
 };

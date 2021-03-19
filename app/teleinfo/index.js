@@ -3,11 +3,12 @@ const SerialPort = require('serialport');
 const events = require('events');
 const deepEqual = require('deep-equal');
 const log = require('../log');
-const { serial } = require('../config');
+const { emitInterval, serial } = require('../config');
 
 let serialPort;
 let previousFrame = {};
 let currentFrame = {};
+let previousEmitTime = Date.now();
 
 function isSameFrame(frame1, frame2) {
     return deepEqual(frame1, frame2);
@@ -34,8 +35,15 @@ function processData(data, teleInfoEventEmitter) {
     // Frame end? -> Dispatch frame event
     if (label === 'MOTDETAT' && currentFrame.ADCO) {
         if (!isSameFrame(currentFrame, previousFrame)) {
-            log.debug(`Dispatch frame ${JSON.stringify(currentFrame)}`);
-            teleInfoEventEmitter.emit('frame', currentFrame);
+            // Don't emit a second frame in emit interval
+            const currentEmitTime = Date.now();
+            if (currentEmitTime - previousEmitTime > emitInterval) {
+                log.debug(`Dispatch frame ${JSON.stringify(currentFrame)}`);
+                teleInfoEventEmitter.emit('frame', currentFrame);
+                previousEmitTime = currentEmitTime;
+            } else {
+                log.debug(`Ignoring frame emission because of previous emit time ${previousEmitTime}`);
+            }
         } else {
             log.debug(`Ignoring identical frame ${JSON.stringify(currentFrame)}`);
         }

@@ -18,7 +18,7 @@ Run the official Docker image (i386, amd64, armv6, armv7, arm64).
 docker run -d --name teleinfo-mqtt          \
     --device=/dev/ttyUSB0:/dev/ttyUSB0      \ # add serial port device from host
     - e MQTT_URL=mqtt://my_mqtt_broker:1883 \ # set mqtt broker url
-    fmartinou/teleinfo-mqtt:2.0.0
+    fmartinou/teleinfo-mqtt
 ```
 
 ### Configure
@@ -33,6 +33,7 @@ Configuration uses environment variables.
 |MQTT_PASSWORD    | MQTT password (optional)                  |                        |
 |IDENTIFIER       | Identifier for Home-Assistant Discovery   |                        |
 |DISCOVERY_PREFIX | Topic prefix for Home-Assistant Discovery | homeassistant          |
+|EMIT_INTERVAL    | Interval between 2 MQTT emissions (ms)    | 0                      |
 
 ### MQTT topics
 The frames are published to the topic `teleinfo`.
