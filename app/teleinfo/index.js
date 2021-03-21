@@ -8,7 +8,7 @@ const { emitInterval, serial } = require('../config');
 let serialPort;
 let previousFrame = {};
 let currentFrame = {};
-let previousEmitTime = Date.now();
+let lastEmitTime = Date.now();
 
 function isSameFrame(frame1, frame2) {
     return deepEqual(frame1, frame2);
@@ -36,13 +36,13 @@ function processData(data, teleInfoEventEmitter) {
     if (label === 'MOTDETAT' && currentFrame.ADCO) {
         if (!isSameFrame(currentFrame, previousFrame)) {
             // Don't emit a second frame in emit interval
-            const currentEmitTime = Date.now();
-            if (currentEmitTime - previousEmitTime > emitInterval) {
+            const currentTime = Date.now();
+            if (currentTime - lastEmitTime > emitInterval) {
                 log.debug(`Dispatch frame ${JSON.stringify(currentFrame)}`);
                 teleInfoEventEmitter.emit('frame', currentFrame);
-                previousEmitTime = currentEmitTime;
+                lastEmitTime = currentTime;
             } else {
-                log.debug(`Ignoring frame emission because of previous emit time ${previousEmitTime}`);
+                log.debug(`Ignoring MQTT emission because of emit interval (Emit interval : ${emitInterval} - Last emit time : ${lastEmitTime} - Current time : ${currentTime}`);
             }
         } else {
             log.debug(`Ignoring identical frame ${JSON.stringify(currentFrame)}`);
