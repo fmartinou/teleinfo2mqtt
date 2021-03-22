@@ -37,7 +37,7 @@ function processData(data, teleInfoEventEmitter) {
         if (!isSameFrame(currentFrame, previousFrame)) {
             // Don't emit a second frame in emit interval
             const currentTime = Date.now();
-            if (currentTime - lastEmitTime > emitInterval) {
+            if (currentTime - lastEmitTime > emitInterval * 1000) {
                 log.debug(`Dispatch frame ${JSON.stringify(currentFrame)}`);
                 teleInfoEventEmitter.emit('frame', currentFrame);
                 lastEmitTime = currentTime;

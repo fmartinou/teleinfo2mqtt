@@ -24,16 +24,16 @@ docker run -d --name teleinfo-mqtt          \
 ### Configure
 Configuration uses environment variables.
 
-| Env var         | Description                               | Default value          |
-|-----------------|-------------------------------------------|------------------------|
-|LOG_LEVEL        | Log level (INFO, DEBUG, ERROR)            | INFO                   |
-|SERIAL           | Serial Port location                      | /dev/ttyUSB0           |
-|MQTT_URL         | MQTT Broker connection URL                | mqtt://localhost:1883  |
-|MQTT_USER        | MQTT user     (optional)                  |                        |
-|MQTT_PASSWORD    | MQTT password (optional)                  |                        |
-|IDENTIFIER       | Identifier for Home-Assistant Discovery   |                        |
-|DISCOVERY_PREFIX | Topic prefix for Home-Assistant Discovery | homeassistant          |
-|EMIT_INTERVAL    | Interval between 2 MQTT emissions (ms)    | 0                      |
+| Env var         | Description                                                            | Default value          |
+|-----------------|------------------------------------------------------------------------|------------------------|
+|LOG_LEVEL        | Log level (INFO, DEBUG, ERROR)                                         | INFO                   |
+|SERIAL           | Serial Port location                                                   | /dev/ttyUSB0           |
+|MQTT_URL         | MQTT Broker connection URL                                             | mqtt://localhost:1883  |
+|MQTT_USER        | MQTT user     (optional)                                               |                        |
+|MQTT_PASSWORD    | MQTT password (optional)                                               |                        |
+|IDENTIFIER       | Identifier for Home-Assistant Discovery                                |                        |
+|DISCOVERY_PREFIX | Topic prefix for Home-Assistant Discovery                              | homeassistant          |
+|EMIT_INTERVAL    | Interval in seconds between 2 MQTT emissions (0 : All frames are sent) | 0                      |
 
 ### MQTT topics
 The frames are published to the topic `teleinfo`.
