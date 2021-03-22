@@ -18,21 +18,22 @@ Run the official Docker image (i386, amd64, armv6, armv7, arm64).
 docker run -d --name teleinfo-mqtt          \
     --device=/dev/ttyUSB0:/dev/ttyUSB0      \ # add serial port device from host
     - e MQTT_URL=mqtt://my_mqtt_broker:1883 \ # set mqtt broker url
-    fmartinou/teleinfo-mqtt:2.0.0
+    fmartinou/teleinfo-mqtt
 ```
 
 ### Configure
 Configuration uses environment variables.
 
-| Env var         | Description                               | Default value          |
-|-----------------|-------------------------------------------|------------------------|
-|LOG_LEVEL        | Log level (INFO, DEBUG, ERROR)            | INFO                   |
-|SERIAL           | Serial Port location                      | /dev/ttyUSB0           |
-|MQTT_URL         | MQTT Broker connection URL                | mqtt://localhost:1883  |
-|MQTT_USER        | MQTT user     (optional)                  |                        |
-|MQTT_PASSWORD    | MQTT password (optional)                  |                        |
-|IDENTIFIER       | Identifier for Home-Assistant Discovery   |                        |
-|DISCOVERY_PREFIX | Topic prefix for Home-Assistant Discovery | homeassistant          |
+| Env var         | Description                                                            | Default value          |
+|-----------------|------------------------------------------------------------------------|------------------------|
+|LOG_LEVEL        | Log level (INFO, DEBUG, ERROR)                                         | INFO                   |
+|SERIAL           | Serial Port location                                                   | /dev/ttyUSB0           |
+|MQTT_URL         | MQTT Broker connection URL                                             | mqtt://localhost:1883  |
+|MQTT_USER        | MQTT user     (optional)                                               |                        |
+|MQTT_PASSWORD    | MQTT password (optional)                                               |                        |
+|IDENTIFIER       | Identifier for Home-Assistant Discovery                                |                        |
+|DISCOVERY_PREFIX | Topic prefix for Home-Assistant Discovery                              | homeassistant          |
+|EMIT_INTERVAL    | Interval in seconds between 2 MQTT emissions (0 : All frames are sent) | 0                      |
 
 ### MQTT topics
 The frames are published to the topic `teleinfo`.
