@@ -3,7 +3,7 @@ os: linux
 
 env:
   global:
-    - NODE_VERSION=14
+    - NODE_VERSION=16
     - CC_TEST_REPORTER_ID=054a8c4f2007b9299933b67221504554462eed6cbb06c364c926a9869dfd4020
     - DOCKER_CLI_EXPERIMENTAL=enabled
     - IMAGE_VERSION=develop
@@ -29,7 +29,7 @@ before_install:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 
-script:
+install:
 
   # Install npm dependencies
   - npm ci
@@ -40,10 +40,10 @@ script:
   # Run Unit tests
   - npm test
 
+after_success:
+
   # Report to Code Climate
   - ./cc-test-reporter after-build -t lcov --debug --exit-code $TRAVIS_TEST_RESULT;
-
-after_script:
 
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker version

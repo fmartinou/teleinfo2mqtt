@@ -5,23 +5,23 @@ const {
     mqttUrl,
     mqttUser,
     mqttPassword,
-    identifier,
-    discoveryPrefix,
+    hassIdentifier,
+    hassDiscoveryPrefix,
 } = require('../config');
 
 // Topic for teleinfo frames
 let frameTopic = 'teleinfo';
-if (identifier) {
-    frameTopic += `/${identifier}`;
+if (hassIdentifier) {
+    frameTopic += `/${hassIdentifier}`;
 }
 
 // Topic for discovery (home-assistant)
-const discoveryTopic = `${discoveryPrefix}/sensor/teleinfo/${identifier || 'default'}/config`;
+const discoveryTopic = `${hassDiscoveryPrefix}/sensor/teleinfo/${hassIdentifier || 'default'}/config`;
 
 // Unique id for home-assistant
 let uniqueId = 'teleinfo';
-if (identifier) {
-    uniqueId += `_${identifier}`;
+if (hassIdentifier) {
+    uniqueId += `_${hassIdentifier}`;
 }
 
 let client;
@@ -66,6 +66,17 @@ async function connect() {
     try {
         if (client) {
             publishConfigurationForDiscovery();
+            client.on('connect', () => {
+                // Workaround to avoid reconnect issue (see https://github.com/mqttjs/MQTT.js/issues/1213)
+                // eslint-disable-next-line no-underscore-dangle
+                client._client.options.properties = {};
+            });
+            client.on('reconnect', () => {
+                log.info('Reconnecting to the MQTT broker...');
+            });
+            client.on('error', (err) => {
+                log.warn(`Error when publishing to the mqtt broker (${err.message})`);
+            });
         }
     } catch (e) {
         log.error(`MQTT connection error [${e.message}]`);

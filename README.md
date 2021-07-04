@@ -24,16 +24,17 @@ docker run -d --name teleinfo-mqtt          \
 ### Configure
 Configuration uses environment variables.
 
-| Env var         | Description                                                            | Default value          |
-|-----------------|------------------------------------------------------------------------|------------------------|
-|LOG_LEVEL        | Log level (INFO, DEBUG, ERROR)                                         | INFO                   |
-|SERIAL           | Serial Port location                                                   | /dev/ttyUSB0           |
-|MQTT_URL         | MQTT Broker connection URL                                             | mqtt://localhost:1883  |
-|MQTT_USER        | MQTT user     (optional)                                               |                        |
-|MQTT_PASSWORD    | MQTT password (optional)                                               |                        |
-|IDENTIFIER       | Identifier for Home-Assistant Discovery                                |                        |
-|DISCOVERY_PREFIX | Topic prefix for Home-Assistant Discovery                              | homeassistant          |
-|EMIT_INTERVAL    | Interval in seconds between 2 MQTT emissions (0 : All frames are sent) | 0                      |
+| Env var              | Description                                                            | Default value          |
+|----------------------|------------------------------------------------------------------------|------------------------|
+|EMIT_INTERVAL         | Interval in seconds between 2 MQTT emissions (0 = All frames are sent) | 10                     |
+|HASS_DISCOVERY_PREFIX | Topic prefix for Home-Assistant Discovery                              | homeassistant          |
+|HASS_IDENTIFIER       | Identifier for Home-Assistant Discovery                                |                        |
+|LOG_LEVEL             | Log level (INFO, DEBUG, ERROR)                                         | INFO                   |
+|LOG_FORMAT            | Log format (text, json)                                                | text                   |
+|MQTT_URL              | MQTT Broker connection URL                                             | mqtt://localhost:1883  |
+|MQTT_USER             | MQTT user     (optional)                                               |                        |
+|MQTT_PASSWORD         | MQTT password (optional)                                               |                        |
+|SERIAL                | Serial Port location                                                   | /dev/ttyUSB0           |
 
 ### MQTT topics
 The frames are published to the topic `teleinfo`.
@@ -101,29 +102,4 @@ Home Assistant can automatically discover the teleinfo sensor. \
 ![Integration](docs/images/entity.png)
 
 ### Changelog
-
-#### 3.0.0
-- :star: Add Homeassistant MQTT Discovery capabilities 
-- :star: Upgrade all dependencies
-
-#### 2.3.1
-- :star: Upgrade all dependencies
-
-#### 2.3.1
-- :star: Upgrade all dependencies
-
-#### 2.3.0
-- :star: Upgrade to node 14
-- :star: Upgrade all dependencies
-
-#### 2.2.0
-- :star: Prevent identical frames to be published
-
-#### 2.1.0
-- :star: Add ARM v6 support
-
-#### 2.0.0
-- :star: Add multi arch Docker images (i386 / amd64 / armv7 / arm64)
-
-#### 1.0.0
-- :star: Initial release
+[See detailed changelog here](CHANGELOG.md).
