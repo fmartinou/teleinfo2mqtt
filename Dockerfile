@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:14-alpine
 
 LABEL maintainer="fmartinou"
 
@@ -14,9 +14,6 @@ ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 
 # Default Command
 CMD ["node", "index"]
-
-# Copy package.json
-COPY package* ./
 
 # Copy app
 COPY app/ ./

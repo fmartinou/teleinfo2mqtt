@@ -1,0 +1,15 @@
+{
+  "name": "teleinfo-mqtt-doc",
+  "version": "1.0.0",
+  "description": "Teleinfo Mqtt doc",
+  "main": "index.js",
+  "scripts": {
+    "doc": "docsify serve"
+  },
+  "author": "fmartinou",
+  "repository": "fmartinou/teleinfo-mqtt",
+  "license": "MIT",
+  "devDependencies": {
+    "docsify-cli": "4.4.3"
+  }
+}

@@ -29,8 +29,10 @@ test('publishFrame should be called as expected', () => {
     moduleToTest.__set__('client', {
         publish: jest.fn(() => {}),
     });
-    moduleToTest.publishFrame({ a: 'b' });
-    expect(moduleToTest.__get__('client').publish).toHaveBeenCalledWith('teleinfo', JSON.stringify({ a: 'b' }));
+    moduleToTest.__set__('discoveryConfigurationPublished', true);
+    const frame = { ADCO: { raw: '123456789' } };
+    moduleToTest.publishFrame(frame);
+    expect(moduleToTest.__get__('client').publish).toHaveBeenCalledWith('teleinfo/123456789', JSON.stringify(frame));
 });
 
 test('publishConfigurationForDiscovery should be called as expected', () => {
@@ -38,14 +40,20 @@ test('publishConfigurationForDiscovery should be called as expected', () => {
     moduleToTest.__set__('client', {
         publish: jest.fn(() => {}),
     });
-    moduleToTest.publishConfigurationForDiscovery();
-    expect(moduleToTest.__get__('client').publish).toHaveBeenCalledWith('homeassistant/sensor/teleinfo/default/config', JSON.stringify({
-        unique_id: 'teleinfo',
-        name: 'teleinfo',
+    moduleToTest.publishConfigurationForDiscovery('123456789');
+    expect(moduleToTest.__get__('client').publish).toHaveBeenCalledWith('homeassistant/sensor/teleinfo/123456789/config', JSON.stringify({
+        unique_id: 'teleinfo_123456789',
+        name: 'Teleinfo 123456789',
         icon: 'mdi:speedometer',
-        state_topic: 'teleinfo',
-        json_attributes_topic: 'teleinfo',
+        state_topic: 'teleinfo/123456789',
+        json_attributes_topic: 'teleinfo/123456789',
         value_template: '{{ value_json.PAPP.value }}',
         unit_of_measurement: 'VA',
+        device: {
+            identifiers: ['teleinfo-mqtt'],
+            manufacturer: 'fmartinou',
+            model: 'teleinfo-mqtt',
+            name: 'Teleinfo-mqtt',
+        },
     }), { retain: true });
 });

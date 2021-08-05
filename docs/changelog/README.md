@@ -1,12 +1,22 @@
 # Changelog
 
+## develop
+- :star: Include ADCO in topic
+- :star: New docsify documentation
+- :star: Upgrade all dependencies
+- :fire: Rollback to Node.js 14 because of Raspberry pi Zero runtime error
+
+!> **Breaking changes**  
+Default topic name has been changed  
+HASS_IDENTIFIER env var has been removed
+
 ## 4.0.0
 - :star: Upgrade to node 16
 - :fire: Fix reconnect issue when broker is restarted
 
-> **Breaking changes** \
-Home-Assistant related env vars have been renamed \
-Emit interval is now 1 frame every 10 seconds by default \
+!> **Breaking changes**  
+Home-Assistant related env vars have been renamed  
+Emit interval is now 1 frame every 10 seconds by default  
 Logs are now Text by default (instead of JSON)
 
 ## 3.0.0

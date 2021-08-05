@@ -5,43 +5,66 @@ const {
     mqttUrl,
     mqttUser,
     mqttPassword,
-    hassIdentifier,
+    mqttBaseTopic,
     hassDiscoveryPrefix,
 } = require('../config');
 
-// Topic for teleinfo frames
-let frameTopic = 'teleinfo';
-if (hassIdentifier) {
-    frameTopic += `/${hassIdentifier}`;
-}
+const hassDeviceId = 'teleinfo-mqtt';
+const hassDeviceName = 'Teleinfo-mqtt';
+const hassManufacturer = 'Fmartinou';
+const hassEntityIcon = 'mdi:speedometer';
+const hassEntityValueTemplate = '{{ value_json.PAPP.value }}';
 
-// Topic for discovery (home-assistant)
-const discoveryTopic = `${hassDiscoveryPrefix}/sensor/teleinfo/${hassIdentifier || 'default'}/config`;
+/**
+ * True when hass discovery configuration has been published.
+ * @type {boolean}
+ */
+let discoveryConfigurationPublished = false;
 
-// Unique id for home-assistant
-let uniqueId = 'teleinfo';
-if (hassIdentifier) {
-    uniqueId += `_${hassIdentifier}`;
-}
-
+/**
+ * MQT Client.
+ */
 let client;
 
 /**
- * Publish Configuration for home-assistant discovery.
+ * Get frame topic.
+ * @param adco
+ * @returns {string}
  */
-function publishConfigurationForDiscovery() {
+function getFrameTopic(adco) {
+    return `${mqttBaseTopic}/${adco}`;
+}
+
+/**
+ * Publish Configuration for home-assistant discovery.
+ * @param adco
+ */
+async function publishConfigurationForDiscovery(adco) {
+    const discoveryTopic = `${hassDiscoveryPrefix}/sensor/${mqttBaseTopic}/${adco}/config`;
+
     log.debug(`Publish configuration for discovery to topic [${discoveryTopic}]`);
-    client.publish(discoveryTopic, JSON.stringify({
-        unique_id: uniqueId,
-        name: uniqueId,
-        icon: 'mdi:speedometer',
-        state_topic: frameTopic,
-        json_attributes_topic: frameTopic,
-        value_template: '{{ value_json.PAPP.value }}',
-        unit_of_measurement: 'VA',
-    }), {
-        retain: true,
-    });
+    try {
+        await client.publish(discoveryTopic, JSON.stringify({
+            unique_id: `teleinfo_${adco}`,
+            name: `Teleinfo ${adco}`,
+            icon: hassEntityIcon,
+            state_topic: getFrameTopic(adco),
+            json_attributes_topic: getFrameTopic(adco),
+            value_template: hassEntityValueTemplate,
+            unit_of_measurement: 'VA',
+            device: {
+                identifiers: [hassDeviceId],
+                manufacturer: hassManufacturer,
+                model: hassDeviceId,
+                name: hassDeviceName,
+            },
+        }), {
+            retain: true,
+        });
+        discoveryConfigurationPublished = true;
+    } catch (e) {
+        log.warn(`Unable to publish discovery configuration to ${discoveryTopic} (${e.message})`);
+    }
 }
 
 /**
@@ -65,7 +88,6 @@ async function connect() {
     }
     try {
         if (client) {
-            publishConfigurationForDiscovery();
             client.on('connect', () => {
                 // Workaround to avoid reconnect issue (see https://github.com/mqttjs/MQTT.js/issues/1213)
                 // eslint-disable-next-line no-underscore-dangle
@@ -102,9 +124,24 @@ async function disconnect() {
  * Publish teleinfo frame to MQTT broker.
  * @param {*} frame
  */
-function publishFrame(frame) {
-    log.debug(`Publish frame to topic [${frameTopic}]`);
-    client.publish(frameTopic, JSON.stringify(frame));
+async function publishFrame(frame) {
+    const adco = frame.ADCO ? frame.ADCO.raw : undefined;
+    if (!adco) {
+        log.warn('Cannot publish a frame without ADCO property');
+        log.debug(frame);
+    } else {
+        if (!discoveryConfigurationPublished) {
+            await publishConfigurationForDiscovery(adco);
+        }
+        const frameTopic = getFrameTopic(adco);
+        log.debug(`Publish frame to topic [${frameTopic}]`);
+        log.debug(frame);
+        try {
+            await client.publish(frameTopic, JSON.stringify(frame));
+        } catch (e) {
+            log.warn(`Unable to publish frame to ${frameTopic} (${e.message})`);
+        }
+    }
 }
 
 module.exports = {
