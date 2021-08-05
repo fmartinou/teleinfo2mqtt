@@ -51,7 +51,7 @@ test('publishConfigurationForDiscovery should be called as expected', () => {
         unit_of_measurement: 'VA',
         device: {
             identifiers: ['teleinfo-mqtt'],
-            manufacturer: 'fmartinou',
+            manufacturer: 'Fmartinou',
             model: 'teleinfo-mqtt',
             name: 'Teleinfo-mqtt',
         },
