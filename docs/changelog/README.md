@@ -1,14 +1,15 @@
 # Changelog
 
-## develop
+## 5.0.0
 - :star: Include ADCO in topic
 - :star: New docsify documentation
 - :star: Upgrade all dependencies
 - :fire: Rollback to Node.js 14 because of Raspberry pi Zero runtime error
 
 !> **Breaking changes**  
-Default topic name has been changed  
+Default topic name has been changed
 HASS_IDENTIFIER env var has been removed
+Home-assistant sensor id changed
 
 ## 4.0.0
 - :star: Upgrade to node 16
