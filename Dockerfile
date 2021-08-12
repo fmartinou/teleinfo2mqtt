@@ -15,6 +15,11 @@ ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 # Default Command
 CMD ["node", "index"]
 
+# Add TZDATA to allow easy local time configuration
+RUN apk update \
+    && apk add tzdata \
+    && rm -rf /var/cache/apk/*
+
 # Copy app
 COPY app/ ./
 

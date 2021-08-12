@@ -6,14 +6,10 @@ const {
     mqttUser,
     mqttPassword,
     mqttBaseTopic,
-    hassDiscoveryPrefix,
+    hassDiscovery,
 } = require('../config');
 
-const hassDeviceId = 'teleinfo-mqtt';
-const hassDeviceName = 'Teleinfo-mqtt';
-const hassManufacturer = 'Fmartinou';
-const hassEntityIcon = 'mdi:speedometer';
-const hassEntityValueTemplate = '{{ value_json.PAPP.value }}';
+const { publishConfigurationForHassDiscovery } = require('./hass');
 
 /**
  * True when hass discovery configuration has been published.
@@ -33,38 +29,6 @@ let client;
  */
 function getFrameTopic(adco) {
     return `${mqttBaseTopic}/${adco}`;
-}
-
-/**
- * Publish Configuration for home-assistant discovery.
- * @param adco
- */
-async function publishConfigurationForDiscovery(adco) {
-    const discoveryTopic = `${hassDiscoveryPrefix}/sensor/${mqttBaseTopic}/${adco}/config`;
-
-    log.debug(`Publish configuration for discovery to topic [${discoveryTopic}]`);
-    try {
-        await client.publish(discoveryTopic, JSON.stringify({
-            unique_id: `teleinfo_${adco}`,
-            name: `Teleinfo ${adco}`,
-            icon: hassEntityIcon,
-            state_topic: getFrameTopic(adco),
-            json_attributes_topic: getFrameTopic(adco),
-            value_template: hassEntityValueTemplate,
-            unit_of_measurement: 'VA',
-            device: {
-                identifiers: [hassDeviceId],
-                manufacturer: hassManufacturer,
-                model: hassDeviceId,
-                name: hassDeviceName,
-            },
-        }), {
-            retain: true,
-        });
-        discoveryConfigurationPublished = true;
-    } catch (e) {
-        log.warn(`Unable to publish discovery configuration to ${discoveryTopic} (${e.message})`);
-    }
 }
 
 /**
@@ -130,8 +94,13 @@ async function publishFrame(frame) {
         log.warn('Cannot publish a frame without ADCO property');
         log.debug(frame);
     } else {
-        if (!discoveryConfigurationPublished) {
-            await publishConfigurationForDiscovery(adco);
+        if (hassDiscovery && !discoveryConfigurationPublished) {
+            try {
+                await publishConfigurationForHassDiscovery(client, adco, frame);
+                discoveryConfigurationPublished = true;
+            } catch (e) {
+                log.warn(`Unable to publish discovery configuration (${e.message})`);
+            }
         }
         const frameTopic = getFrameTopic(adco);
         log.debug(`Publish frame to topic [${frameTopic}]`);
@@ -148,5 +117,4 @@ module.exports = {
     connect,
     disconnect,
     publishFrame,
-    publishConfigurationForDiscovery,
 };

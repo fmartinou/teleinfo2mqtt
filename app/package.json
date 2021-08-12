@@ -4,7 +4,7 @@
   "description": "Publish teleinfo to mqtt topics",
   "main": "index.js",
   "scripts": {
-    "start": "node index | bunyan",
+    "start": "node index | bunyan -L -o short",
     "lint": "eslint '**/*.js'",
     "test": "jest --coverage"
   },
@@ -32,7 +32,7 @@
   "devDependencies": {
     "eslint": "7.32.0",
     "eslint-config-airbnb-base": "14.2.1",
-    "eslint-plugin-import": "2.23.4",
+    "eslint-plugin-import": "2.24.0",
     "eslint-plugin-jest": "24.4.0",
     "jest": "27.0.6",
     "rewire": "5.0.0"

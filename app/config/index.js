@@ -1,5 +1,6 @@
 module.exports = {
     emitInterval: process.env.EMIT_INTERVAL || 10,
+    hassDiscovery: process.env.HASS_DISCOVERY ? process.env.HASS_DISCOVERY.toLowerCase() === 'true' : true,
     hassDiscoveryPrefix: process.env.HASS_DISCOVERY_PREFIX || 'homeassistant',
     logLevel: process.env.LOG_LEVEL || 'info',
     mqttBaseTopic: process.env.MQTT_BASE_TOPIC || 'teleinfo',

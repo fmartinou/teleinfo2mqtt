@@ -3,17 +3,19 @@ Teleinfo-Mqtt can be configured using Environment Variables.
 
 ## Environment variables
 
-| Env var              | Description                                                            | Default value          |
-|----------------------|------------------------------------------------------------------------|------------------------|
-|EMIT_INTERVAL         | Interval in seconds between 2 MQTT emissions (0 = All frames are sent) | 10                     |
-|HASS_DISCOVERY_PREFIX | Topic prefix for Home-Assistant Discovery                              | homeassistant          |
-|LOG_LEVEL             | Log level (INFO, DEBUG, ERROR)                                         | INFO                   |
-|LOG_FORMAT            | Log format (text, json)                                                | text                   |
-|MQTT_BASE_TOPIC       | MQTT Base topic                                                        | teleinfo               |
-|MQTT_URL              | MQTT Broker connection URL                                             | mqtt://localhost:1883  |
-|MQTT_USER             | MQTT user     (optional)                                               |                        |
-|MQTT_PASSWORD         | MQTT password (optional)                                               |                        |
-|SERIAL                | Serial Port location                                                   | /dev/ttyUSB0           |
+| Env var              | Description                                                                                                 | Default value          |
+|----------------------|-------------------------------------------------------------------------------------------------------------|------------------------|
+|EMIT_INTERVAL         | Interval in seconds between 2 MQTT emissions (0 = All frames are sent)                                      | 10                     |
+|HASS_DISCOVERY        | Publish configuration for Home-Assistant discovery                                                          | true                   |
+|HASS_DISCOVERY_PREFIX | Topic prefix for Home-Assistant Discovery                                                                   | homeassistant          |
+|LOG_LEVEL             | Log level (INFO, DEBUG, ERROR)                                                                              | INFO                   |
+|LOG_FORMAT            | Log format (text, json)                                                                                     | text                   |
+|MQTT_BASE_TOPIC       | MQTT Base topic                                                                                             | teleinfo               |
+|MQTT_URL              | MQTT Broker connection URL                                                                                  | mqtt://localhost:1883  |
+|MQTT_USER             | MQTT user     (optional)                                                                                    |                        |
+|MQTT_PASSWORD         | MQTT password (optional)                                                                                    |                        |
+|SERIAL                | Serial Port location                                                                                        | /dev/ttyUSB0           |
+|TZ                    | Timezone (for logs...) [see supported values](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) | (default is UTC)       |
 
 ## Complete example
 
@@ -35,6 +37,7 @@ services:
       - MQTT_USER=my-super-user
       - MQTT_PASSWORD=my-secret-password
       - EMIT_INTERVAL=5
+      - TZ=Europe/Paris 
 ```
 #### **Docker**
 ```bash
@@ -44,6 +47,7 @@ docker run -d --name teleinfo2mqtt \
   -e MQTT_URL="mqtt://my_mqtt_broker:1883" \
   -e MQTT_USER="my-super-user" \
   -e MQTT_PASSWORD="my-secret-password" \
+  -e TZ="Europe/Paris" \
   fmartinou/teleinfo-mqtt
 ```
 <!-- tabs:end -->

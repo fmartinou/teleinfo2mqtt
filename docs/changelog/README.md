@@ -1,5 +1,11 @@
 # Changelog
 
+## develop
+- :star: Support [Home-Assistant Energy platform](https://www.home-assistant.io/home-energy-management/) 
+
+!> **Breaking changes**  
+Home-Assistant integration changed; now there is 1 sensor per Teleinfo tag (PAPP, BASE, HPHP...)
+
 ## 5.0.0
 - :star: Include ADCO in topic
 - :star: New docsify documentation
