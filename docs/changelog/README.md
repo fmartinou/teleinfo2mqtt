@@ -1,7 +1,9 @@
 # Changelog
 
-## develop
+## 6.0.0
 - :star: Support [Home-Assistant Energy platform](https://www.home-assistant.io/home-energy-management/) 
+- :star: Support TZ env var for local time configuration
+- :star: Improve logs
 
 !> **Breaking changes**  
 Home-Assistant integration changed; now there is 1 sensor per Teleinfo tag (PAPP, BASE, HPHP...)
