@@ -1,5 +1,8 @@
 # Changelog
 
+## 6.0.1
+- :fire: Fix missing `total_increasing` state_class for home-assistant 2021.9
+
 ## 6.0.0
 - :star: Support [Home-Assistant Energy platform](https://www.home-assistant.io/home-energy-management/) 
 - :star: Support TZ env var for local time configuration
