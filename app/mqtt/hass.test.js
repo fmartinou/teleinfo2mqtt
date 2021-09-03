@@ -67,7 +67,7 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         unique_id: 'teleinfo_012345678912_BASE',
         name: 'Teleinfo 012345678912 BASE',
         state_topic: 'teleinfo/012345678912',
-        state_class: 'measurement',
+        state_class: 'total_increasing',
         device_class: 'energy',
         last_reset_topic: 'teleinfo/012345678912',
         last_reset_value_template: '1970-01-01T00:00:00+00:00',

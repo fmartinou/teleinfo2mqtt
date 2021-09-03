@@ -75,7 +75,7 @@ function getStateClass(tag) {
     case 'EJPHPM':
     case 'HCHC':
     case 'HCHP':
-        stateClass = 'measurement';
+        stateClass = 'total_increasing';
         break;
     default:
         stateClass = undefined;
