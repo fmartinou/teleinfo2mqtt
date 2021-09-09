@@ -69,8 +69,6 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
-        last_reset_topic: 'teleinfo/012345678912',
-        last_reset_value_template: '1970-01-01T00:00:00+00:00',
         value_template: '{{ value_json.BASE.value }}',
         unit_of_measurement: 'Wh',
         device: {

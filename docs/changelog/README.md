@@ -1,5 +1,8 @@
 # Changelog
 
+## 6.0.2
+- :fire: Remove deprecated `last_reset` prop for home-assistant 2021.9
+
 ## 6.0.1
 - :fire: Fix missing `total_increasing` state_class for home-assistant 2021.9
 

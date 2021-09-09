@@ -84,62 +84,6 @@ function getStateClass(tag) {
 }
 
 /**
- * Get hass last reset topic.
- * @param tag
- * @param stateTopic
- * @returns {undefined}
- */
-function getLastResetTopic(tag, stateTopic) {
-    let lastResetTopic;
-    switch (tag) {
-    case 'BASE':
-    case 'BBRHCJB':
-    case 'BBRHCJR':
-    case 'BBRHCJW':
-    case 'BBRHPJB':
-    case 'BBRHPJR':
-    case 'BBRHPJW':
-    case 'EJPHN':
-    case 'EJPHPM':
-    case 'HCHC':
-    case 'HCHP':
-        lastResetTopic = stateTopic;
-        break;
-    default:
-        lastResetTopic = undefined;
-    }
-    return lastResetTopic;
-}
-
-/**
- * Get hass last reset value tempalte.
- * @param tag
- * @returns {string}
- */
-function getLastResetValueTemplate(tag) {
-    let resetValueTemplate;
-    switch (tag) {
-    case 'BASE':
-    case 'BBRHCJB':
-    case 'BBRHCJR':
-    case 'BBRHCJW':
-    case 'BBRHPJB':
-    case 'BBRHPJR':
-    case 'BBRHPJW':
-    case 'EJPHN':
-    case 'EJPHPM':
-    case 'HCHC':
-    case 'HCHP':
-        // Indices never reset
-        resetValueTemplate = '1970-01-01T00:00:00+00:00';
-        break;
-    default:
-        resetValueTemplate = undefined;
-    }
-    return resetValueTemplate;
-}
-
-/**
  * Get hass sensor unit.
  * @param tag
  * @returns {string}
@@ -216,8 +160,6 @@ async function publishConfigurationForHassDiscovery(client, adco, frame) {
             state_topic: stateTopic,
             state_class: getStateClass(tag),
             device_class: getDeviceClass(tag),
-            last_reset_topic: getLastResetTopic(tag, stateTopic),
-            last_reset_value_template: getLastResetValueTemplate(tag),
             value_template: getValueTemplate(tag),
             unit_of_measurement: getUnit(tag),
             device: {
