@@ -1,5 +1,8 @@
 # Changelog
 
+## develop
+- :star: Add compatibility to [Home-Assistant add-on system](https://github.com/fmartinou/hassio-addons) 
+
 ## 6.0.2
 - :fire: Remove deprecated `last_reset` prop for home-assistant 2021.9
 

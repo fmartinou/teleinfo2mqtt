@@ -6,7 +6,7 @@
 ![Maintainability](https://img.shields.io/codeclimate/maintainability/fmartinou/teleinfo-mqtt)
 ![Coverage](https://img.shields.io/codeclimate/coverage/fmartinou/teleinfo-mqtt)
 
-![](docs/teleinfo-mqtt-logo.png)
+![](docs/teleinfo-mqtt-logo-250.png)
 
 **Teleinfo-Mqtt** allows you to read Teleinfo frames from a Serial port and publish them to an Mqtt broker.
 
