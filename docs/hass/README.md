@@ -5,7 +5,7 @@
 `teleinfo-mqtt` can be integrated to [Home-Assistant](https://www.home-assistant.io/) in 2 distinct ways.
 
 > **Solution 1:** \
-Deploy the `teleinfo-mqtt` docker image by yourself ([see here](../introduction/))
+Deploy the `teleinfo-mqtt` docker image by yourself ([see here](/introduction/))
 
 > **Solution 2:** \
 Install the [`teleinfo2mqtt` hass.io add-on](https://github.com/fmartinou/hassio-addons/tree/main/teleinfo2mqtt)
