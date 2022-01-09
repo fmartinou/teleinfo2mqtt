@@ -8,7 +8,7 @@
 Deploy the `teleinfo-mqtt` docker image by yourself ([see here](/introduction/))
 
 > **Solution 2:** \
-Install the [`teleinfo2mqtt` hass.io add-on](https://github.com/fmartinou/hassio-addons/tree/main/teleinfo2mqtt)
+Install the [`teleinfo2mqtt` hass.io add-on](https://github.com/fmartinou/hassio-addons)
 
 ## Discovery
 
