@@ -34,23 +34,23 @@ function processData(data, teleInfoEventEmitter) {
 
     // Frame end? -> Dispatch frame event
     if ((ticMode === 'HISTORY' && label === 'MOTDETAT' && currentFrame.ADCO) || (ticMode === 'STANDARD' && label === 'PJOURF+1' && currentFrame.ADSC))
-	{
+    {
         if (!isSameFrame(currentFrame, previousFrame)) 
-		{
+        {
             // Don't emit a second frame in emit interval
             const currentTime = Date.now();
             if (currentTime - lastEmitTime > emitInterval * 1000) 
-			{
+            {
                 log.debug(`Dispatch frame ${JSON.stringify(currentFrame)}`);
                 teleInfoEventEmitter.emit('frame', currentFrame);
                 lastEmitTime = currentTime;
             } else 
-			{
+            {
                 log.debug(`Ignoring MQTT emission because of emit interval (Emit interval : ${emitInterval} - Last emit time : ${lastEmitTime} - Current time : ${currentTime}`);
             }
         } 
-		else 
-		{
+        else 
+        {
             log.debug(`Ignoring identical frame ${JSON.stringify(currentFrame)}`);
         }
         return;
@@ -58,7 +58,7 @@ function processData(data, teleInfoEventEmitter) {
 
     // Frame start? -> Reset frame object
     if ((ticMode === 'HISTORY' && label === 'ADCO') || (ticMode === 'STANDARD' && label === 'ADSC')) 
-	{
+    {
         previousFrame = currentFrame;
         currentFrame = {};
     }
@@ -89,7 +89,7 @@ function processError(error) {
 async function connect() {
     return new Promise((resolve, reject) => {
         log.info(`Connecting to port [${serial}]`);
-		const baudRateVar = ticMode === 'STANDARD' ? 9600 : 1200;
+        const baudRateVar = ticMode === 'STANDARD' ? 9600 : 1200;
         serialPort = new SerialPort(serial, {
             baudRate: baudRateVar,
             dataBits: 7,

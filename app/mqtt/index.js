@@ -7,7 +7,7 @@ const {
     mqttPassword,
     mqttBaseTopic,
     hassDiscovery,
-	ticMode,
+    ticMode,
 } = require('../config');
 
 const { publishConfigurationForHassDiscovery } = require('./hass');
@@ -29,11 +29,11 @@ let client;
  * @returns {string}
  */
 function getFrameTopic(id) {
-	if(ticMode === 'STANDARD')
-	{
-		return `${mqttBaseTopic}/${adsc}`;
-	}
-	
+    if(ticMode === 'STANDARD')
+    {
+        return `${mqttBaseTopic}/${adsc}`;
+    }
+    
     return `${mqttBaseTopic}/${adco}`;
 }
 
@@ -97,27 +97,27 @@ async function disconnect() {
  */
 async function publishFrame(frame) 
 {
-	var id;
-	if(ticMode === 'HISTORY')
-	{
-		id = frame.ADCO ? frame.ADCO.raw : undefined;
-	}
-	else if(ticMode === 'STANDARD')
-	{
-		id = frame.ADSC ? frame.ADSC.raw : undefined;
-	}	
+    var id;
+    if(ticMode === 'HISTORY')
+    {
+        id = frame.ADCO ? frame.ADCO.raw : undefined;
+    }
+    else if(ticMode === 'STANDARD')
+    {
+        id = frame.ADSC ? frame.ADSC.raw : undefined;
+    }   
     
     if (!id) 
-	{
+    {
         log.warn('Cannot publish a frame without ADCO or ADSC property');
         log.debug(frame);
     } 
-	else 
-	{
+    else 
+    {
         if (hassDiscovery && !discoveryConfigurationPublished) 
-		{
+        {
             try 
-			{
+            {
                 await publishConfigurationForHassDiscovery(client, id, frame);
                 discoveryConfigurationPublished = true;
             } catch (e) {
@@ -128,7 +128,7 @@ async function publishFrame(frame)
         log.debug(`Publish frame to topic [${frameTopic}]`);
         log.debug(frame);
         try 
-		{
+        {
             await client.publish(frameTopic, JSON.stringify(frame));
         } catch (e) {
             log.warn(`Unable to publish frame to ${frameTopic} (${e.message})`);

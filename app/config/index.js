@@ -14,7 +14,7 @@ const config = {
     mqttUser: undefined,
     mqttPassword: undefined,
     serial: '/dev/ttyUSB0',
-	ticMode: 'HISTORY',
+    ticMode: 'HISTORY',
 };
 
 /**
@@ -49,7 +49,7 @@ function overrideConfiguration(overrideObject) {
     if (overrideObject.SERIAL) {
         config.serial = overrideObject.SERIAL;
     }
-	 if (overrideObject.TICMODE) {
+     if (overrideObject.TICMODE) {
         config.ticMode = overrideObject.TICMODE;
     }
 }
