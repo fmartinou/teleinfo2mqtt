@@ -7,6 +7,7 @@ const {
     mqttPassword,
     mqttBaseTopic,
     hassDiscovery,
+	ticMode,
 } = require('../config');
 
 const { publishConfigurationForHassDiscovery } = require('./hass');
@@ -24,12 +25,18 @@ let client;
 
 /**
  * Get frame topic.
- * @param adco
+ * @param id
  * @returns {string}
  */
-function getFrameTopic(adco) {
+function getFrameTopic(id) {
+	if(ticMode === 'STANDARD')
+	{
+		return `${mqttBaseTopic}/${adsc}`;
+	}
+	
     return `${mqttBaseTopic}/${adco}`;
 }
+
 
 /**
  * Connect to MQTT broker.
@@ -88,24 +95,40 @@ async function disconnect() {
  * Publish teleinfo frame to MQTT broker.
  * @param {*} frame
  */
-async function publishFrame(frame) {
-    const adco = frame.ADCO ? frame.ADCO.raw : undefined;
-    if (!adco) {
-        log.warn('Cannot publish a frame without ADCO property');
+async function publishFrame(frame) 
+{
+	var id;
+	if(ticMode === 'HISTORY')
+	{
+		id = frame.ADCO ? frame.ADCO.raw : undefined;
+	}
+	else if(ticMode === 'STANDARD')
+	{
+		id = frame.ADSC ? frame.ADSC.raw : undefined;
+	}	
+    
+    if (!id) 
+	{
+        log.warn('Cannot publish a frame without ADCO or ADSC property');
         log.debug(frame);
-    } else {
-        if (hassDiscovery && !discoveryConfigurationPublished) {
-            try {
-                await publishConfigurationForHassDiscovery(client, adco, frame);
+    } 
+	else 
+	{
+        if (hassDiscovery && !discoveryConfigurationPublished) 
+		{
+            try 
+			{
+                await publishConfigurationForHassDiscovery(client, id, frame);
                 discoveryConfigurationPublished = true;
             } catch (e) {
                 log.warn(`Unable to publish discovery configuration (${e.message})`);
             }
         }
-        const frameTopic = getFrameTopic(adco);
+        const frameTopic = getFrameTopic(id);
         log.debug(`Publish frame to topic [${frameTopic}]`);
         log.debug(frame);
-        try {
+        try 
+		{
             await client.publish(frameTopic, JSON.stringify(frame));
         } catch (e) {
             log.warn(`Unable to publish frame to ${frameTopic} (${e.message})`);

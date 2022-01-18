@@ -3,7 +3,7 @@ const SerialPort = require('serialport');
 const events = require('events');
 const deepEqual = require('deep-equal');
 const log = require('../log');
-const { emitInterval, serial } = require('../config');
+const { emitInterval, serial, ticMode } = require('../config');
 
 let serialPort;
 let previousFrame = {};
@@ -33,25 +33,32 @@ function processData(data, teleInfoEventEmitter) {
     const label = lineItems[0];
 
     // Frame end? -> Dispatch frame event
-    if (label === 'MOTDETAT' && currentFrame.ADCO) {
-        if (!isSameFrame(currentFrame, previousFrame)) {
+    if ((ticMode === 'HISTORY' && label === 'MOTDETAT' && currentFrame.ADCO) || (ticMode === 'STANDARD' && label === 'PJOURF+1' && currentFrame.ADSC))
+	{
+        if (!isSameFrame(currentFrame, previousFrame)) 
+		{
             // Don't emit a second frame in emit interval
             const currentTime = Date.now();
-            if (currentTime - lastEmitTime > emitInterval * 1000) {
+            if (currentTime - lastEmitTime > emitInterval * 1000) 
+			{
                 log.debug(`Dispatch frame ${JSON.stringify(currentFrame)}`);
                 teleInfoEventEmitter.emit('frame', currentFrame);
                 lastEmitTime = currentTime;
-            } else {
+            } else 
+			{
                 log.debug(`Ignoring MQTT emission because of emit interval (Emit interval : ${emitInterval} - Last emit time : ${lastEmitTime} - Current time : ${currentTime}`);
             }
-        } else {
+        } 
+		else 
+		{
             log.debug(`Ignoring identical frame ${JSON.stringify(currentFrame)}`);
         }
         return;
     }
 
     // Frame start? -> Reset frame object
-    if (label === 'ADCO') {
+    if ((ticMode === 'HISTORY' && label === 'ADCO') || (ticMode === 'STANDARD' && label === 'ADSC')) 
+	{
         previousFrame = currentFrame;
         currentFrame = {};
     }
@@ -82,8 +89,9 @@ function processError(error) {
 async function connect() {
     return new Promise((resolve, reject) => {
         log.info(`Connecting to port [${serial}]`);
+		const baudRateVar = ticMode === 'STANDARD' ? 9600 : 1200;
         serialPort = new SerialPort(serial, {
-            baudRate: 1200,
+            baudRate: baudRateVar,
             dataBits: 7,
             parity: 'even',
             stopBits: 1,
