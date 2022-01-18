@@ -29,12 +29,7 @@ let client;
  * @returns {string}
  */
 function getFrameTopic(id) {
-    if(ticMode === 'STANDARD')
-    {
-        return `${mqttBaseTopic}/${adsc}`;
-    }
-    
-    return `${mqttBaseTopic}/${adco}`;
+    return `${mqttBaseTopic}/${id}`;
 }
 
 
