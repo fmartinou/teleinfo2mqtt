@@ -194,7 +194,8 @@ function getStateClass(tag) {
  * @param tag
  * @returns {string}
  */
-function getUnit(tag) {
+function getUnit(tag) 
+{
     let unit;
     if(ticMode === 'HISTORY')
     {
@@ -273,6 +274,7 @@ function getUnit(tag) {
         case 'PREF':
         case 'PCOUP':
             unit = 'kVA';
+			break;
             
         case 'SINSTS':
         case 'SINSTS1':
@@ -290,12 +292,14 @@ function getUnit(tag) {
         case 'SMAXIN':  
         case 'SMAXIN-1':
             unit = 'VA';
+			break;
             
         case 'CCASN':
         case 'CCASN-1':
         case 'CCAIN':
         case 'CCAIN-1':
             unit = 'W';
+			break;
             
         case 'ERQ1':
         case 'ERQ2':
@@ -306,7 +310,8 @@ function getUnit(tag) {
 
         default:
             deviceClass = undefined;
-    }
+		}
+	}
     return unit;
 }
 
