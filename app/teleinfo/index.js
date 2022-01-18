@@ -63,15 +63,24 @@ function processData(data, teleInfoEventEmitter) {
         currentFrame = {};
     }
 
-    // Sanitize value & try to convert to number
-    const valueSanitized = lineItems[1].replace(/\.\./g, '');
-    const valueNumber = Number.parseInt(valueSanitized, 10);
-    const value = !Number.isNaN(valueNumber) ? valueNumber : valueSanitized;
+    var indexUtil = 1;
+    if(lineItems.length>3 && (label.indexOf('SMAXSN')!=-1 || label.indexOf('CCAIN')!=-1 || label.indexOf('UMOY')!=-1)
+    {
+        indexUtil = 2;
+    }
+    
+    if(lineItems.length<=4)
+    {
+        // Sanitize value & try to convert to number
+        const valueSanitized = lineItems[indexUtil].replace(/\.\./g, '');
+        const valueNumber = Number.parseInt(valueSanitized, 10);
+        const value = !Number.isNaN(valueNumber) ? valueNumber : valueSanitized;
 
-    currentFrame[label] = {
-        raw: lineItems[1],
-        value,
-    };
+        currentFrame[label] = {
+            raw: lineItems[indexUtil],
+            value,
+        };
+    }
 }
 
 /**
