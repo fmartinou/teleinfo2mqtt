@@ -64,7 +64,7 @@ function processData(data, teleInfoEventEmitter) {
     }
 
     var indexUtil = 1;
-    if(lineItems.length>3 && (label.indexOf('SMAXSN')!=-1 || label.indexOf('CCAIN')!=-1 || label.indexOf('UMOY')!=-1)
+    if(lineItems.length>3 && (label.indexOf('SMAXSN')!=-1 || label.indexOf('CCAIN')!=-1 || label.indexOf('UMOY')!=-1))
     {
         indexUtil = 2;
     }
