@@ -23,7 +23,7 @@ function processData(data, teleInfoEventEmitter) {
     const dataStr = data.toString('utf-8');
 
     // Split line `${label} ${value} ${checksum}`
-    const lineItems = dataStr.split(' ');
+    const lineItems = dataStr.split(/\s+/);
 
     if (lineItems.length < 2) {
         log.error(`Corrupted data received [${dataStr}]`);
