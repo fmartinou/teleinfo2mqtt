@@ -1,4 +1,5 @@
 const hass = require('./hass');
+const HistoryTicMode = require('../teleinfo/history/HistoryTicMode');
 
 const sample = {
     ADCO: { raw: '012345678912', value: 12345678912 },
@@ -17,7 +18,12 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         publish: jest.fn(() => {
         }),
     };
-    await hass.publishConfigurationForHassDiscovery(mqttClientMock, '012345678912', sample);
+    await hass.publishConfigurationForHassDiscovery({
+        client: mqttClientMock,
+        id: '012345678912',
+        frame: sample,
+        teleinfoService: new HistoryTicMode(),
+    });
     expect(mqttClientMock.publish).toHaveBeenCalledTimes(9);
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(1, 'homeassistant/sensor/teleinfo/012345678912_adco/config', JSON.stringify({
         unique_id: 'teleinfo_012345678912_ADCO',

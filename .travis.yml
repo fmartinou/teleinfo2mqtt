@@ -10,6 +10,9 @@ env:
 
 before_install:
 
+  - export IMAGE_VERSION=${TRAVIS_BRANCH//\//\_}
+  - export IMAGE_VERSION=${IMAGE_VERSION//\#/\_}
+
   # Install docker with buildx
   - sudo rm -rf /var/lib/apt/lists/*
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -44,15 +47,13 @@ after_success:
   # Report to Code Climate
   - (cd app && ./cc-test-reporter after-build -t lcov --debug --exit-code $TRAVIS_TEST_RESULT)
 
-  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-  - docker version
-  - make prepare
-
   # Override image version with latest if master branch
   - if [ "$TRAVIS_BRANCH" == "master" ] ; then export IMAGE_VERSION=latest; fi
 
   # Override image version with tag name if any
   - if [ ! -z "$TRAVIS_TAG" ] ; then export IMAGE_VERSION=$TRAVIS_TAG; fi
 
-  # Build & push image
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+  - docker version
+  - make prepare
   - make build IMAGE_NAME=$DOCKER_USERNAME/teleinfo-mqtt IMAGE_VERSION=$IMAGE_VERSION PLATFORMS=linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/amd64

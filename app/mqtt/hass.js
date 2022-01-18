@@ -10,163 +10,50 @@ const {
 
 /**
  * Get frame topic.
- * @param adco
+ * @param id
  * @returns {string}
  */
-function getFrameTopic(adco) {
-    return `${mqttBaseTopic}/${adco}`;
-}
-
-/**
- * Get hass device class.
- * @param tag
- * @returns {string}
- */
-function getDeviceClass(tag) {
-    let deviceClass;
-    switch (tag) {
-    case 'ADPS':
-    case 'IINST':
-    case 'IMAX':
-    case 'ISOUSC':
-        deviceClass = 'current';
-        break;
-
-    case 'BASE':
-    case 'BBRHCJB':
-    case 'BBRHCJR':
-    case 'BBRHCJW':
-    case 'BBRHPJB':
-    case 'BBRHPJR':
-    case 'BBRHPJW':
-    case 'EJPHN':
-    case 'EJPHPM':
-    case 'HCHC':
-    case 'HCHP':
-        deviceClass = 'energy';
-        break;
-
-    case 'PAPP':
-        deviceClass = 'power';
-        break;
-
-    default:
-        deviceClass = undefined;
-    }
-    return deviceClass;
-}
-
-/**
- * Get hass state class.
- * @param tag
- * @returns {string}
- */
-function getStateClass(tag) {
-    let stateClass;
-    switch (tag) {
-    case 'BASE':
-    case 'BBRHCJB':
-    case 'BBRHCJR':
-    case 'BBRHCJW':
-    case 'BBRHPJB':
-    case 'BBRHPJR':
-    case 'BBRHPJW':
-    case 'EJPHN':
-    case 'EJPHPM':
-    case 'HCHC':
-    case 'HCHP':
-        stateClass = 'total_increasing';
-        break;
-    default:
-        stateClass = undefined;
-    }
-    return stateClass;
-}
-
-/**
- * Get hass sensor unit.
- * @param tag
- * @returns {string}
- */
-function getUnit(tag) {
-    let unit;
-    switch (tag) {
-    case 'ADPS':
-    case 'IINST':
-    case 'IMAX':
-    case 'ISOUSC':
-        unit = 'A';
-        break;
-
-    case 'BASE':
-    case 'BBRHCJB':
-    case 'BBRHCJR':
-    case 'BBRHCJW':
-    case 'BBRHPJB':
-    case 'BBRHPJR':
-    case 'BBRHPJW':
-    case 'EJPHN':
-    case 'EJPHPM':
-    case 'HCHC':
-    case 'HCHP':
-        unit = 'Wh';
-        break;
-
-    case 'PAPP':
-        unit = 'VA';
-        break;
-
-    case 'PEJP':
-        unit = 'min';
-        break;
-
-    default:
-        unit = undefined;
-    }
-    return unit;
+function getFrameTopic(id) {
+    return `${mqttBaseTopic}/${id}`;
 }
 
 /**
  * Get hass value template.
- * @param tag
+ * @param label
+ * @param idLabel
  * @returns {string}
  */
-function getValueTemplate(tag) {
-    let valueTemplate;
-    switch (tag) {
-    case 'ADCO':
-        valueTemplate = `{{ value_json.${tag}.raw }}`;
-        break;
-    default:
-        valueTemplate = `{{ value_json.${tag}.value }}`;
-    }
-    return valueTemplate;
+function getValueTemplate({ label, idLabel }) {
+    return label === idLabel ? `{{ value_json.${label}.raw }}` : `{{ value_json.${label}.value }}`;
 }
 
 /**
  * Publish Configuration for home-assistant discovery.
  * @param client
- * @param adco
+ * @param id
  * @param frame
+ * @param teleinfoService
  */
-async function publishConfigurationForHassDiscovery(client, adco, frame) {
-    const promises = Object.keys(frame).map(async (tag) => {
-        const discoveryTopic = `${hassDiscoveryPrefix}/sensor/${mqttBaseTopic}/${adco}_${tag.toLowerCase()}/config`;
-        log.info(`Publish configuration for tag ${tag} for discovery to topic [${discoveryTopic}]`);
-        const stateTopic = getFrameTopic(adco);
+async function publishConfigurationForHassDiscovery({
+    client, id, frame, teleinfoService,
+}) {
+    const promises = Object.keys(frame).map(async (label) => {
+        const discoveryTopic = `${hassDiscoveryPrefix}/sensor/${mqttBaseTopic}/${id}_${label.toLowerCase()}/config`;
+        log.info(`Publish configuration for tag ${label} for discovery to topic [${discoveryTopic}]`);
+        const stateTopic = getFrameTopic(id);
         return client.publish(discoveryTopic, JSON.stringify({
-            unique_id: `teleinfo_${adco}_${tag}`,
-            name: `Teleinfo ${adco} ${tag}`,
+            unique_id: `teleinfo_${id}_${label}`,
+            name: `Teleinfo ${id} ${label}`,
             state_topic: stateTopic,
-            state_class: getStateClass(tag),
-            device_class: getDeviceClass(tag),
-            value_template: getValueTemplate(tag),
-            unit_of_measurement: getUnit(tag),
+            state_class: teleinfoService.getHAStateClass(label),
+            device_class: teleinfoService.getHADeviceClass(label),
+            value_template: getValueTemplate({ label, idLabel: teleinfoService.getIdLabel() }),
+            unit_of_measurement: teleinfoService.getHAUnit(label),
             device: {
-                identifiers: [adco],
+                identifiers: [id],
                 manufacturer: 'Enedis',
-                model: `linky_${adco}`,
-                name: `Linky ${adco}`,
+                model: `linky_${id}`,
+                name: `Linky ${id}`,
             },
         }), {
             retain: true,

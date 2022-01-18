@@ -1,4 +1,7 @@
 {
+    "parserOptions": {
+        "ecmaVersion": 2022
+    },
     extends: "airbnb-base",
     plugins: [
         "jest"
@@ -10,6 +13,7 @@
         ]
     },
     env: {
+        node: true,
         jest/globals: true
     }
 }

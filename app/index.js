@@ -3,30 +3,20 @@ const teleinfo = require('./teleinfo');
 const mqtt = require('./mqtt');
 const log = require('./log');
 
-async function disconnect() {
-    await teleinfo.disconnect();
-    await mqtt.disconnect();
-}
-
+/**
+ * Main function.
+ * @return {Promise<void>}
+ */
 async function run() {
     const configHidden = { ...config, mqttPassword: '<hidden>' };
     log.info('Starting teleinfo-mqtt with configuration =', configHidden);
 
     try {
-        // Connect to MQTT
-        await mqtt.connect();
+        // Connect to the serial port
+        const teleinfoService = await teleinfo.connect({ ticMode: config.ticMode });
 
-        // Connect to serial port
-        const teleinfoEventEmitter = await teleinfo.connect();
-
-        // Register to frame events and publish to mqtt
-        teleinfoEventEmitter.on('frame', (frame) => {
-            mqtt.publishFrame(frame);
-        });
-
-        // Graceful exit
-        process.on('SIGTERM', disconnect);
-        process.on('SIGINT', disconnect);
+        // Connect to the MQTT broker
+        await mqtt.connect({ teleinfoService });
     } catch (e) {
         log.error('Unable to run => See errors below');
         log.error(e);
@@ -34,4 +24,5 @@ async function run() {
     }
 }
 
+// Launch the app.
 run();

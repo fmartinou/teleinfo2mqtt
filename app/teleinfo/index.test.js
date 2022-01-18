@@ -1,247 +1,27 @@
-/* eslint no-underscore-dangle: ["error", { "allow": ["__get__", "__set__"] }] */
+const { SerialPortMock } = require('serialport');
+const HistoryTicMode = require('./history/HistoryTicMode');
+const StandardTicMode = require('./standard/StandardTicMode');
+const teleinfo = require('.');
 
-const rewire = require('rewire');
-
-const moduleToTest = rewire('./index.js');
-
-test('isSameFrame should return true when frame is same as previous one', () => {
-    const isSameFrame = moduleToTest.__get__('isSameFrame');
-    expect(isSameFrame(12, 12)).toBe(true);
+beforeEach(() => {
+    SerialPortMock.binding.createPort('/dev/ttyUSB0');
 });
 
-test('isSameFrame should return t,rue when frame is same as previous one', () => {
-    const isSameFrame = moduleToTest.__get__('isSameFrame');
-    expect(isSameFrame({
-        ADCO: {
-            raw: '12345678901',
-            value: 12345678901,
-        },
-        OPTARIF: {
-            raw: 'HC..',
-            value: 'HC',
-        },
-        ISOUSC: {
-            raw: '45',
-            value: 45,
-        },
-        HCHC: {
-            raw: '9058688',
-            value: 9058688,
-        },
-        HCHP: {
-            raw: '9752846',
-            value: 9752846,
-        },
-        PTEC: {
-            raw: 'HP..',
-            value: 'HP',
-        },
-        IINST: {
-            raw: '22',
-            value: 22,
-        },
-        IMAX: {
-            raw: '90',
-            value: 90,
-        },
-        PAPP: {
-            raw: 'A',
-            value: 'A',
-        },
-    }, {
-        ADCO: {
-            raw: '12345678901',
-            value: 12345678901,
-        },
-        OPTARIF: {
-            raw: 'HC..',
-            value: 'HC',
-        },
-        ISOUSC: {
-            raw: '45',
-            value: 45,
-        },
-        HCHC: {
-            raw: '9058688',
-            value: 9058688,
-        },
-        HCHP: {
-            raw: '9752846',
-            value: 9752846,
-        },
-        PTEC: {
-            raw: 'HP..',
-            value: 'HP',
-        },
-        IINST: {
-            raw: '22',
-            value: 22,
-        },
-        IMAX: {
-            raw: '90',
-            value: 90,
-        },
-        PAPP: {
-            raw: 'A',
-            value: 'A',
-        },
-    })).toBe(true);
-});
+test.each([
+    { ticMode: 'history', instance: HistoryTicMode },
+    { ticMode: 'standard', instance: StandardTicMode },
+])(
+    'connect should init $instance service when ticMode is $ticMode',
+    async ({ ticMode, instance }) => {
+        const service = await teleinfo.connect({ ticMode, SerialPortClass: SerialPortMock });
+        expect(service).toBeInstanceOf(instance);
+    },
+);
 
-test('isSameFrame should return true when frame is same as previous one but keys shuffled', async () => {
-    const isSameFrame = moduleToTest.__get__('isSameFrame');
-    expect(isSameFrame({
-        OPTARIF: {
-            raw: 'HC..',
-            value: 'HC',
-        },
-        ADCO: {
-            raw: '12345678901',
-            value: 12345678901,
-        },
-        ISOUSC: {
-            raw: '45',
-            value: 45,
-        },
-        HCHP: {
-            raw: '9752846',
-            value: 9752846,
-        },
-        HCHC: {
-            raw: '9058688',
-            value: 9058688,
-        },
-        PTEC: {
-            raw: 'HP..',
-            value: 'HP',
-        },
-        IMAX: {
-            raw: '90',
-            value: 90,
-        },
-        IINST: {
-            raw: '22',
-            value: 22,
-        },
-        PAPP: {
-            raw: 'A',
-            value: 'A',
-        },
-    }, {
-        ADCO: {
-            raw: '12345678901',
-            value: 12345678901,
-        },
-        OPTARIF: {
-            raw: 'HC..',
-            value: 'HC',
-        },
-        ISOUSC: {
-            raw: '45',
-            value: 45,
-        },
-        HCHC: {
-            raw: '9058688',
-            value: 9058688,
-        },
-        HCHP: {
-            raw: '9752846',
-            value: 9752846,
-        },
-        PTEC: {
-            raw: 'HP..',
-            value: 'HP',
-        },
-        IINST: {
-            raw: '22',
-            value: 22,
-        },
-        IMAX: {
-            raw: '90',
-            value: 90,
-        },
-        PAPP: {
-            raw: 'A',
-            value: 'A',
-        },
-    })).toBe(true);
-});
-
-test('isSameFrame should return false when frame is different as previous one', async () => {
-    const isSameFrame = moduleToTest.__get__('isSameFrame');
-    expect(isSameFrame({
-        ADCO: {
-            raw: '12345678901',
-            value: 12345678901,
-        },
-        OPTARIF: {
-            raw: 'HC..',
-            value: 'HC',
-        },
-        ISOUSC: {
-            raw: '45',
-            value: 45,
-        },
-        HCHC: {
-            raw: '9058688',
-            value: 9058688,
-        },
-        HCHP: {
-            raw: '9752847',
-            value: 9752847,
-        },
-        PTEC: {
-            raw: 'HP..',
-            value: 'HP',
-        },
-        IINST: {
-            raw: '22',
-            value: 22,
-        },
-        IMAX: {
-            raw: '90',
-            value: 90,
-        },
-        PAPP: {
-            raw: 'A',
-            value: 'A',
-        },
-    }, {
-        ADCO: {
-            raw: '12345678901',
-            value: 12345678901,
-        },
-        OPTARIF: {
-            raw: 'HC..',
-            value: 'HC',
-        },
-        ISOUSC: {
-            raw: '45',
-            value: 45,
-        },
-        HCHC: {
-            raw: '9058688',
-            value: 9058688,
-        },
-        HCHP: {
-            raw: '9752846',
-            value: 9752846,
-        },
-        PTEC: {
-            raw: 'HP..',
-            value: 'HP',
-        },
-        IINST: {
-            raw: '22',
-            value: 22,
-        },
-        IMAX: {
-            raw: '90',
-            value: 90,
-        },
-        PAPP: {
-            raw: 'A',
-            value: 'A',
-        },
-    })).toBe(false);
+test('connect should fail when ticMode is neither history nor standard', async () => {
+    try {
+        await teleinfo.connect({ ticMode: 'UNKNOWN' });
+    } catch (e) {
+        expect(e.message).toEqual('Unsupported TIC_MODE [UNKNOWN]');
+    }
 });
