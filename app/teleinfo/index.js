@@ -69,7 +69,7 @@ function processData(data, teleInfoEventEmitter) {
         indexUtil = 2;
     }
     
-    if(lineItems.length<=5)
+    if(lineItems.length<=4)
     {
         // Sanitize value & try to convert to number
         const valueSanitized = lineItems[indexUtil].replace(/\.\./g, '');
