@@ -21,7 +21,7 @@ function CheckStandardData(lineItems)
     {
 	case 'ADSC':
 	{
-	    if(lineItems.length == 4 && lineItems[1].length == 12)
+	    if(lineItems.length >= 2 && lineItems[1].length == 12)
 	    {
 	 	   return 1;
 	    }
@@ -32,7 +32,7 @@ function CheckStandardData(lineItems)
     }
 	case 'VTIC':
 	{
-	    if(lineItems.length == 4 && lineItems[1].length == 2)
+	    if(lineItems.length >= 2 && lineItems[1].length == 2)
 	    {
 	 	   return 1;
 	    }
@@ -43,7 +43,7 @@ function CheckStandardData(lineItems)
     }
 	case 'DATE':
 	{
-	    if(lineItems.length == 4)
+	    if(lineItems.length >= 2)
 	    {
 	 	   return 1;
 	    }
@@ -55,7 +55,7 @@ function CheckStandardData(lineItems)
 	case 'NGTF':
 	case 'LTARF':
 	{
-	    if(lineItems.length == 4 && lineItems[1].length == 16)
+	    if(lineItems.length >= 2 && lineItems[1].length == 16)
 	    {
 	 	   return 1;
 	    }
@@ -86,7 +86,7 @@ function CheckStandardData(lineItems)
     case 'ERQ4':
 	case 'LTARF':
 	{
-	    if(lineItems.length == 4 && lineItems[1].length == 9)
+	    if(lineItems.length >= 2 && lineItems[1].length == 9)
 	    {
 	 	   return 1;
 	    }
@@ -102,7 +102,7 @@ function CheckStandardData(lineItems)
     case 'URMS2':
     case 'URMS3':
     {
-	    if(lineItems.length == 4 && lineItems[1].length == 3)
+	    if(lineItems.length >= 2 && lineItems[1].length == 3)
 	    {
 	 	   return 1;
 	    }
@@ -114,7 +114,7 @@ function CheckStandardData(lineItems)
     case 'PREF':
     case 'PCOUP':
 	{
-	    if(lineItems.length == 4 && lineItems[1].length == 2)
+	    if(lineItems.length >= 2 && lineItems[1].length == 2)
 	    {
 	 	   return 1;
 	    }
@@ -128,7 +128,7 @@ function CheckStandardData(lineItems)
     case 'SINSTS2':
     case 'SINSTS3':
     {
-	    if(lineItems.length == 4 && lineItems[1].length == 5)
+	    if(lineItems.length >= 2 && lineItems[1].length == 5)
 	    {
 	 	   return 1;
 	    }
@@ -146,7 +146,7 @@ function CheckStandardData(lineItems)
     case 'SMAXSN2-1':
     case 'SMAXSN3-1':
 	{
-	    if(lineItems.length == 5 && lineItems[2].length == 5)
+	    if(lineItems.length >= 3 && lineItems[2].length == 5)
 	    {
 	 	   return 2;
 	    }
@@ -157,7 +157,7 @@ function CheckStandardData(lineItems)
     } 
     case 'SINSTI':
 	{
-	    if(lineItems.length == 4 && lineItems[1].length == 5)
+	    if(lineItems.length >= 2 && lineItems[1].length == 5)
 	    {
 	 	   return 1;
 	    }
@@ -173,7 +173,7 @@ function CheckStandardData(lineItems)
     case 'CCAIN':
     case 'CCAIN-1':
 	{
-	    if(lineItems.length == 5 && lineItems[2].length == 5)
+	    if(lineItems.length >= 3 && lineItems[2].length == 5)
 	    {
 	 	   return 2;
 	    }
@@ -186,7 +186,7 @@ function CheckStandardData(lineItems)
     case 'UMOY2':
     case 'UMOY3':
 	{
-	    if(lineItems.length == 5 && lineItems[2].length == 3)
+	    if(lineItems.length >= 3 && lineItems[2].length == 3)
 	    {
 	 	   return 2;
 	    }
@@ -197,7 +197,7 @@ function CheckStandardData(lineItems)
     }
 	case 'STGE':
 	{
-	    if(lineItems.length == 4 && lineItems[1].length == 8)
+	    if(lineItems.length >= 2 && lineItems[1].length == 8)
 	    {
 	 	   return 1;
 	    }
@@ -213,7 +213,7 @@ function CheckStandardData(lineItems)
 	case 'DPM3':
 	case 'FPM3':
 	{
-	    if(lineItems.length == 5 && lineItems[2].length == 2)
+	    if(lineItems.length >= 3 && lineItems[2].length == 2)
 	    {
 	 	   return 2;
 	    }
@@ -226,7 +226,7 @@ function CheckStandardData(lineItems)
 	//MSG2
 	case 'PRM':
 	{
-	    if(lineItems.length == 4 && lineItems[1].length == 14)
+	    if(lineItems.length >= 2 && lineItems[1].length == 14)
 	    {
 	 	   return 1;
 	    }
@@ -237,7 +237,7 @@ function CheckStandardData(lineItems)
     }
 	case 'RELAIS':
 	{
-	    if(lineItems.length == 4 && lineItems[1].length == 3)
+	    if(lineItems.length >= 2 && lineItems[1].length == 3)
 	    {
 	 	   return 1;
 	    }
@@ -248,7 +248,7 @@ function CheckStandardData(lineItems)
     }
 	case 'NTARF':
 	{
-	    if(lineItems.length == 4 && lineItems[1].length == 2)
+	    if(lineItems.length >= 2 && lineItems[1].length == 2)
 	    {
 	 	   return 1;
 	    }
@@ -259,7 +259,7 @@ function CheckStandardData(lineItems)
     }
 	case 'NJOURF':
 	{
-	    if(lineItems.length == 4 && lineItems[1].length == 2)
+	    if(lineItems.length >= 2 && lineItems[1].length == 2)
 	    {
 	 	   return 1;
 	    }
@@ -270,7 +270,7 @@ function CheckStandardData(lineItems)
     }
 	case 'NJOURF+1':
 	{
-	    if(lineItems.length == 4 && lineItems[1].length == 2)
+	    if(lineItems.length >= 2 && lineItems[1].length == 2)
 	    {
 	 	   return 1;
 	    }
@@ -293,10 +293,10 @@ function CheckStandardData(lineItems)
 function processData(data, teleInfoEventEmitter) {
     const dataStr = data.toString('utf-8');
 
-    // Split line `${label} ${value} ${checksum}${lineBreak}
+    // Split line `${label} ${value} ${checksum}
     const lineItems = dataStr.split(/\s+/);
 	
-	if (lineItems.length < 4) {
+	if (lineItems.length < 3) {
         log.error(`Corrupted data received [${dataStr}]`);
         return;
     }
@@ -313,7 +313,6 @@ function processData(data, teleInfoEventEmitter) {
 	
 	if(dataIndex == -1)
 	{
-		log.error(`Corrupted data received [${dataStr}]`);
         return;
 	}
 
@@ -377,18 +376,17 @@ async function connect() {
     return new Promise((resolve, reject) => {
         log.info(`Connecting to port [${serial}]`);
         const baudRateVar = ticMode === 'STANDARD' ? 9600 : 1200;
-		const parityVar = ticMode === 'STANDARD' ? 'odd' : 'even';
         serialPort = new SerialPort(serial, {
             baudRate: baudRateVar,
             dataBits: 7,
-            parity: parityVar,
+            parity: 'even',
             stopBits: 1,
         }, (error) => {
             if (error) {
                 log.error(`Error when connecting to serial port [${error.message}]`);
                 reject(error);
             } else {
-                const parser = serialPort.pipe(new Readline());
+                const parser = serialPort.pipe(new Readline({ delimiter: '\r\n' }));
 
                 const teleInfoEventEmitter = new events.EventEmitter();
 
