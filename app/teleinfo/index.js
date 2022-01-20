@@ -15,7 +15,7 @@ function isSameFrame(frame1, frame2) {
 }
 
 //check all data which can be received by standard mode
-function CheckStandardData(const lineItems)
+function CheckStandardData(lineItems)
 {
 	switch (lineItems[0]) 
     {
@@ -320,7 +320,7 @@ function processData(data, teleInfoEventEmitter) {
     const label = lineItems[0];
 
     // Frame end? -> Dispatch frame event
-    if ((ticMode === 'HISTORY' && label === 'MOTDETAT' && currentFrame.ADCO) || (ticMode === 'STANDARD' && label === 'PJOURF+1' && currentFrame.ADSC))
+    if ((ticMode === 'HISTORY' && label === 'MOTDETAT' && currentFrame.ADCO) || (ticMode === 'STANDARD' && label === 'NJOURF+1' && currentFrame.ADSC))
     {
         if (!isSameFrame(currentFrame, previousFrame)) 
         {
