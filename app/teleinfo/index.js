@@ -99,10 +99,11 @@ async function connect() {
     return new Promise((resolve, reject) => {
         log.info(`Connecting to port [${serial}]`);
         const baudRateVar = ticMode === 'STANDARD' ? 9600 : 1200;
+		const parityVar = ticMode === 'STANDARD' ? 'odd' : 'even';
         serialPort = new SerialPort(serial, {
             baudRate: baudRateVar,
             dataBits: 7,
-            parity: 'even',
+            parity: parityVar,
             stopBits: 1,
         }, (error) => {
             if (error) {
