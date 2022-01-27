@@ -285,6 +285,159 @@ function CheckStandardData(lineItems)
     return -1;
 }
 
+//check all data which can be received by standard mode
+function CheckHistoryData(lineItems)
+{
+    switch (lineItems[0]) 
+    {
+    case 'ADCO':
+    {
+        if(lineItems.length >= 2 && lineItems[1].length == 12)
+        {
+           return 1;
+        }
+        else
+        {
+           return -1;
+        }
+    }
+	case 'OPTARIF':
+    {
+        if(lineItems.length >= 2 && lineItems[1].length == 4)
+        {
+           return 1;
+        }
+        else
+        {
+           return -1;
+		}
+	}   
+	case 'ISOUSC':
+    {
+        if(lineItems.length >= 2 && lineItems[1].length == 2)
+        {
+           return 1;
+        }
+        else
+        {
+           return -1;
+        }
+    }
+	case 'BASE':
+	case 'HCHC':
+	case 'HCHP':
+	case 'EJPHN':
+	case 'EJPHPM':
+	case 'BBRHCJB':
+	case 'BBRHPJB':
+	case 'BBRHCJW':
+	case 'BBRHPJW':
+	case 'BBRHCJR':
+	case 'BBRHPJR':
+    {
+        if(lineItems.length >= 2 && lineItems[1].length == 9)
+        {
+           return 1;
+        }
+        else
+        {
+           return -1;
+        }
+    }
+	case 'PEJP':
+    {
+        if(lineItems.length >= 2 && lineItems[1].length == 2)
+        {
+           return 1;
+        }
+        else
+        {
+           return -1;
+        }
+    }
+	case 'PTEC':
+	case 'DEMAIN':
+    {
+        if(lineItems.length >= 2 && lineItems[1].length == 4)
+        {
+           return 1;
+        }
+        else
+        {
+           return -1;
+        }
+    }
+	case 'IINST':
+    {
+        if(lineItems.length >= 2 && lineItems[1].length == 3)
+        {
+           return 1;
+        }
+        else
+        {
+           return -1;
+        }
+    }
+	case 'ADPS':
+    {
+        if(lineItems.length >= 2 && lineItems[1].length == 3)
+        {
+           return 1;
+        }
+        else
+        {
+           return -1;
+        }
+    }
+	case 'IMAX':
+    {
+        if(lineItems.length >= 2 && lineItems[1].length == 3)
+        {
+           return 1;
+        }
+        else
+        {
+           return -1;
+        }
+    }
+	case 'PAPP':
+    {
+        if(lineItems.length >= 2 && lineItems[1].length == 5)
+        {
+           return 1;
+        }
+        else
+        {
+           return -1;
+        }
+    }
+	case 'HHPHC':
+    {
+        if(lineItems.length >= 2 && lineItems[1].length == 1)
+        {
+           return 1;
+        }
+        else
+        {
+           return -1;
+        }
+    }
+	case 'MOTDETAT':
+    {
+        if(lineItems.length >= 2 && lineItems[1].length == 6)
+        {
+           return 1;
+        }
+        else
+        {
+           return -1;
+        }
+    }
+	}
+	
+	return -1;
+}
+
 /**
  * Process data.
  * @param {*} data
@@ -304,7 +457,7 @@ function processData(data, teleInfoEventEmitter) {
     var dataIndex = 1;
     if(ticMode === 'HISTORY')
     {
-        
+        dataIndex = CheckHistoryData(lineItems);
     }
     else
     {
@@ -315,8 +468,8 @@ function processData(data, teleInfoEventEmitter) {
     {
         return;
     }
-
-    const label = lineItems[0];
+	
+	const label = lineItems[0];
 
     // Frame end? -> Dispatch frame event
     if ((ticMode === 'HISTORY' && label === 'MOTDETAT' && currentFrame.ADCO) || (ticMode === 'STANDARD' && label === 'ADSC' && currentFrame.ADSC))
@@ -348,11 +501,56 @@ function processData(data, teleInfoEventEmitter) {
         previousFrame = currentFrame;
         currentFrame = {};
     }
-
-    // Sanitize value & try to convert to number
+	
+	// Sanitize value & try to convert to number
     const valueSanitized = lineItems[dataIndex].replace(/\.\./g, '');
     const valueNumber = Number.parseInt(valueSanitized, 10);
     const value = !Number.isNaN(valueNumber) ? valueNumber : valueSanitized;
+	
+	var HCHP = 0;
+	var HCHC = 0;
+	var EAIT = 0;
+	if(label == 'HCHC')
+	{
+		if(Number.isNaN(valueNumber))
+		{
+			return;
+		}
+		
+		if(HCHC != 0 && (HCHC > value || value - HCHC > 1000))
+		{
+			return;
+		}
+		HCHC = value;
+	}
+	
+	if(label == 'HCHP')
+	{
+		if(Number.isNaN(valueNumber))
+		{
+			return;
+		}
+		
+		if(HCHP != 0 && (HCHP > value || value - HCHP > 1000))
+		{
+			return;
+		}
+		HCHP = value;
+	}
+	
+	if(label == 'EAIT')
+	{
+		if(Number.isNaN(valueNumber))
+		{
+			return;
+		}
+		
+		if(EAIT != 0 && (EAIT > value || value - EAIT > 1000))
+		{
+			return;
+		}
+		EAIT = value;
+	}
 
     currentFrame[label] = {
         raw: lineItems[dataIndex],
