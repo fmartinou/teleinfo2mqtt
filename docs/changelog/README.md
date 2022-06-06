@@ -1,7 +1,7 @@
 # Changelog
 
-## dev
-- :star: Add support for TIC `STANDARD` mode
+## 7.0.0
+- :star: Add support for TIC `STANDARD` mode (:warning:**EXPERIMENTAL!!!**:warning:)
 
 ## 6.1.0
 - :star: Add compatibility to [Home-Assistant add-on system](https://github.com/fmartinou/hassio-addons) 
