@@ -49,25 +49,81 @@ class StandardTicMode extends TicMode {
      */
     getValue({ label, lineItems }) {
         switch (label) {
+        case 'ADSC':
+        case 'EAIT':
+        case 'EASD01':
+        case 'EASD02':
+        case 'EASD03':
+        case 'EASD04':
+        case 'EASF01':
+        case 'EASF02':
+        case 'EASF03':
+        case 'EASF04':
+        case 'EASF05':
+        case 'EASF06':
+        case 'EASF07':
+        case 'EASF08':
+        case 'EASF09':
+        case 'EASF10':
+        case 'EAST':
+        case 'ERQ1':
+        case 'ERQ2':
+        case 'ERQ3':
+        case 'ERQ4':
+        case 'IRMS1':
+        case 'IRMS2':
+        case 'IRMS3':
+        case 'LTARF':
+        case 'MSG1':
+        case 'MSG2':
+        case 'NGTF':
+        case 'NJOURF':
+        case 'NJOURF+1':
+        case 'NTARF':
         case 'PCOUP':
+        case 'PJOURF+1':
+        case 'PPOINTE':
+        case 'PREF':
+        case 'PRM':
+        case 'RELAIS':
+        case 'SINSTI':
         case 'SINSTS':
         case 'SINSTS1':
         case 'SINSTS2':
         case 'SINSTS3':
-        case 'SINSTI':
         case 'STGE':
-        case 'MSG1':
-        case 'MSG2':
-        case 'PRM':
-        case 'RELAIS':
-        case 'NTARF':
-        case 'NJOURF':
-        case 'NJOURF+1':
-        case 'PJOURF+1':
-        case 'PPOINTE':
-            return lineItems[1];
+        case 'URMS1':
+        case 'URMS2':
+        case 'URMS3':
+        case 'VTIC':
+            return lineItems.slice(1, lineItems.length - 1).join(' ');
+        case 'CCAIN':
+        case 'CCAIN-1':
+        case 'CCASN':
+        case 'CCASN-1':
+        case 'DATE':
+        case 'DPM1':
+        case 'DPM2':
+        case 'DPM3':
+        case 'FPM1':
+        case 'FPM2':
+        case 'FPM3':
+        case 'SMAXIN':
+        case 'SMAXIN-1':
+        case 'SMAXSN':
+        case 'SMAXSN-1':
+        case 'SMAXSN1':
+        case 'SMAXSN1-1':
+        case 'SMAXSN2':
+        case 'SMAXSN2-1':
+        case 'SMAXSN3':
+        case 'SMAXSN3-1':
+        case 'UMOY1':
+        case 'UMOY2':
+        case 'UMOY3':
+            return lineItems.slice(2, lineItems.length - 1).join(' ');
         default:
-            return lineItems[2];
+            throw new Error(`Unsupported label [${label}]`);
         }
     }
 
@@ -160,6 +216,44 @@ class StandardTicMode extends TicMode {
         case 'MSG1':
             return value.length <= 32;
         default: return false;
+        }
+    }
+
+    /**
+     * Get timestamp associated to the label.
+     * @param label
+     * @param lineItems
+     * @return {undefined}
+     */
+    getTimestamp({ label, lineItems }) {
+        switch (label) {
+        case 'CCAIN':
+        case 'CCAIN-1':
+        case 'CCASN':
+        case 'CCASN-1':
+        case 'DATE':
+        case 'DPM1':
+        case 'DPM2':
+        case 'DPM3':
+        case 'FPM1':
+        case 'FPM2':
+        case 'FPM3':
+        case 'SMAXIN':
+        case 'SMAXIN-1':
+        case 'SMAXSN':
+        case 'SMAXSN-1':
+        case 'SMAXSN1':
+        case 'SMAXSN1-1':
+        case 'SMAXSN2':
+        case 'SMAXSN2-1':
+        case 'SMAXSN3':
+        case 'SMAXSN3-1':
+        case 'UMOY1':
+        case 'UMOY2':
+        case 'UMOY3':
+            return lineItems[1];
+        default:
+            return undefined;
         }
     }
 

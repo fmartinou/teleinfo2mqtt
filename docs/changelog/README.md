@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.0.1
+- :fire: Downgrade serialport lib because of crash on raspberry-pi like devices
+- :fire: Fix `STANDARD` frames bad parsing 
+
 ## 7.0.0
 - :star: Add support for TIC `STANDARD` mode (:warning:**EXPERIMENTAL!!!**:warning:)
 

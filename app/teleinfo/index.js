@@ -1,4 +1,4 @@
-const { SerialPort } = require('serialport');
+const SerialPort = require('serialport');
 const HistoryTicMode = require('./history/HistoryTicMode');
 const StandardTicMode = require('./standard/StandardTicMode');
 const { ticMode: ticModeFromConfig } = require('../config');

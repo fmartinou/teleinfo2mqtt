@@ -1,6 +1,12 @@
 const { EventEmitter } = require('events');
-const { SerialPortMock } = require('serialport');
+const SerialPort = require('@serialport/stream');
+const SerialPortMockBinding = require('@serialport/binding-mock');
 const TicMode = require('./TicMode');
+
+beforeEach(() => {
+    SerialPort.Binding = SerialPortMockBinding;
+    SerialPortMockBinding.createPort('/dev/ttyUSB0');
+});
 
 test('TicMode should initialize with appropriate default values when constructor is called', () => {
     const ticMode = new TicMode();
@@ -48,8 +54,7 @@ test('connect should connect to serial port when called', async () => {
     const ticMode = new TicMode();
     jest.spyOn(ticMode, 'getMode').mockImplementation(() => 'test');
     jest.spyOn(ticMode, 'getBaudRate').mockImplementation(() => 999);
-    SerialPortMock.binding.createPort('/dev/ttyUSB0');
-    await ticMode.connect(SerialPortMock);
+    await ticMode.connect(SerialPort);
     jest.spyOn(ticMode.serialPort, 'close').mockImplementation(() => {});
     await ticMode.disconnect();
     expect(ticMode.serialPort.close).toHaveBeenCalled();
@@ -59,8 +64,7 @@ test('disconnect should dicconnect from serial port when called', async () => {
     const ticMode = new TicMode();
     jest.spyOn(ticMode, 'getMode').mockImplementation(() => 'test');
     jest.spyOn(ticMode, 'getBaudRate').mockImplementation(() => 999);
-    SerialPortMock.binding.createPort('/dev/ttyUSB0');
-    await ticMode.connect(SerialPortMock);
+    await ticMode.connect(SerialPort);
     ticMode.disconnect();
 });
 
