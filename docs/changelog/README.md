@@ -1,5 +1,8 @@
 # Changelog
 
+## 7.0.2
+- :fire: Fix `STANDARD` frames bad parsing (next try...)
+
 ## 7.0.1
 - :fire: Downgrade serialport lib because of crash on raspberry-pi like devices
 - :fire: Fix `STANDARD` frames bad parsing 

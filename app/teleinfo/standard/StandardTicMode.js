@@ -96,7 +96,7 @@ class StandardTicMode extends TicMode {
         case 'URMS2':
         case 'URMS3':
         case 'VTIC':
-            return lineItems.slice(1, lineItems.length - 1).join(' ');
+            return lineItems[1];
         case 'CCAIN':
         case 'CCAIN-1':
         case 'CCASN':
@@ -121,9 +121,9 @@ class StandardTicMode extends TicMode {
         case 'UMOY1':
         case 'UMOY2':
         case 'UMOY3':
-            return lineItems.slice(2, lineItems.length - 1).join(' ');
+            return lineItems[2];
         default:
-            throw new Error(`Unsupported label [${label}]`);
+            return super.getValue({ label, lineItems });
         }
     }
 
@@ -423,6 +423,14 @@ class StandardTicMode extends TicMode {
         default:
             return undefined;
         }
+    }
+
+    /**
+     * Get frame data delimiter (space, tab...)
+     * @returns {RegExp}
+     */
+    getDataDelimiter() {
+        return /\t+/;
     }
 }
 

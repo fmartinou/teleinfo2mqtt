@@ -79,9 +79,11 @@ class TicMode {
      */
     processData(data) {
         const dataStr = data.toString('utf-8');
+        log.debug(`Raw frame [${dataStr}]`);
 
         // Split line `${label} ${timestamp?} ${value} ${checksum}
-        const lineItems = dataStr.split(/\s+/);
+        const lineItems = dataStr.split(this.getDataDelimiter());
+        log.debug(`Split frame [${lineItems.toString()}]`);
 
         if (lineItems.length < 3) {
             log.warn(`Corrupted line received [${dataStr}]`);
@@ -93,9 +95,10 @@ class TicMode {
 
         // Is the value valid?
         if (!this.checkValue({ label, value })) {
-            log.warn(`Corrupted data received [${dataStr}]`);
+            log.warn(`Invalid value received for label ${label} [${value}]`);
             return;
         }
+        log.debug(`Value for label ${label} = ${value}`);
 
         // Does the line contain a timestamp?
         const timestampStr = this.getTimestamp({ label, lineItems });
@@ -104,8 +107,9 @@ class TicMode {
         let frameItem;
         try {
             frameItem = this.parseFrameItem({ value, timestampStr });
+            log.debug(`Frame parsed [${frameItem}]`);
         } catch (e) {
-            log.warn(`Error on parsing the line [${dataStr}] error [${e.message}]`);
+            log.warn(`Error on parsing the value [${value}] and the timestamp [${timestampStr}] for label [${label}]: [${e.message}]`);
             return;
         }
 
@@ -309,6 +313,14 @@ class TicMode {
      */
     getHAUnit(label) {
         throw new Error('getHAUnit must be overridden');
+    }
+
+    /**
+     * Get frame data delimiter (space, tab...)
+     * @returns {RegExp}
+     */
+    getDataDelimiter() {
+        return /\s+/;
     }
 }
 

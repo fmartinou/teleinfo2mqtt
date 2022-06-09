@@ -47,14 +47,14 @@ test.each([
     { label: 'EASF10', lineItems: ['EASF10', '002084472', 'x'], value: '002084472' },
     { label: 'EAST', lineItems: ['EAST', '004552492', 'x'], value: '004552492' },
     { label: 'IRMS1', lineItems: ['IRMS1', '003', 'x'], value: '003' },
-    { label: 'LTARF', lineItems: ['LTARF', 'HC', 'WEEK', 'END', 'x'], value: 'HC WEEK END' },
-    { label: 'MSG1', lineItems: ['MSG1', 'PAS', 'DE', 'MESSAGE', 'x'], value: 'PAS DE MESSAGE' },
-    { label: 'NGTF', lineItems: ['NGTF', 'HC', 'SEM', 'WE', 'MERCR', 'x'], value: 'HC SEM WE MERCR' },
+    { label: 'LTARF', lineItems: ['LTARF', 'HC WEEK END', 'x'], value: 'HC WEEK END' },
+    { label: 'MSG1', lineItems: ['MSG1', 'PAS DE MESSAGE', 'x'], value: 'PAS DE MESSAGE' },
+    { label: 'NGTF', lineItems: ['NGTF', 'HC SEM WE MERCR', 'x'], value: 'HC SEM WE MERCR' },
     { label: 'NJOURF', lineItems: ['NJOURF', '02', 'x'], value: '02' },
     { label: 'NJOURF+1', lineItems: ['NJOURF+1', '02', 'x'], value: '02' },
     { label: 'NTARF', lineItems: ['NTARF', '03', 'x'], value: '03' },
     { label: 'PCOUP', lineItems: ['PCOUP', '09', 'x'], value: '09' },
-    { label: 'PJOURF+1', lineItems: ['PJOURF+1', '00008002', '0300C001', '08008002', '0C1EC001', '0F1E8002', 'x'], value: '00008002 0300C001 08008002 0C1EC001 0F1E8002' },
+    { label: 'PJOURF+1', lineItems: ['PJOURF+1', '00008002 0300C001 08008002 0C1EC001 0F1E8002', 'x'], value: '00008002 0300C001 08008002 0C1EC001 0F1E8002' },
     { label: 'PREF', lineItems: ['PREF', '06', 'x'], value: '06' },
     { label: 'PRM', lineItems: ['PRM', '12462373340635', 'x'], value: '12462373340635' },
     { label: 'RELAIS', lineItems: ['RELAIS', '001', 'x'], value: '001' },
@@ -147,5 +147,18 @@ test.each([
     'parseFrameItem should parse and sanitize frame for label $label',
     ({ value, timestampStr, parsedFrame }) => {
         expect(new StandardTicMode().parseFrameItem({ value, timestampStr })).toEqual(parsedFrame);
+    },
+);
+
+test.each([
+    { data: 'EASF06\t000000000\tx', parsedFrame: { EASF06: { raw: '000000000', value: 0 } } },
+    { data: 'NGTF\tH PLEINE/CREUSE\tx', parsedFrame: { NGTF: { raw: 'H PLEINE/CREUSE', value: 'H PLEINE/CREUSE' } } },
+    { data: 'SMAXSN\tE220609060531\t02740\t9', parsedFrame: { SMAXSN: { raw: '02740', value: 2740, timestamp: { date: '2022-06-09T06:05:31.000Z', dst: 'summer' } } } },
+])(
+    'processData should process frame as expected',
+    ({ data, parsedFrame }) => {
+        const ticMode = new StandardTicMode();
+        ticMode.processData(data);
+        expect(ticMode.currentFrame).toEqual(parsedFrame);
     },
 );
