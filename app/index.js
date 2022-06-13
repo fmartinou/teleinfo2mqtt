@@ -9,7 +9,7 @@ const log = require('./log');
  */
 async function run() {
     const configHidden = { ...config, mqttPassword: '<hidden>' };
-    log.info('Starting teleinfo-mqtt with configuration =', configHidden);
+    log.info('Starting teleinfo2mqtt with configuration =', configHidden);
 
     try {
         // Connect to the serial port

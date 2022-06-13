@@ -1,5 +1,5 @@
 {
-  "name": "teleinfo-mqtt-app",
+  "name": "teleinfo2mqtt-app",
   "version": "1.0.0",
   "description": "Publish teleinfo to mqtt topics",
   "main": "index.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fmartinou/teleinfo-mqtt.git"
+    "url": "git+https://github.com/fmartinou/teleinfo2mqtt.git"
   },
   "keywords": [
     "teleinfo",
@@ -19,9 +19,9 @@
   "author": "fmartinou",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/fmartinou/teleinfo-mqtt/issues"
+    "url": "https://github.com/fmartinou/teleinfo2mqtt/issues"
   },
-  "homepage": "https://github.com/fmartinou/teleinfo-mqtt#readme",
+  "homepage": "https://github.com/fmartinou/teleinfo2mqtt#readme",
   "dependencies": {
     "@serialport/parser-readline": "9.2.4",
     "async-mqtt": "2.6.2",

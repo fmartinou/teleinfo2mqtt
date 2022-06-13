@@ -1,6 +1,6 @@
-![logo](teleinfo-mqtt-logo.png)
+![logo](teleinfo2mqtt-logo.png)
 
-# **Teleinfo Mqtt**
+# **teleinfo2Mqtt**
 
 > Serial-to-MQTT Teleinfo Bridge
 

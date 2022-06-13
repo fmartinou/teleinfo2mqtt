@@ -8,7 +8,7 @@
 - :fire: Fix `STANDARD` frames bad parsing 
 
 ## 7.0.0
-- :star: Add support for TIC `STANDARD` mode (:warning:**EXPERIMENTAL!!!**:warning:)
+- :star: Add support for TIC `STANDARD` mode
 
 ## 6.1.0
 - :star: Add compatibility to [Home-Assistant add-on system](https://github.com/fmartinou/hassio-addons) 
