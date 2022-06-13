@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.0.0
+- :star: Rename the project from `teleinfo-mqtt` to `teleinfo2mqtt`
+
 ## 7.0.2
 - :fire: Fix `STANDARD` frames bad parsing (next try...)
 
