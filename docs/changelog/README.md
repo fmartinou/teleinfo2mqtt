@@ -1,5 +1,8 @@
 # Changelog
 
+## dev
+- :fire: Fix `DATE` and `PJOURF+1` labels parsing
+
 ## 8.0.0
 - :star: Rename the project from `teleinfo-mqtt` to `teleinfo2mqtt`
 

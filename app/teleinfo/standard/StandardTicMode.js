@@ -49,6 +49,8 @@ class StandardTicMode extends TicMode {
      */
     getValue({ label, lineItems }) {
         switch (label) {
+        case 'DATE':
+            return '';
         case 'ADSC':
         case 'EAIT':
         case 'EASD01':
@@ -101,7 +103,6 @@ class StandardTicMode extends TicMode {
         case 'CCAIN-1':
         case 'CCASN':
         case 'CCASN-1':
-        case 'DATE':
         case 'DPM1':
         case 'DPM2':
         case 'DPM3':
@@ -135,6 +136,8 @@ class StandardTicMode extends TicMode {
      */
     checkValue({ label, value }) {
         switch (label) {
+        case 'DATE':
+            return value.length === 0;
         case 'PREF':
         case 'PCOUP':
         case 'VTIC':
@@ -148,8 +151,6 @@ class StandardTicMode extends TicMode {
         case 'NJOURF':
         case 'NJOURF+1':
             return value.length === 2;
-        case 'DATE':
-            return value.length >= 2;
         case 'IRMS1':
         case 'IRMS2':
         case 'IRMS3':
@@ -181,7 +182,6 @@ class StandardTicMode extends TicMode {
         case 'CCAIN':
         case 'CCAIN-1':
             return value.length === 5;
-        case 'PJOURF+1':
         case 'STGE':
             return value.length === 8;
         case 'EAST':
@@ -215,6 +215,8 @@ class StandardTicMode extends TicMode {
             return value.length <= 16;
         case 'MSG1':
             return value.length <= 32;
+        case 'PJOURF+1':
+            return value.length === 98;
         default: return false;
         }
     }

@@ -30,7 +30,7 @@ test.each([
     { label: 'PJOURF+1', lineItems: ['PJOURF+1', '02216XXXXXXX', 'x'], value: '02216XXXXXXX' },
     { label: 'CCASN', lineItems: ['CCASN', 'E220526143000', '00504', 'x'], value: '00504' },
     { label: 'CCASN-1', lineItems: ['CCASN-1', 'E220526143000', '00534', 'x'], value: '00534' },
-    { label: 'DATE', lineItems: ['DATE', '003416027', '00534', 'x'], value: '00534' },
+    { label: 'DATE', lineItems: ['DATE', 'E220615092559', '', 'L'], value: '' },
     { label: 'EASD01', lineItems: ['EASD01', '003416027', 'x'], value: '003416027' },
     { label: 'EASD02', lineItems: ['EASD02', '003416027', 'x'], value: '003416027' },
     { label: 'EASD03', lineItems: ['EASD03', '003416027', 'x'], value: '003416027' },
@@ -73,10 +73,9 @@ test.each([
 );
 
 test.each([
-    { label: 'PJOURF+1', value: '00008001' },
     { label: 'ADSC', value: '031961805785' },
     { label: 'VTIC', value: '02' },
-    { label: 'DATE', value: 'H220222202817' },
+    { label: 'DATE', value: '' },
     { label: 'NGTF', value: 'PRODUCTEUR' },
     { label: 'LTARF', value: 'INDEX NON CONSO' },
     { label: 'EAST', value: '000000000' },
@@ -119,7 +118,7 @@ test.each([
     { label: 'NTARF', value: '01' },
     { label: 'NJOURF', value: '00' },
     { label: 'NJOURF+1', value: '00' },
-    { label: 'PJOURF+1', value: '00008001' },
+    { label: 'PJOURF+1', value: '00008002 0050C001 06508002 1220C001 14208002 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE' },
 ])(
     'checkValue should return true when label is $label and value is $value',
     ({ label, value }) => {
@@ -133,6 +132,7 @@ test.each([
     { label: 'SMAXSN', lineItems: ['SMAXSN', 'E220526121217', '02940', 'x'], date: 'E220526121217' },
     { label: 'SMAXSN-1', lineItems: ['SMAXSN', 'E220525132326', '04550', 'x'], date: 'E220525132326' },
     { label: 'UMOY1', lineItems: ['UMOY1', 'E220526145000', '234', 'x'], date: 'E220526145000' },
+    { label: 'DATE', lineItems: ['DATE', 'E220526145000', '', 'x'], date: 'E220526145000' },
 ])(
     'getTimestamp should return $date when label is $label',
     ({ label, lineItems, date }) => {
@@ -154,6 +154,7 @@ test.each([
     { data: 'EASF06\t000000000\tx', parsedFrame: { EASF06: { raw: '000000000', value: 0 } } },
     { data: 'NGTF\tH PLEINE/CREUSE\tx', parsedFrame: { NGTF: { raw: 'H PLEINE/CREUSE', value: 'H PLEINE/CREUSE' } } },
     { data: 'SMAXSN\tE220609060531\t02740\t9', parsedFrame: { SMAXSN: { raw: '02740', value: 2740, timestamp: { date: '2022-06-09T06:05:31.000Z', dst: 'summer' } } } },
+    { data: 'DATE\tE220609060531\t\tL', parsedFrame: { DATE: { raw: '', value: '', timestamp: { date: '2022-06-09T06:05:31.000Z', dst: 'summer' } } } },
 ])(
     'processData should process frame as expected',
     ({ data, parsedFrame }) => {
