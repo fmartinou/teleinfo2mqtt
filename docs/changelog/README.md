@@ -1,6 +1,6 @@
 # Changelog
 
-## dev
+## 8.0.1
 - :fire: Fix `DATE` and `PJOURF+1` labels parsing
 
 ## 8.0.0
