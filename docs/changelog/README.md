@@ -1,6 +1,6 @@
 # Changelog
 
-## dev
+## 8.0.2
 - :fire: Fix `HISTORY` mode for three-phase counters
 
 ## 8.0.1
