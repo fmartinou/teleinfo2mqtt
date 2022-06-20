@@ -1,5 +1,8 @@
 # Changelog
 
+## dev
+- :fire: Fix `HISTORY` mode for three-phase counters
+
 ## 8.0.1
 - :fire: Fix `DATE` and `PJOURF+1` labels parsing
 

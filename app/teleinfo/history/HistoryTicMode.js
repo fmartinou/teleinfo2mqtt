@@ -57,17 +57,27 @@ class HistoryTicMode extends TicMode {
             return value.length === 1;
         case 'ISOUSC':
         case 'PEJP':
+        case 'PPOT':
             return value.length === 2;
-        case 'IINST':
+        case 'ADIR1':
+        case 'ADIR2':
+        case 'ADIR3':
         case 'ADPS':
+        case 'IINST':
+        case 'IINST1':
+        case 'IINST2':
+        case 'IINST3':
         case 'IMAX':
+        case 'IMAX1':
+        case 'IMAX2':
+        case 'IMAX3':
             return value.length === 3;
+        case 'DEMAIN':
+        case 'OPTARIF':
         case 'PTEC':
             return value.length === 4;
-        case 'OPTARIF':
-        case 'DEMAIN':
-            return value.length <= 4;
         case 'PAPP':
+        case 'PMAX':
             return value.length === 5;
         case 'MOTDETAT':
             return value.length === 6;
@@ -102,9 +112,18 @@ class HistoryTicMode extends TicMode {
      */
     getHADeviceClass(label) {
         switch (label) {
+        case 'ADIR1':
+        case 'ADIR2':
+        case 'ADIR3':
         case 'ADPS':
         case 'IINST':
+        case 'IINST1':
+        case 'IINST2':
+        case 'IINST3':
         case 'IMAX':
+        case 'IMAX1':
+        case 'IMAX2':
+        case 'IMAX3':
         case 'ISOUSC':
             return 'current';
         case 'BASE':
@@ -120,6 +139,7 @@ class HistoryTicMode extends TicMode {
         case 'HCHP':
             return 'energy';
         case 'PAPP':
+        case 'PMAX':
             return 'power';
         default:
             return undefined;
@@ -157,7 +177,13 @@ class HistoryTicMode extends TicMode {
         switch (label) {
         case 'ADPS':
         case 'IINST':
+        case 'IINST1':
+        case 'IINST2':
+        case 'IINST3':
         case 'IMAX':
+        case 'IMAX1':
+        case 'IMAX2':
+        case 'IMAX3':
         case 'ISOUSC':
             return 'A';
         case 'BASE':
@@ -174,6 +200,8 @@ class HistoryTicMode extends TicMode {
             return 'Wh';
         case 'PAPP':
             return 'VA';
+        case 'PMAX':
+            return 'W';
         case 'PEJP':
             return 'min';
         default:
