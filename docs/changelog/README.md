@@ -1,5 +1,8 @@
 # Changelog
 
+## dev
+- :star: Add mTLS support for mqtt connection
+
 ## 8.0.2
 - :fire: Fix `HISTORY` mode for three-phase counters
 
