@@ -24,7 +24,7 @@ services:
   teleinfo2mqtt:
     image: fmartinou/teleinfo2mqtt
     container_name: teleinfo2mqtt
-    device:
+    devices:
       - /dev/ttyUSB0:/dev/ttyUSB0             # Serial port device
     environment:
       - MQTT_URL=mqtt://my_mqtt_broker:1883   # MQTT broker url   
