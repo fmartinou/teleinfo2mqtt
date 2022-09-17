@@ -29,7 +29,7 @@ services:
   teleinfo2mqtt:
     image: fmartinou/teleinfo2mqtt
     container_name: teleinfo2mqtt
-    device:
+    devices:
       - /dev/ttyUSB1:/dev/ttyUSB1
     environment:
       - SERIAL=/dev/ttyUSB1
