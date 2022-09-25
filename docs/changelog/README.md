@@ -1,6 +1,6 @@
 # Changelog
 
-## dev
+## 8.1.0
 - :star: Add mTLS support for mqtt connection
 
 ## 8.0.2
