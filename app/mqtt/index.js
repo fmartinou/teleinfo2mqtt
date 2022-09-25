@@ -1,3 +1,4 @@
+const fs = require('fs');
 const mqtt = require('async-mqtt');
 const log = require('../log');
 
@@ -6,6 +7,10 @@ const {
     mqttUser,
     mqttPassword,
     mqttBaseTopic,
+    mqttTlsClientKey,
+    mqttTlsClientCert,
+    mqttTlsCaChain,
+    mqttTlsRejectUnauthorized,
     hassDiscovery,
 
 } = require('../config');
@@ -97,6 +102,18 @@ async function connect({ teleinfoService }) {
     }
     if (mqttPassword) {
         options.password = mqttPassword;
+    }
+    if (mqttTlsClientKey) {
+        options.key = fs.readFileSync(mqttTlsClientKey);
+    }
+    if (mqttTlsClientCert) {
+        options.cert = fs.readFileSync(mqttTlsClientCert);
+    }
+    if (mqttTlsCaChain) {
+        options.ca = [fs.readFileSync(mqttTlsCaChain)];
+    }
+    if (mqttTlsRejectUnauthorized !== '') {
+        options.rejectUnauthorized = mqttTlsRejectUnauthorized;
     }
     log.info(`Connecting to MQTT broker [${mqttUrl}]`);
     try {

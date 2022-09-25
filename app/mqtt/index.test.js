@@ -26,7 +26,7 @@ test('connect should be called as expected', async () => {
         }),
     });
     await mqtt.connect({});
-    expect(mqttAsync.connectAsync).toHaveBeenCalledWith('mqtt://localhost:1883', {});
+    expect(mqttAsync.connectAsync).toHaveBeenCalledWith('mqtt://localhost:1883', { rejectUnauthorized: true });
 });
 
 test('publishFrame should be called as expected', () => {

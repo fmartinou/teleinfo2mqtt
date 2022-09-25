@@ -13,6 +13,10 @@ const config = {
     mqttUrl: 'mqtt://localhost:1883',
     mqttUser: undefined,
     mqttPassword: undefined,
+    mqttTlsClientKey: undefined,
+    mqttTlsClientCert: undefined,
+    mqttTlsCaChain: undefined,
+    mqttTlsRejectUnauthorized: true,
     serial: '/dev/ttyUSB0',
     ticMode: 'history',
 };
@@ -46,8 +50,17 @@ function overrideConfiguration(overrideObject) {
     if (overrideObject.MQTT_PASSWORD && overrideObject.MQTT_PASSWORD !== '') {
         config.mqttPassword = overrideObject.MQTT_PASSWORD;
     }
-    if (overrideObject.SERIAL) {
-        config.serial = overrideObject.SERIAL;
+    if (overrideObject.MQTT_TLS_CLIENT_KEY) {
+        config.mqttTlsClientKey = overrideObject.MQTT_TLS_CLIENT_KEY;
+    }
+    if (overrideObject.MQTT_TLS_CLIENT_CERT) {
+        config.mqttTlsClientCert = overrideObject.MQTT_TLS_CLIENT_CERT;
+    }
+    if (overrideObject.MQTT_TLS_CA_CHAIN) {
+        config.mqttTlsCaChain = overrideObject.MQTT_TLS_CA_CHAIN;
+    }
+    if (overrideObject.MQTT_TLS_REJECT_UNAUTHORIZED !== undefined) {
+        config.mqttTlsRejectUnauthorized = overrideObject.MQTT_TLS_REJECT_UNAUTHORIZED.toLowerCase() === 'true';
     }
     if (overrideObject.TIC_MODE) {
         config.ticMode = overrideObject.TIC_MODE;

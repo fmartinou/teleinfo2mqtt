@@ -1,0 +1,10 @@
+version: "3"
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2.0.14
+    container_name: mosquitto
+    user: '1000:1000'
+    ports:
+      - '8883:8883'
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
