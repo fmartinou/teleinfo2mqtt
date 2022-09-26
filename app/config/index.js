@@ -26,6 +26,9 @@ const config = {
  * @param overrideObject the object containing the overridden values
  */
 function overrideConfiguration(overrideObject) {
+    if (overrideObject.SERIAL) {
+        config.serial = overrideObject.SERIAL;
+    }
     if (overrideObject.EMIT_INTERVAL) {
         config.emitInterval = overrideObject.EMIT_INTERVAL;
     }

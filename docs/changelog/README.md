@@ -1,5 +1,8 @@
 # Changelog
 
+## dev
+- :fire: Fix `SERIAL` environment variable not being picked-up
+
 ## 8.1.0
 - :star: Add mTLS support for mqtt connection
 
