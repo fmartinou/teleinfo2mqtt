@@ -1,6 +1,6 @@
 # Changelog
 
-## dev
+## 8.1.1
 - :fire: Fix `SERIAL` environment variable not being picked-up
 
 ## 8.1.0
