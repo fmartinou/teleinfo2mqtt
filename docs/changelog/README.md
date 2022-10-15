@@ -1,5 +1,9 @@
 # Changelog
 
+## dev
+- :star: update all dependencies
+- :fire: Fix home-assistant configuration not republished when the MQTT broker is restarted (without retain option)
+ 
 ## 8.1.1
 - :fire: Fix `SERIAL` environment variable not being picked-up
 
