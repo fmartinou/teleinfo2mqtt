@@ -56,7 +56,7 @@ async function disconnect(force = false) {
 /**
  * Publish healthcheck to MQTT broker.
  */
- async function publishHealthCheck() {
+async function publishHealthCheck() {
     try {
         await client.publish(`${mqttBaseTopic}/status`, true);
     } catch (e) {
