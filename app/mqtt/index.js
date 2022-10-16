@@ -84,9 +84,21 @@ async function publishFrame({ frame, teleinfoService }) {
         log.debug(frame);
         try {
             await client.publish(frameTopic, JSON.stringify(frame));
+            await publishHealthCheck();
         } catch (e) {
             log.warn(`Unable to publish frame to ${frameTopic} (${e.message})`);
         }
+    }
+}
+
+/**
+ * Publish healthcheck to MQTT broker.
+ */
+async function publishHealthCheck(){
+    try {
+        await client.publish(`${mqttBaseTopic}/status`, true);
+    } catch (e) {
+        log.warn(`Unable to publish frame to ${mqttBaseTopic}/status (${e.message})`);
     }
 }
 
@@ -156,4 +168,5 @@ async function connect({ teleinfoService }) {
 module.exports = {
     connect,
     publishFrame,
+    publishHealthCheck
 };

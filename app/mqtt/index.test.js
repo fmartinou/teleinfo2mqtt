@@ -39,3 +39,14 @@ test('publishFrame should be called as expected', () => {
     moduleToTest.publishFrame({ frame: sample, teleinfoService: new HistoryTicMode() });
     expect(moduleToTest.__get__('client').publish).toHaveBeenCalledWith('teleinfo/012345678912', JSON.stringify(sample));
 });
+
+test('publishHealthCheck should be called as expected', () => {
+    const moduleToTest = rewire('./index');
+    moduleToTest.__set__('client', {
+        publish: jest.fn(() => {
+        }),
+    });
+    moduleToTest.__set__('discoveryConfigurationPublished', true);
+    moduleToTest.publishHealthCheck();
+    expect(moduleToTest.__get__('client').publish).toHaveBeenCalledWith('teleinfo/status', true);
+});

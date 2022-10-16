@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.1.3
+- :star: add MQTT health status topic (teleinfo/status = true)
+
 ## 8.1.2
 - :star: update all dependencies
 - :fire: Fix home-assistant configuration not republished when the MQTT broker is restarted (without retain option)
