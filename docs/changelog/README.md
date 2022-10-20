@@ -1,6 +1,6 @@
 # Changelog
 
-## dev
+## 8.1.3
 - :fire: Rollback "Fix home-assistant configuration not republished when the MQTT broker is restarted (without retain option)"
 
 ## 8.1.2
