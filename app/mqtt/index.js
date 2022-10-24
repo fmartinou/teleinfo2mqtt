@@ -117,25 +117,27 @@ async function connect({ teleinfoService }) {
     }
     log.info(`Connecting to MQTT broker [${mqttUrl}]`);
     try {
-        client = await mqtt.connectAsync(mqttUrl, options);
         log.info(`Connected to MQTT broker [${mqttUrl}]`);
+        client = await mqtt.connectAsync(mqttUrl, options);
     } catch (e) {
         log.error(`MQTT connection error [${e.message}]`);
-        throw e;
+        log.error('Retrying in 5 seconds...');
+        setTimeout(() => { this.connect({ teleinfoService }); }, 5000);
     }
     try {
         if (client) {
             client.on('connect', () => {
+                log.info(`Connected to MQTT broker [${mqttUrl}]`);
                 // Workaround to avoid reconnect issue (see https://github.com/mqttjs/MQTT.js/issues/1213)
                 // eslint-disable-next-line no-underscore-dangle
                 client._client.options.properties = {};
+                discoveryConfigurationPublished = false;
             });
             client.on('reconnect', () => {
-                // discoveryConfigurationPublished = false; Regressions observed; see here https://github.com/fmartinou/teleinfo2mqtt/issues/16
-                log.info('Reconnecting to the MQTT broker...');
+                log.info(`Connecting to MQTT broker [${mqttUrl}]`);
             });
             client.on('error', (err) => {
-                log.warn(`Error when publishing to the mqtt broker (${err.message})`);
+                log.warn(`Connection error to the mqtt broker (${err.message})`);
             });
         }
         process.on('SIGTERM', () => disconnect());

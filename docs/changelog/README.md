@@ -1,7 +1,9 @@
 # Changelog
 
 ## dev
+- :star: Automatic reconnection at startup when the broker is not available
 - :fire: Fix wrong value retained after a period of consumption stability
+- :fire: Fix home-assistant configuration not republished when the MQTT broker is restarted (without retain option)
 
 ## 8.1.3
 - :fire: Rollback "Fix home-assistant configuration not republished when the MQTT broker is restarted (without retain option)"
