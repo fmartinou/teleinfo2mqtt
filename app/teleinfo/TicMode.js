@@ -21,6 +21,7 @@ class TicMode {
         this.currentFrame = {};
         this.eventEmitter = new EventEmitter();
         this.lastEmitTime = Date.now();
+        this.lastFrameSent = {};
 
         // Graceful exit
         process.on('SIGTERM', () => this.disconnect());
@@ -122,6 +123,7 @@ class TicMode {
                     log.debug(`Dispatch frame ${JSON.stringify(this.currentFrame)}`);
                     this.eventEmitter.emit('frame', this.currentFrame);
                     this.lastEmitTime = currentTime;
+                    this.lastFrameSent = this.currentFrame;
                 } else {
                     log.debug(`Ignoring MQTT emission because of emit interval (Emit interval : ${emitInterval} - Last emit time : ${this.lastEmitTime} - Current time : ${currentTime}`);
                 }
@@ -237,7 +239,7 @@ class TicMode {
      * @return {*|boolean}
      */
     isSameFrame() {
-        return deepEqual(this.currentFrame, this.previousFrame);
+        return deepEqual(this.currentFrame, this.lastFrameSent);
     }
 
     /**

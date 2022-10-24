@@ -162,7 +162,7 @@ test('processData should not publish event when frame date is under emit interva
 test('processData should not publish event when frame is identical', async () => {
     const ticMode = new TicMode();
     jest.spyOn(ticMode.eventEmitter, 'emit').mockImplementation(() => {});
-    ticMode.previousFrame = {
+    ticMode.lastFrameSent = {
         IDENTICAL: 'IDENTICAL',
     };
     ticMode.currentFrame = {
@@ -202,7 +202,7 @@ test('processData should reset frame when frame starts', async () => {
 
 test('isSameFrame should return true when frame is same as previous one', () => {
     const ticMode = new TicMode();
-    ticMode.previousFrame = {
+    ticMode.lastFrameSent = {
         ADCO: {
             raw: '12345678901',
             value: 12345678901,
@@ -283,7 +283,7 @@ test('isSameFrame should return true when frame is same as previous one', () => 
 
 test('isSameFrame should return true when frame is same as previous one but keys shuffled', async () => {
     const ticMode = new TicMode();
-    ticMode.previousFrame = {
+    ticMode.lastFrameSent = {
         OPTARIF: {
             raw: 'HC..',
             value: 'HC',
