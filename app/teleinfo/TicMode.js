@@ -1,7 +1,6 @@
 const SerialPort = require('serialport');
 const ReadlineParser = require('@serialport/parser-readline');
 const { EventEmitter } = require('events');
-const deepEqual = require('deep-equal');
 const { emitInterval, serial } = require('../config');
 const log = require('../log');
 
@@ -116,19 +115,15 @@ class TicMode {
 
         // Frame end? -> Dispatch frame event
         if (this.isFrameEnd(label)) {
-            if (!this.isSameFrame()) {
-                // Don't emit a second frame in emit interval
-                const currentTime = Date.now();
-                if (currentTime - this.lastEmitTime > emitInterval * 1000) {
-                    log.debug(`Dispatch frame ${JSON.stringify(this.currentFrame)}`);
-                    this.eventEmitter.emit('frame', this.currentFrame);
-                    this.lastEmitTime = currentTime;
-                    this.lastFrameSent = this.currentFrame;
-                } else {
-                    log.debug(`Ignoring MQTT emission because of emit interval (Emit interval : ${emitInterval} - Last emit time : ${this.lastEmitTime} - Current time : ${currentTime}`);
-                }
+            // Don't emit a second frame in emit interval
+            const currentTime = Date.now();
+            if (currentTime - this.lastEmitTime > emitInterval * 1000) {
+                log.debug(`Dispatch frame ${JSON.stringify(this.currentFrame)}`);
+                this.eventEmitter.emit('frame', this.currentFrame);
+                this.lastEmitTime = currentTime;
+                this.lastFrameSent = this.currentFrame;
             } else {
-                log.debug(`Ignoring identical frame ${JSON.stringify(this.currentFrame)}`);
+                log.debug(`Ignoring MQTT emission because of emit interval (Emit interval : ${emitInterval} - Last emit time : ${this.lastEmitTime} - Current time : ${currentTime}`);
             }
             return;
         }
@@ -232,14 +227,6 @@ class TicMode {
      */
     getTimestamp({ label, lineItems }) {
         return undefined;
-    }
-
-    /**
-     * Are previous & current frames equal?
-     * @return {*|boolean}
-     */
-    isSameFrame() {
-        return deepEqual(this.currentFrame, this.lastFrameSent);
     }
 
     /**
