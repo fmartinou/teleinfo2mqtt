@@ -143,7 +143,7 @@ async function connect({ teleinfoService }) {
                 client._client.options.properties = {};
             });
             client.on('reconnect', () => {
-                discoveryConfigurationPublished = false;
+                // discoveryConfigurationPublished = false; Regressions observed; see here https://github.com/fmartinou/teleinfo2mqtt/issues/16
                 log.info('Reconnecting to the MQTT broker...');
             });
             client.on('error', (err) => {
