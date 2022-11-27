@@ -1,11 +1,14 @@
 # Mqtt
 
 ## Topic
-**teleinfo2mqtt** publishes messages to the `$mqtt_base_topicMQTT_BASE_TOPIC/c` topic.
+**teleinfo2mqtt** publishes messages to the `$MQTT_BASE_TOPIC/$mqtt_base_topic` topic.
 
 ?> [`$MQTT_BASE_TOPIC`](configuration/) is configured by env var (`teleinfo` by default)
 
 ?> `$mqtt_base_topic` is the id of your electricity meter (received from teleinfo data as `ADCO` or `ADSC` labels)
+
+**teleinfo2mqtt** publishes health status message to the `$MQTT_BASE_TOPIC/status` topic.
+The value is `up` if everything is ok. You could check this message age in order to verify that service is healthy.
 
 ## Message
 Messages are JSON documents whose content may vary upon your Electricity meter.

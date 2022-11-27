@@ -1,6 +1,7 @@
 # Changelog
 
 ## dev
+- :star: add MQTT health status topic (teleinfo/status = true)
 - :fire: Fix wrong value retained after a period of consumption stability
 
 ## 8.1.3
