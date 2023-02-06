@@ -121,7 +121,6 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         unique_id: 'teleinfo_012345678912_IMAX',
         name: 'Teleinfo 012345678912 IMAX',
         state_topic: 'teleinfo/012345678912',
-        state_class: 'measurement',
         device_class: 'current',
         value_template: '{{ value_json.IMAX.value }}',
         unit_of_measurement: 'A',
