@@ -354,6 +354,21 @@ class StandardTicMode extends TicMode {
         case 'EASD04':
         case 'EAIT':
             return 'total_increasing';
+        case 'IRMS1':
+        case 'IRMS2':
+        case 'IRMS3':
+        case 'URMS1':
+        case 'URMS2':
+        case 'URMS3':
+        case 'UMOY1':
+        case 'UMOY2':
+        case 'UMOY3':
+        case 'SINSTS':
+        case 'SINSTS1':
+        case 'SINSTS2':
+        case 'SINSTS3':
+        case 'SINSTI':
+            return 'measurement';
         default:
             return undefined;
         }
