@@ -81,7 +81,7 @@ test('processData should parse frame lines without timestamp when called', async
     });
 });
 
-test('processData should parse frame lines with timestamp when called', async () => {
+test('processData should parse frame lines with timestamp and DST when called', async () => {
     const ticMode = new TicMode();
     jest.spyOn(ticMode, 'checkValue').mockImplementation(() => true);
     jest.spyOn(ticMode, 'isFrameStart').mockImplementation(() => false);
@@ -95,6 +95,24 @@ test('processData should parse frame lines with timestamp when called', async ()
         timestamp: {
             dst: 'winter',
             date: '2008-12-25T22:35:18.000Z',
+        },
+    });
+});
+
+test('processData should parse frame lines with timestamp and no DST when called', async () => {
+    const ticMode = new TicMode();
+    jest.spyOn(ticMode, 'checkValue').mockImplementation(() => true);
+    jest.spyOn(ticMode, 'isFrameStart').mockImplementation(() => false);
+    jest.spyOn(ticMode, 'isFrameEnd').mockImplementation(() => false);
+    jest.spyOn(ticMode, 'getValue').mockImplementation(({ lineItems }) => lineItems[2]);
+    jest.spyOn(ticMode, 'getTimestamp').mockImplementation(({ lineItems }) => lineItems[1]);
+    ticMode.processData('LABEL  230214060000 VALUE CHECKSUM');
+    expect(ticMode.currentFrame.LABEL).toEqual({
+        raw: 'VALUE',
+        value: 'VALUE',
+        timestamp: {
+            dst: 'summer',
+            date: '2023-02-14T06:00:00.000Z',
         },
     });
 });
