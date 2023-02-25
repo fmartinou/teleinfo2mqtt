@@ -164,6 +164,12 @@ class HistoryTicMode extends TicMode {
         case 'HCHC':
         case 'HCHP':
             return 'total_increasing';
+        case 'IINST':
+        case 'IINST1':
+        case 'IINST2':
+        case 'IINST3':
+        case 'PAPP':
+            return 'measurement';
         default:
             return undefined;
         }
