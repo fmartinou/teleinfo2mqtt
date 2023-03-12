@@ -1,6 +1,6 @@
 # Changelog
 
-## dev
+## 8.3.0
 - :star: Use docker multi-stage build to reduce image size
 - :fire: Fix `FPM1`, `FPM2`, `FPM3` and `PPOINTE` parsing
 - :fire: Fix missing Home-Assistant `measurement` class for some sensors
