@@ -1,7 +1,11 @@
 # Changelog
 
+## dev
+- :fire: Fix `FPM1`, `FPM2`, `FPM3` and `PPOINTE` parsing
+- :fire: Fix missing Home-Assistant `measurement` class for some sensors
+
 ## 8.2.0
-- :star: add MQTT health status topic (teleinfo/status = true)
+- :star: Add MQTT health status topic (teleinfo/status = true)
 - :fire: Fix wrong value retained after a period of consumption stability
 
 ## 8.1.3

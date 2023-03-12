@@ -216,6 +216,7 @@ class StandardTicMode extends TicMode {
         case 'MSG1':
             return value.length <= 32;
         case 'PJOURF+1':
+        case 'PPOINTE':
             return value.length === 98;
         default: return false;
         }

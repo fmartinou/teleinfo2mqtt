@@ -5,7 +5,7 @@ const { emitInterval, serial } = require('../config');
 const log = require('../log');
 
 const CENTURY = '20';
-const TIMESTAMP_REGEX = /(?<dst>H|E)(?<year>\d{2})(?<month>\d{2})(?<day>\d{2})(?<hour>\d{2})(?<min>\d{2})(?<second>\d{2})/;
+const TIMESTAMP_REGEX = /^(?<dst>H|E|\s?)(?<year>\d{2})(?<month>\d{2})(?<day>\d{2})(?<hour>\d{2})(?<min>\d{2})(?<second>\d{2})$/;
 
 /**
  * Abstract TicMode service class.
