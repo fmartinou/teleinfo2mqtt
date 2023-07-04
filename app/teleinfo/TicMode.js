@@ -106,7 +106,7 @@ class TicMode {
         // Compute a clean frame item
         let frameItem;
         try {
-            frameItem = this.parseFrameItem({ value, timestampStr });
+            frameItem = this.parseFrameItem({ label, value, timestampStr });
             log.debug(`Frame parsed [${frameItem}]`);
         } catch (e) {
             log.warn(`Error on parsing the value [${value}] and the timestamp [${timestampStr}] for label [${label}]: [${e.message}]`);
@@ -165,11 +165,22 @@ class TicMode {
     }
 
     /**
+     * Sanitize value & try to convert to number.
+     * @param label
+     * @param value
+     */
+    getValueCoerced({ label, value }) {
+        const valueSanitized = value.replace(/\.\./g, '');
+        const valueNumber = Number.parseInt(valueSanitized, 10);
+        return !Number.isNaN(valueNumber) ? valueNumber : valueSanitized;
+    }
+
+    /**
      * Check data integrity.
      */
     /* eslint-disable class-methods-use-this */
     /* eslint-disable no-unused-vars */
-    parseFrameItem({ value, timestampStr }) {
+    parseFrameItem({ label, value, timestampStr }) {
         let timestamp;
         if (timestampStr) {
             const timestampMatched = timestampStr.match(TIMESTAMP_REGEX);
@@ -189,14 +200,9 @@ class TicMode {
             };
         }
 
-        // Sanitize value & try to convert to number
-        const valueSanitized = value.replace(/\.\./g, '');
-        const valueNumber = Number.parseInt(valueSanitized, 10);
-        const valueCoerced = !Number.isNaN(valueNumber) ? valueNumber : valueSanitized;
-
         return {
             raw: value,
-            value: valueCoerced,
+            value: this.getValueCoerced({ label, value }),
             timestamp,
         };
     }
