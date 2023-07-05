@@ -94,7 +94,9 @@ class TicMode {
         const value = this.getValue({ label, lineItems });
 
         // Is the value valid?
-        if (!this.checkValue({ label, value })) {
+        const previousValue = this.previousFrame[label]
+            ? this.previousFrame[label].value : undefined;
+        if (!this.checkValue({ label, previousValue, value })) {
             log.warn(`Invalid value received for label ${label} [${value}]`);
             return;
         }
@@ -256,7 +258,7 @@ class TicMode {
      */
     /* eslint-disable class-methods-use-this */
     /* eslint-disable no-unused-vars */
-    checkValue({ label, value }) {
+    checkValue({ label, previousValue, value }) {
         throw new Error('checkValue must be overridden');
     }
 

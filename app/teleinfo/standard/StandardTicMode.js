@@ -131,60 +131,65 @@ class StandardTicMode extends TicMode {
     /**
      * Check the value.
      * @param label
+     * @param previousValue
      * @param value
      * @return {boolean}
      */
-    checkValue({ label, value }) {
+    checkValue({ label, previousValue, value }) {
         switch (label) {
         case 'DATE':
             return value.length === 0;
-        case 'PREF':
-        case 'PCOUP':
-        case 'VTIC':
         case 'DPM1':
-        case 'FPM1':
         case 'DPM2':
-        case 'FPM2':
         case 'DPM3':
+        case 'FPM1':
+        case 'FPM2':
         case 'FPM3':
-        case 'NTARF':
         case 'NJOURF':
         case 'NJOURF+1':
+        case 'NTARF':
+        case 'PCOUP':
+        case 'PREF':
+        case 'VTIC':
             return value.length === 2;
         case 'IRMS1':
         case 'IRMS2':
         case 'IRMS3':
-        case 'URMS1':
-        case 'URMS2':
-        case 'URMS3':
+        case 'RELAIS':
         case 'UMOY1':
         case 'UMOY2':
         case 'UMOY3':
-        case 'RELAIS':
+        case 'URMS1':
+        case 'URMS2':
+        case 'URMS3':
             return value.length === 3;
+        case 'CCAIN':
+        case 'CCAIN-1':
+        case 'CCASN':
+        case 'CCASN-1':
+        case 'SINSTI':
         case 'SINSTS':
         case 'SINSTS1':
         case 'SINSTS2':
         case 'SINSTS3':
-        case 'SMAXSN':
-        case 'SMAXSN1':
-        case 'SMAXSN2':
-        case 'SMAXSN3':
-        case 'SMAXSN-1':
-        case 'SMAXSN1-1':
-        case 'SMAXSN2-1':
-        case 'SMAXSN3-1':
-        case 'SINSTI':
         case 'SMAXIN':
         case 'SMAXIN-1':
-        case 'CCASN':
-        case 'CCASN-1':
-        case 'CCAIN':
-        case 'CCAIN-1':
+        case 'SMAXSN':
+        case 'SMAXSN-1':
+        case 'SMAXSN1':
+        case 'SMAXSN1-1':
+        case 'SMAXSN2':
+        case 'SMAXSN2-1':
+        case 'SMAXSN3':
+        case 'SMAXSN3-1':
             return value.length === 5;
         case 'STGE':
             return value.length === 8;
-        case 'EAST':
+        case 'EAIT':
+        case 'EASD01':
+        case 'EASD02':
+        case 'EASD03':
+        case 'EASD04':
         case 'EASF01':
         case 'EASF02':
         case 'EASF03':
@@ -195,16 +200,12 @@ class StandardTicMode extends TicMode {
         case 'EASF08':
         case 'EASF09':
         case 'EASF10':
-        case 'EASD01':
-        case 'EASD02':
-        case 'EASD03':
-        case 'EASD04':
-        case 'EAIT':
+        case 'EAST':
         case 'ERQ1':
         case 'ERQ2':
         case 'ERQ3':
         case 'ERQ4':
-            return value.length === 9;
+            return value.length === 9 && (!previousValue || previousValue <= value);
         case 'ADSC':
             return value.length === 12;
         case 'PRM':
