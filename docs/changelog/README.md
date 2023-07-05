@@ -2,7 +2,7 @@
 
 ## 8.3.1
 - :fire: Fix `STGE` parsing
-- :fire: Prevent abnormal index value to be published
+- :fire: Prevent abnormal index value from being published
 
 ## 8.3.0
 - :star: Use docker multi-stage build to reduce image size
