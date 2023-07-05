@@ -444,6 +444,20 @@ class StandardTicMode extends TicMode {
     }
 
     /**
+     * Sanitize value & try to convert to number.
+     * @param label
+     * @param value
+     */
+    getValueCoerced({ label, value }) {
+        switch (label) {
+        case 'STGE':
+            return value;
+        default:
+            return super.getValueCoerced({ label, value });
+        }
+    }
+
+    /**
      * Get frame data delimiter (space, tab...)
      * @returns {RegExp}
      */
