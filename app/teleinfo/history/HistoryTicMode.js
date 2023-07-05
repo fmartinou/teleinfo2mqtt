@@ -48,10 +48,11 @@ class HistoryTicMode extends TicMode {
     /**
      * Check the value.
      * @param label
+     * @param previousValue
      * @param value
      * @return {boolean}
      */
-    checkValue({ label, value }) {
+    checkValue({ label, previousValue, value }) {
         switch (label) {
         case 'HHPHC':
             return value.length === 1;
@@ -82,17 +83,17 @@ class HistoryTicMode extends TicMode {
         case 'MOTDETAT':
             return value.length === 6;
         case 'BASE':
-        case 'HCHC':
-        case 'HCHP':
+        case 'BBRHCJB':
+        case 'BBRHCJR':
+        case 'BBRHCJW':
+        case 'BBRHPJB':
+        case 'BBRHPJR':
+        case 'BBRHPJW':
         case 'EJPHN':
         case 'EJPHPM':
-        case 'BBRHCJB':
-        case 'BBRHPJB':
-        case 'BBRHCJW':
-        case 'BBRHPJW':
-        case 'BBRHCJR':
-        case 'BBRHPJR':
-            return value.length === 9;
+        case 'HCHC':
+        case 'HCHP':
+            return value.length === 9 && (!previousValue || previousValue <= value);
         case 'ADCO':
             return value.length === 12;
         default: return false;
