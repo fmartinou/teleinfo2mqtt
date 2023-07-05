@@ -1,6 +1,6 @@
 # Changelog
 
-## dev
+## 8.3.1
 - :fire: Fix `STGE` parsing
 - :fire: Prevent abnormal index value to be published
 
