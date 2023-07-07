@@ -1,5 +1,8 @@
 # Changelog
 
+## dev
+- :fire: Fix `DPM1` and `FPM1`when using a `TEMPO` offer
+
 ## 8.3.1
 - :fire: Fix `STGE` parsing
 - :fire: Prevent abnormal index value from being published

@@ -24,7 +24,8 @@ function getFrameTopic(id) {
  * @returns {string}
  */
 function getValueTemplate({ label, idLabel }) {
-    return label === idLabel ? `{{ value_json.${label}.raw }}` : `{{ value_json.${label}.value }}`;
+    const valueProperty = label === idLabel ? 'raw' : 'value';
+    return `{% if '${label}' in value_json %}{{ value_json.${label}.${valueProperty} }}{% else %}''{% endif %}`;
 }
 
 /**
