@@ -1,6 +1,6 @@
 # Changelog
 
-## dev
+## 8.3.2
 - :fire: Fix `DPM1` and `FPM1`when using a `TEMPO` offer
 
 ## 8.3.1
