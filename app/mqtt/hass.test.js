@@ -29,7 +29,7 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         unique_id: 'teleinfo_012345678912_ADCO',
         name: 'Teleinfo 012345678912 ADCO',
         state_topic: 'teleinfo/012345678912',
-        value_template: '{{ value_json.ADCO.raw }}',
+        value_template: '{% if \'ADCO\' in value_json %}{{ value_json.ADCO.raw }}{% else %}\'\'{% endif %}',
         device: {
             identifiers: [
                 '012345678912',
@@ -43,7 +43,7 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         unique_id: 'teleinfo_012345678912_OPTARIF',
         name: 'Teleinfo 012345678912 OPTARIF',
         state_topic: 'teleinfo/012345678912',
-        value_template: '{{ value_json.OPTARIF.value }}',
+        value_template: '{% if \'OPTARIF\' in value_json %}{{ value_json.OPTARIF.value }}{% else %}\'\'{% endif %}',
         device: {
             identifiers: [
                 '012345678912',
@@ -58,7 +58,7 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         name: 'Teleinfo 012345678912 ISOUSC',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
-        value_template: '{{ value_json.ISOUSC.value }}',
+        value_template: '{% if \'ISOUSC\' in value_json %}{{ value_json.ISOUSC.value }}{% else %}\'\'{% endif %}',
         unit_of_measurement: 'A',
         device: {
             identifiers: [
@@ -75,7 +75,7 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
-        value_template: '{{ value_json.BASE.value }}',
+        value_template: '{% if \'BASE\' in value_json %}{{ value_json.BASE.value }}{% else %}\'\'{% endif %}',
         unit_of_measurement: 'Wh',
         device: {
             identifiers: [
@@ -90,7 +90,7 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         unique_id: 'teleinfo_012345678912_PTEC',
         name: 'Teleinfo 012345678912 PTEC',
         state_topic: 'teleinfo/012345678912',
-        value_template: '{{ value_json.PTEC.value }}',
+        value_template: '{% if \'PTEC\' in value_json %}{{ value_json.PTEC.value }}{% else %}\'\'{% endif %}',
         device: {
             identifiers: [
                 '012345678912',
@@ -106,7 +106,7 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'measurement',
         device_class: 'current',
-        value_template: '{{ value_json.IINST.value }}',
+        value_template: '{% if \'IINST\' in value_json %}{{ value_json.IINST.value }}{% else %}\'\'{% endif %}',
         unit_of_measurement: 'A',
         device: {
             identifiers: [
@@ -122,7 +122,7 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         name: 'Teleinfo 012345678912 IMAX',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
-        value_template: '{{ value_json.IMAX.value }}',
+        value_template: '{% if \'IMAX\' in value_json %}{{ value_json.IMAX.value }}{% else %}\'\'{% endif %}',
         unit_of_measurement: 'A',
         device: {
             identifiers: [
@@ -139,7 +139,7 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'measurement',
         device_class: 'power',
-        value_template: '{{ value_json.PAPP.value }}',
+        value_template: '{% if \'PAPP\' in value_json %}{{ value_json.PAPP.value }}{% else %}\'\'{% endif %}',
         unit_of_measurement: 'VA',
         device: {
             identifiers: [
@@ -154,7 +154,7 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         unique_id: 'teleinfo_012345678912_HHPHC',
         name: 'Teleinfo 012345678912 HHPHC',
         state_topic: 'teleinfo/012345678912',
-        value_template: '{{ value_json.HHPHC.value }}',
+        value_template: '{% if \'HHPHC\' in value_json %}{{ value_json.HHPHC.value }}{% else %}\'\'{% endif %}',
         device: {
             identifiers: [
                 '012345678912',
