@@ -1,5 +1,8 @@
 # Changelog
 
+## dev
+- :fire: Use Home-Assistant `apparent_power` device class for sensors with VA unit
+
 ## 8.3.2
 - :fire: Fix `DPM1` and `FPM1`when using a `TEMPO` offer
 
