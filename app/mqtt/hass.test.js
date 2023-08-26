@@ -138,7 +138,7 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         name: 'Teleinfo 012345678912 PAPP',
         state_topic: 'teleinfo/012345678912',
         state_class: 'measurement',
-        device_class: 'power',
+        device_class: 'apparent_power',
         value_template: '{% if \'PAPP\' in value_json %}{{ value_json.PAPP.value }}{% else %}\'\'{% endif %}',
         unit_of_measurement: 'VA',
         device: {

@@ -274,6 +274,24 @@ class StandardTicMode extends TicMode {
      */
     getHADeviceClass(label) {
         switch (label) {
+        case 'PREF':
+        case 'PCOUP':
+        case 'SINSTS':
+        case 'SINSTS1':
+        case 'SINSTS2':
+        case 'SINSTS3':
+        case 'SMAXSN':
+        case 'SMAXSN1':
+        case 'SMAXSN2':
+        case 'SMAXSN3':
+        case 'SMAXSN-1':
+        case 'SMAXSN1-1':
+        case 'SMAXSN2-1':
+        case 'SMAXSN3-1':
+        case 'SINSTI':
+        case 'SMAXIN':
+        case 'SMAXIN-1':
+            return 'apparent_power';
         case 'IRMS1':
         case 'IRMS2':
         case 'IRMS3':
@@ -302,23 +320,6 @@ class StandardTicMode extends TicMode {
         case 'UMOY2':
         case 'UMOY3':
             return 'voltage';
-        case 'PREF':
-        case 'PCOUP':
-        case 'SINSTS':
-        case 'SINSTS1':
-        case 'SINSTS2':
-        case 'SINSTS3':
-        case 'SMAXSN':
-        case 'SMAXSN1':
-        case 'SMAXSN2':
-        case 'SMAXSN3':
-        case 'SMAXSN-1':
-        case 'SMAXSN1-1':
-        case 'SMAXSN2-1':
-        case 'SMAXSN3-1':
-        case 'SINSTI':
-        case 'SMAXIN':
-        case 'SMAXIN-1':
         case 'CCASN':
         case 'CCASN-1':
         case 'CCAIN':

@@ -113,6 +113,8 @@ class HistoryTicMode extends TicMode {
      */
     getHADeviceClass(label) {
         switch (label) {
+        case 'PAPP':
+            return 'apparent_power';
         case 'ADIR1':
         case 'ADIR2':
         case 'ADIR3':
@@ -139,7 +141,6 @@ class HistoryTicMode extends TicMode {
         case 'HCHC':
         case 'HCHP':
             return 'energy';
-        case 'PAPP':
         case 'PMAX':
             return 'power';
         default:
