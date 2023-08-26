@@ -1,6 +1,6 @@
 # Changelog
 
-## dev
+## 8.3.3
 - :fire: Use Home-Assistant `apparent_power` device class for sensors with VA unit
 
 ## 8.3.2
