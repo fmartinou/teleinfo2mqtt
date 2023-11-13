@@ -3,6 +3,80 @@ const TicMode = require('../TicMode');
 class StandardTicMode extends TicMode {
     static TIC_MODE = 'standard';
 
+    labels = [
+        'ADSC',
+        'CCAIN',
+        'CCAIN-1',
+        'CCASN',
+        'CCASN-1',
+        'DATE',
+        'DPM1',
+        'DPM2',
+        'DPM3',
+        'EAIT',
+        'EASD01',
+        'EASD02',
+        'EASD03',
+        'EASD04',
+        'EASF01',
+        'EASF02',
+        'EASF03',
+        'EASF04',
+        'EASF05',
+        'EASF06',
+        'EASF07',
+        'EASF08',
+        'EASF09',
+        'EASF10',
+        'EAST',
+        'ERQ1',
+        'ERQ2',
+        'ERQ3',
+        'ERQ4',
+        'FPM1',
+        'FPM2',
+        'FPM3',
+        'IRMS1',
+        'IRMS2',
+        'IRMS3',
+        'LTARF',
+        'MSG1',
+        'MSG2',
+        'NGTF',
+        'NJOURF',
+        'NJOURF+1',
+        'NTARF',
+        'PCOUP',
+        'PJOURF+1',
+        'PPOINTE',
+        'PREF',
+        'PRM',
+        'RELAIS',
+        'SINSTI',
+        'SINSTS',
+        'SINSTS1',
+        'SINSTS2',
+        'SINSTS3',
+        'SMAXIN',
+        'SMAXIN-1',
+        'SMAXSN',
+        'SMAXSN-1',
+        'SMAXSN1',
+        'SMAXSN1-1',
+        'SMAXSN2',
+        'SMAXSN2-1',
+        'SMAXSN3',
+        'SMAXSN3-1',
+        'STGE',
+        'UMOY1',
+        'UMOY2',
+        'UMOY3',
+        'URMS1',
+        'URMS2',
+        'URMS3',
+        'VTIC',
+    ];
+
     /**
      * Does ticMode match standard?
      */
@@ -24,6 +98,13 @@ class StandardTicMode extends TicMode {
     /* eslint-disable class-methods-use-this */
     getBaudRate() {
         return 9600;
+    }
+
+    /**
+     * Get the list of labels managed by this TicMode
+     */
+    getLabels() {
+        return this.labels;
     }
 
     /**

@@ -32,13 +32,12 @@ function getValueTemplate({ label, idLabel }) {
  * Publish Configuration for home-assistant discovery.
  * @param client
  * @param id
- * @param frame
  * @param teleinfoService
  */
 async function publishConfigurationForHassDiscovery({
-    client, id, frame, teleinfoService,
+    client, id, teleinfoService,
 }) {
-    const promises = Object.keys(frame).map(async (label) => {
+    const promises = teleinfoService.getLabels().map(async (label) => {
         const discoveryTopic = `${hassDiscoveryPrefix}/sensor/${mqttBaseTopic}/${id}_${label.toLowerCase()}/config`;
         log.info(`Publish configuration for tag ${label} for discovery to topic [${discoveryTopic}]`);
         const stateTopic = getFrameTopic(id);

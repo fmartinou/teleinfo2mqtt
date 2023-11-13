@@ -246,6 +246,14 @@ class TicMode {
     }
 
     /**
+     * Get the list of labels managed by this TicMode
+     */
+    /* eslint-disable class-methods-use-this */
+    getLabels() {
+        throw new Error('getMode must be overridden');
+    }
+
+    /**
      * Get baud rate.
      */
     /* eslint-disable class-methods-use-this */

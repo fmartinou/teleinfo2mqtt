@@ -82,7 +82,6 @@ async function publishFrame({ frame, teleinfoService }) {
                 await publishConfigurationForHassDiscovery({
                     client,
                     id,
-                    frame,
                     teleinfoService,
                 });
                 discoveryConfigurationPublished = true;
