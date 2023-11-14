@@ -127,7 +127,9 @@ class TicMode {
             } else {
                 log.debug(`Ignoring MQTT emission because of emit interval (Emit interval : ${emitInterval} - Last emit time : ${this.lastEmitTime} - Current time : ${currentTime}`);
             }
-            return;
+            if (!this.isFrameStart(label)) {
+                return;
+            }
         }
 
         // Frame start? -> Reset frame object
