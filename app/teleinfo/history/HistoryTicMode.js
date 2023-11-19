@@ -4,6 +4,43 @@ class HistoryTicMode extends TicMode {
     // eslint-disable-next-line
     static TIC_MODE = 'history';
 
+    labels = [
+        'ADCO',
+        'ADIR1',
+        'ADIR2',
+        'ADIR3',
+        'ADPS',
+        'BASE',
+        'BBRHCJB',
+        'BBRHCJR',
+        'BBRHCJW',
+        'BBRHPJB',
+        'BBRHPJR',
+        'BBRHPJW',
+        'DEMAIN',
+        'EJPHN',
+        'EJPHPM',
+        'HCHC',
+        'HCHP',
+        'HHPHC',
+        'IINST',
+        'IINST1',
+        'IINST2',
+        'IINST3',
+        'IMAX',
+        'IMAX1',
+        'IMAX2',
+        'IMAX3',
+        'ISOUSC',
+        'MOTDETAT',
+        'OPTARIF',
+        'PAPP',
+        'PEJP',
+        'PMAX',
+        'PPOT',
+        'PTEC',
+    ];
+
     /**
      * Does ticMode match history?
      */
@@ -26,6 +63,13 @@ class HistoryTicMode extends TicMode {
     /* eslint-disable class-methods-use-this */
     getBaudRate() {
         return 1200;
+    }
+
+    /**
+     * Get the list of labels managed by this TicMode
+     */
+    getLabels() {
+        return this.labels;
     }
 
     /**
