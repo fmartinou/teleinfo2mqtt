@@ -1,5 +1,9 @@
 # Changelog
 
+## dev
+- :fire: Fix missing hass sensors when first frames are corrupted 
+- :fire: Fix in-memory frame never reset in `standard` mode
+
 ## 8.3.3
 - :fire: Use Home-Assistant `apparent_power` device class for sensors with VA unit
 
