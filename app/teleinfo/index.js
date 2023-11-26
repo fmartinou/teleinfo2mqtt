@@ -1,4 +1,4 @@
-const SerialPort = require('serialport');
+const { SerialPort } = require('serialport');
 const HistoryTicMode = require('./history/HistoryTicMode');
 const StandardTicMode = require('./standard/StandardTicMode');
 const { ticMode: ticModeFromConfig } = require('../config');
@@ -7,7 +7,7 @@ const { ticMode: ticModeFromConfig } = require('../config');
  * Connect to the serial port.
  * @return {Promise<unknown>}
  */
-async function connect({ ticMode, SerialPortClass = SerialPort }) {
+async function connect({ ticMode, SerialPortClass = SerialPort, BindingClass }) {
     const ticModeResolved = ticMode || ticModeFromConfig;
     let ticModeService;
     if (HistoryTicMode.doesMatchMode(ticModeResolved)) {
@@ -17,7 +17,7 @@ async function connect({ ticMode, SerialPortClass = SerialPort }) {
     } else {
         throw new Error(`Unsupported TIC_MODE [${ticModeResolved}]`);
     }
-    return ticModeService.connect(SerialPortClass);
+    return ticModeService.connect(SerialPortClass, BindingClass);
 }
 
 module.exports = {

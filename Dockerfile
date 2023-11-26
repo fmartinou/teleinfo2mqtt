@@ -1,5 +1,5 @@
 # Common Stage
-FROM node:14-alpine as base
+FROM node:18-alpine as base
 
 LABEL maintainer="fmartinou"
 
@@ -14,10 +14,13 @@ FROM base as dependencies
 
 COPY app/package*.json app/index.js ./
 
-RUN apk update && apk add --no-cache --virtual build_tools make gcc g++ python3 linux-headers udev && \
-    npm ci --production --no-audit --no-optional --no-update-notifier && \
-    apk del build_tools
+RUN apk update
+RUN apk add --no-cache --virtual build_tools make gcc g++ python3 linux-headers udev
+# RUN npm ci --omit=dev --no-audit --omit=optional --no-update-notifier
 
+RUN npm install --verbose
+
+RUN apk del build_tools
 
 # Release stage
 FROM base as release

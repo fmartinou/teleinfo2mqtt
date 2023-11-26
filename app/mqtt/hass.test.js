@@ -14,8 +14,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     expect(mqttClientMock.publish).toHaveBeenCalledTimes(34);
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(1, 'homeassistant/sensor/teleinfo/012345678912_adco/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_ADCO',
-        name: 'Teleinfo 012345678912 ADCO',
+        unique_id: 'ADCO',
+        name: 'ADCO',
         state_topic: 'teleinfo/012345678912',
         value_template: '{% if \'ADCO\' in value_json %}{{ value_json.ADCO.raw }}{% else %}\'\'{% endif %}',
         device: {
@@ -29,8 +29,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(2, 'homeassistant/sensor/teleinfo/012345678912_adir1/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_ADIR1',
-        name: 'Teleinfo 012345678912 ADIR1',
+        unique_id: 'ADIR1',
+        name: 'ADIR1',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
         value_template: '{% if \'ADIR1\' in value_json %}{{ value_json.ADIR1.value }}{% else %}\'\'{% endif %}',
@@ -45,8 +45,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(3, 'homeassistant/sensor/teleinfo/012345678912_adir2/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_ADIR2',
-        name: 'Teleinfo 012345678912 ADIR2',
+        unique_id: 'ADIR2',
+        name: 'ADIR2',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
         value_template: '{% if \'ADIR2\' in value_json %}{{ value_json.ADIR2.value }}{% else %}\'\'{% endif %}',
@@ -61,8 +61,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(4, 'homeassistant/sensor/teleinfo/012345678912_adir3/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_ADIR3',
-        name: 'Teleinfo 012345678912 ADIR3',
+        unique_id: 'ADIR3',
+        name: 'ADIR3',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
         value_template: '{% if \'ADIR3\' in value_json %}{{ value_json.ADIR3.value }}{% else %}\'\'{% endif %}',
@@ -77,8 +77,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(5, 'homeassistant/sensor/teleinfo/012345678912_adps/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_ADPS',
-        name: 'Teleinfo 012345678912 ADPS',
+        unique_id: 'ADPS',
+        name: 'ADPS',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
         value_template: '{% if \'ADPS\' in value_json %}{{ value_json.ADPS.value }}{% else %}\'\'{% endif %}',
@@ -94,8 +94,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(6, 'homeassistant/sensor/teleinfo/012345678912_base/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_BASE',
-        name: 'Teleinfo 012345678912 BASE',
+        unique_id: 'BASE',
+        name: 'BASE',
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
@@ -112,8 +112,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(7, 'homeassistant/sensor/teleinfo/012345678912_bbrhcjb/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_BBRHCJB',
-        name: 'Teleinfo 012345678912 BBRHCJB',
+        unique_id: 'BBRHCJB',
+        name: 'BBRHCJB',
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
@@ -130,8 +130,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(8, 'homeassistant/sensor/teleinfo/012345678912_bbrhcjr/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_BBRHCJR',
-        name: 'Teleinfo 012345678912 BBRHCJR',
+        unique_id: 'BBRHCJR',
+        name: 'BBRHCJR',
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
@@ -148,8 +148,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(9, 'homeassistant/sensor/teleinfo/012345678912_bbrhcjw/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_BBRHCJW',
-        name: 'Teleinfo 012345678912 BBRHCJW',
+        unique_id: 'BBRHCJW',
+        name: 'BBRHCJW',
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
@@ -166,8 +166,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(10, 'homeassistant/sensor/teleinfo/012345678912_bbrhpjb/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_BBRHPJB',
-        name: 'Teleinfo 012345678912 BBRHPJB',
+        unique_id: 'BBRHPJB',
+        name: 'BBRHPJB',
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
@@ -184,8 +184,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(11, 'homeassistant/sensor/teleinfo/012345678912_bbrhpjr/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_BBRHPJR',
-        name: 'Teleinfo 012345678912 BBRHPJR',
+        unique_id: 'BBRHPJR',
+        name: 'BBRHPJR',
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
@@ -202,8 +202,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(12, 'homeassistant/sensor/teleinfo/012345678912_bbrhpjw/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_BBRHPJW',
-        name: 'Teleinfo 012345678912 BBRHPJW',
+        unique_id: 'BBRHPJW',
+        name: 'BBRHPJW',
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
@@ -220,8 +220,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(13, 'homeassistant/sensor/teleinfo/012345678912_demain/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_DEMAIN',
-        name: 'Teleinfo 012345678912 DEMAIN',
+        unique_id: 'DEMAIN',
+        name: 'DEMAIN',
         state_topic: 'teleinfo/012345678912',
         value_template: '{% if \'DEMAIN\' in value_json %}{{ value_json.DEMAIN.value }}{% else %}\'\'{% endif %}',
         device: {
@@ -235,8 +235,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(14, 'homeassistant/sensor/teleinfo/012345678912_ejphn/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_EJPHN',
-        name: 'Teleinfo 012345678912 EJPHN',
+        unique_id: 'EJPHN',
+        name: 'EJPHN',
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
@@ -253,8 +253,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(15, 'homeassistant/sensor/teleinfo/012345678912_ejphpm/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_EJPHPM',
-        name: 'Teleinfo 012345678912 EJPHPM',
+        unique_id: 'EJPHPM',
+        name: 'EJPHPM',
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
@@ -271,8 +271,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(16, 'homeassistant/sensor/teleinfo/012345678912_hchc/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_HCHC',
-        name: 'Teleinfo 012345678912 HCHC',
+        unique_id: 'HCHC',
+        name: 'HCHC',
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
@@ -289,8 +289,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(17, 'homeassistant/sensor/teleinfo/012345678912_hchp/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_HCHP',
-        name: 'Teleinfo 012345678912 HCHP',
+        unique_id: 'HCHP',
+        name: 'HCHP',
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
@@ -307,8 +307,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(18, 'homeassistant/sensor/teleinfo/012345678912_hhphc/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_HHPHC',
-        name: 'Teleinfo 012345678912 HHPHC',
+        unique_id: 'HHPHC',
+        name: 'HHPHC',
         state_topic: 'teleinfo/012345678912',
         value_template: '{% if \'HHPHC\' in value_json %}{{ value_json.HHPHC.value }}{% else %}\'\'{% endif %}',
         device: {
@@ -322,8 +322,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(19, 'homeassistant/sensor/teleinfo/012345678912_iinst/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_IINST',
-        name: 'Teleinfo 012345678912 IINST',
+        unique_id: 'IINST',
+        name: 'IINST',
         state_topic: 'teleinfo/012345678912',
         state_class: 'measurement',
         device_class: 'current',
@@ -340,8 +340,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(20, 'homeassistant/sensor/teleinfo/012345678912_iinst1/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_IINST1',
-        name: 'Teleinfo 012345678912 IINST1',
+        unique_id: 'IINST1',
+        name: 'IINST1',
         state_topic: 'teleinfo/012345678912',
         state_class: 'measurement',
         device_class: 'current',
@@ -358,8 +358,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(21, 'homeassistant/sensor/teleinfo/012345678912_iinst2/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_IINST2',
-        name: 'Teleinfo 012345678912 IINST2',
+        unique_id: 'IINST2',
+        name: 'IINST2',
         state_topic: 'teleinfo/012345678912',
         state_class: 'measurement',
         device_class: 'current',
@@ -376,8 +376,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(22, 'homeassistant/sensor/teleinfo/012345678912_iinst3/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_IINST3',
-        name: 'Teleinfo 012345678912 IINST3',
+        unique_id: 'IINST3',
+        name: 'IINST3',
         state_topic: 'teleinfo/012345678912',
         state_class: 'measurement',
         device_class: 'current',
@@ -394,8 +394,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(23, 'homeassistant/sensor/teleinfo/012345678912_imax/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_IMAX',
-        name: 'Teleinfo 012345678912 IMAX',
+        unique_id: 'IMAX',
+        name: 'IMAX',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
         value_template: '{% if \'IMAX\' in value_json %}{{ value_json.IMAX.value }}{% else %}\'\'{% endif %}',
@@ -411,8 +411,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(24, 'homeassistant/sensor/teleinfo/012345678912_imax1/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_IMAX1',
-        name: 'Teleinfo 012345678912 IMAX1',
+        unique_id: 'IMAX1',
+        name: 'IMAX1',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
         value_template: '{% if \'IMAX1\' in value_json %}{{ value_json.IMAX1.value }}{% else %}\'\'{% endif %}',
@@ -428,8 +428,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(25, 'homeassistant/sensor/teleinfo/012345678912_imax2/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_IMAX2',
-        name: 'Teleinfo 012345678912 IMAX2',
+        unique_id: 'IMAX2',
+        name: 'IMAX2',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
         value_template: '{% if \'IMAX2\' in value_json %}{{ value_json.IMAX2.value }}{% else %}\'\'{% endif %}',
@@ -445,8 +445,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(26, 'homeassistant/sensor/teleinfo/012345678912_imax3/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_IMAX3',
-        name: 'Teleinfo 012345678912 IMAX3',
+        unique_id: 'IMAX3',
+        name: 'IMAX3',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
         value_template: '{% if \'IMAX3\' in value_json %}{{ value_json.IMAX3.value }}{% else %}\'\'{% endif %}',
@@ -462,8 +462,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(27, 'homeassistant/sensor/teleinfo/012345678912_isousc/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_ISOUSC',
-        name: 'Teleinfo 012345678912 ISOUSC',
+        unique_id: 'ISOUSC',
+        name: 'ISOUSC',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
         value_template: '{% if \'ISOUSC\' in value_json %}{{ value_json.ISOUSC.value }}{% else %}\'\'{% endif %}',
@@ -479,8 +479,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(28, 'homeassistant/sensor/teleinfo/012345678912_motdetat/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_MOTDETAT',
-        name: 'Teleinfo 012345678912 MOTDETAT',
+        unique_id: 'MOTDETAT',
+        name: 'MOTDETAT',
         state_topic: 'teleinfo/012345678912',
         value_template: '{% if \'MOTDETAT\' in value_json %}{{ value_json.MOTDETAT.value }}{% else %}\'\'{% endif %}',
         device: {
@@ -494,8 +494,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(29, 'homeassistant/sensor/teleinfo/012345678912_optarif/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_OPTARIF',
-        name: 'Teleinfo 012345678912 OPTARIF',
+        unique_id: 'OPTARIF',
+        name: 'OPTARIF',
         state_topic: 'teleinfo/012345678912',
         value_template: '{% if \'OPTARIF\' in value_json %}{{ value_json.OPTARIF.value }}{% else %}\'\'{% endif %}',
         device: {
@@ -509,8 +509,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(30, 'homeassistant/sensor/teleinfo/012345678912_papp/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_PAPP',
-        name: 'Teleinfo 012345678912 PAPP',
+        unique_id: 'PAPP',
+        name: 'PAPP',
         state_topic: 'teleinfo/012345678912',
         state_class: 'measurement',
         device_class: 'apparent_power',
@@ -527,8 +527,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(31, 'homeassistant/sensor/teleinfo/012345678912_pejp/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_PEJP',
-        name: 'Teleinfo 012345678912 PEJP',
+        unique_id: 'PEJP',
+        name: 'PEJP',
         state_topic: 'teleinfo/012345678912',
         value_template: '{% if \'PEJP\' in value_json %}{{ value_json.PEJP.value }}{% else %}\'\'{% endif %}',
         unit_of_measurement: 'min',
@@ -543,8 +543,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(32, 'homeassistant/sensor/teleinfo/012345678912_pmax/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_PMAX',
-        name: 'Teleinfo 012345678912 PMAX',
+        unique_id: 'PMAX',
+        name: 'PMAX',
         state_topic: 'teleinfo/012345678912',
         device_class: 'power',
         value_template: '{% if \'PMAX\' in value_json %}{{ value_json.PMAX.value }}{% else %}\'\'{% endif %}',
@@ -560,8 +560,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(33, 'homeassistant/sensor/teleinfo/012345678912_ppot/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_PPOT',
-        name: 'Teleinfo 012345678912 PPOT',
+        unique_id: 'PPOT',
+        name: 'PPOT',
         state_topic: 'teleinfo/012345678912',
         value_template: '{% if \'PPOT\' in value_json %}{{ value_json.PPOT.value }}{% else %}\'\'{% endif %}',
         device: {
@@ -575,8 +575,8 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
     }), { retain: true });
 
     expect(mqttClientMock.publish).toHaveBeenNthCalledWith(34, 'homeassistant/sensor/teleinfo/012345678912_ptec/config', JSON.stringify({
-        unique_id: 'teleinfo_012345678912_PTEC',
-        name: 'Teleinfo 012345678912 PTEC',
+        unique_id: 'PTEC',
+        name: 'PTEC',
         state_topic: 'teleinfo/012345678912',
         value_template: '{% if \'PTEC\' in value_json %}{{ value_json.PTEC.value }}{% else %}\'\'{% endif %}',
         device: {

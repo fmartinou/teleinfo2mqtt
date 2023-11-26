@@ -1,6 +1,9 @@
 # Changelog
 
 ## dev
+- :star: Add extra EDF Tempo data fetch
+- :star: Upgrade to node.js 18
+- :star: Update all dependencies
 - :fire: Fix missing hass sensors when first frames are corrupted 
 - :fire: Fix in-memory frame never reset in `standard` mode
 

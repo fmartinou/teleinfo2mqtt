@@ -1,11 +1,11 @@
 # Mqtt
 
 ## Topic
-**teleinfo2mqtt** publishes messages to the `$MQTT_BASE_TOPIC/$mqtt_base_topic` topic.
+**teleinfo2mqtt** publishes messages to the `$MQTT_BASE_TOPIC/$electricity_meter_id` topic.
 
 ?> [`$MQTT_BASE_TOPIC`](configuration/) is configured by env var (`teleinfo` by default)
 
-?> `$mqtt_base_topic` is the id of your electricity meter (received from teleinfo data as `ADCO` or `ADSC` labels)
+?> `$electricity_meter_id` is the id of your electricity meter (received from teleinfo data as `ADCO` or `ADSC` labels)
 
 **teleinfo2mqtt** publishes health status message to the `$MQTT_BASE_TOPIC/status` topic.
 The value is `up` if everything is ok. You could check this message age in order to verify that service is healthy.
@@ -93,3 +93,23 @@ You can still access the original `raw` value if necessary.
 }
 ```
 <!-- tabs:end -->
+
+## EDF Tempo data
+Extra EDF Tempo data can be fetched using a public EDF Http API (sse the [configuration page](../configuration/README.md)).
+
+When enabled, you'll get Tempo data published to the `$MQTT_BASE_TOPIC/tempo` topic.
+```json
+{
+  "today":"blue",
+  "tomorrow":"white",
+  "blue_total":300,
+  "blue_elapsed":85,
+  "blue_remaining":215,
+  "white_total":43,
+  "white_elapsed":2,
+  "white_remaining":41,
+  "red_remaining":22,
+  "red_total":22,
+  "red_elapsed":0
+}
+```

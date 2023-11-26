@@ -1,11 +1,11 @@
 language: shell
 os: linux
+dist: jammy
 
 env:
   global:
-    - NODE_VERSION=14
+    - NODE_VERSION=18
     - CC_TEST_REPORTER_ID=5167fc209c026a59fa2f9e21c7e21efa2ce09989a62ca8bc775f2240d8b9f662
-    - DOCKER_CLI_EXPERIMENTAL=enabled
     - IMAGE_VERSION=develop
 
 before_install:
@@ -13,15 +13,8 @@ before_install:
   - export IMAGE_VERSION=${TRAVIS_BRANCH//\//\_}
   - export IMAGE_VERSION=${IMAGE_VERSION//\#/\_}
 
-  # Install docker with buildx
-  - sudo rm -rf /var/lib/apt/lists/*
-  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  - lsb_release -cs
-  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
-  - sudo apt-get update
-  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
-  - docker run --rm --privileged docker/binfmt:820fdd95a9972a5308930a2bdfb8573dd4447ad3
-  - cat /proc/sys/fs/binfmt_misc/qemu-aarch64
+  #  Add qemu
+  - docker run --rm --privileged multiarch/qemu-user-static --credential yes --persistent yes
 
   # Install Nodejs
   - nvm install $NODE_VERSION

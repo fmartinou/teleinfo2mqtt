@@ -18,6 +18,8 @@ const config = {
     mqttTlsCaChain: undefined,
     mqttTlsRejectUnauthorized: true,
     serial: '/dev/ttyUSB0',
+    tempoEnabled: false,
+    tempoIntervalMinute: 5,
     ticMode: 'history',
 };
 
@@ -64,6 +66,12 @@ function overrideConfiguration(overrideObject) {
     }
     if (overrideObject.MQTT_TLS_REJECT_UNAUTHORIZED !== undefined) {
         config.mqttTlsRejectUnauthorized = overrideObject.MQTT_TLS_REJECT_UNAUTHORIZED.toLowerCase() === 'true';
+    }
+    if (overrideObject.TEMPO_ENABLED !== undefined) {
+        config.tempoEnabled = overrideObject.TEMPO_ENABLED.toLowerCase() === 'true';
+    }
+    if (overrideObject.TEMPO_INTERVAL_MINUTE) {
+        config.tempoIntervalMinute = overrideObject.TEMPO_INTERVAL_MINUTE;
     }
     if (overrideObject.TIC_MODE) {
         config.ticMode = overrideObject.TIC_MODE;
