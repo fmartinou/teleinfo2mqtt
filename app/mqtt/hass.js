@@ -25,7 +25,7 @@ function getFrameTopic(id) {
  */
 function getValueTemplate({ label, idLabel }) {
     const valueProperty = label === idLabel ? 'raw' : 'value';
-    return `{% if '${label}' in value_json %}{{ value_json.${label}.${valueProperty} }}{% else %}''{% endif %}`;
+    return `{% if '${label}' in value_json %}{{ value_json.${label}.${valueProperty} }}{% endif %}`;
 }
 
 /**
@@ -52,8 +52,8 @@ async function publishConfigurationForHassDiscovery({
             device: {
                 identifiers: [id],
                 manufacturer: 'Enedis',
-                model: `linky_${id}`,
-                name: `Linky ${id}`,
+                model: `teleinfo_${id}`,
+                name: `Teleinfo ${id}`,
             },
         }), {
             retain: true,
@@ -76,7 +76,7 @@ async function publishTempoConfigurationForHassDiscovery({ client, tempoData }) 
                 identifiers: ['tempo'],
                 manufacturer: 'EDF',
                 model: 'Tempo',
-                name: 'Linky Tempo',
+                name: 'Teleinfo Tempo',
             },
         }), {
             retain: true,

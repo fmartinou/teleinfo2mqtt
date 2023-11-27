@@ -2,6 +2,7 @@
 
 ## dev
 - :fire: Fix segmentation fault on arm devices
+- :fire: Fix broken HASS entity ids
 
 ## 9.0.1
 - :fire: Fix TEMPO_ENABLED configuration parsing error on hassio
