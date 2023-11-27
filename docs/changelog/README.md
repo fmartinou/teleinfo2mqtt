@@ -1,6 +1,6 @@
 # Changelog
 
-## dev
+## 9.0.0
 - :star: Add extra EDF Tempo data fetch
 - :star: Upgrade to node.js 18
 - :star: Update all dependencies
