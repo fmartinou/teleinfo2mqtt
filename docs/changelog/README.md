@@ -1,5 +1,8 @@
 # Changelog
 
+## dev
+- :fire: Fix TEMPO_ENABLED configuration parsing error on hassio
+
 ## 9.0.0
 - :star: Add extra EDF Tempo data fetch
 - :star: Upgrade to node.js 18
