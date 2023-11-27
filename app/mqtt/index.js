@@ -15,13 +15,17 @@ const {
 
 } = require('../config');
 
-const { publishConfigurationForHassDiscovery } = require('./hass');
+const {
+    publishConfigurationForHassDiscovery,
+    publishTempoConfigurationForHassDiscovery,
+} = require('./hass');
 
 /**
  * True when hass discovery configuration has been published.
  * @type {boolean}
  */
 let discoveryConfigurationPublished = false;
+let discoveryTempoConfigurationPublished = false;
 
 /**
  * MQT Client.
@@ -101,12 +105,25 @@ async function publishFrame({ frame, teleinfoService }) {
     }
 }
 
+async function publishTempoData({ tempoData }) {
+    if (hassDiscovery && !discoveryTempoConfigurationPublished) {
+        await publishTempoConfigurationForHassDiscovery({ client, tempoData });
+        discoveryTempoConfigurationPublished = true;
+    }
+    try {
+        await client.publish(getFrameTopic('tempo'), JSON.stringify(tempoData));
+    } catch (e) {
+        log.warn(`Unable to publish tempo data (${e.message})`);
+    }
+}
+
 /**
  * Connect to MQTT broker.
  * @param teleinfoService
+ * @param tempoService
  * @return {Promise<>}
  */
-async function connect({ teleinfoService }) {
+async function connect({ teleinfoService, tempoService }) {
     const options = {};
     if (mqttUser) {
         options.username = mqttUser;
@@ -155,6 +172,14 @@ async function connect({ teleinfoService }) {
         // Register to frame events and publish frame details to the mqtt broker
         if (teleinfoService) {
             teleinfoService.onFrame((frame) => { publishFrame({ frame, teleinfoService }); });
+        }
+
+        // Register to tempo events
+        if (tempoService) {
+            tempoService.onChange((tempoData) => {
+                publishTempoData({ tempoData });
+            });
+            tempoService.startSchedule();
         }
 
         return client;

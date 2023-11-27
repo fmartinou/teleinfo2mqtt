@@ -1,5 +1,5 @@
 const SerialPort = require('serialport');
-const ReadlineParser = require('@serialport/parser-readline');
+const { ReadlineParser } = require('@serialport/parser-readline');
 const { EventEmitter } = require('events');
 const { emitInterval, serial } = require('../config');
 const log = require('../log');
@@ -38,17 +38,26 @@ class TicMode {
     /**
      * Connect to the serial port.
      * @param SerialPortClass
+     * @param BindingClass
      * @return {Promise<unknown>}
      */
-    connect(SerialPortClass = SerialPort) {
+    connect(SerialPortClass = SerialPort, BindingClass = undefined) {
         log.info(`Connecting to port [${serial}] with ${this.getMode()} TIC mode`);
+        const options = {
+            path: serial,
+            baudRate: this.getBaudRate(),
+            dataBits: 7,
+            parity: 'even',
+            stopBits: 1,
+        };
+        if (BindingClass) {
+            options.binding = BindingClass;
+        }
         return new Promise((resolve, reject) => {
-            this.serialPort = new SerialPortClass(serial, {
-                baudRate: this.getBaudRate(),
-                dataBits: 7,
-                parity: 'even',
-                stopBits: 1,
-            }, (error) => this.onConnection(error, resolve, reject));
+            this.serialPort = new SerialPortClass(
+                options,
+                (error) => this.onConnection(error, resolve, reject),
+            );
         });
     }
 

@@ -42,8 +42,8 @@ async function publishConfigurationForHassDiscovery({
         log.info(`Publish configuration for tag ${label} for discovery to topic [${discoveryTopic}]`);
         const stateTopic = getFrameTopic(id);
         return client.publish(discoveryTopic, JSON.stringify({
-            unique_id: `teleinfo_${id}_${label}`,
-            name: `Teleinfo ${id} ${label}`,
+            unique_id: label,
+            name: label,
             state_topic: stateTopic,
             state_class: teleinfoService.getHAStateClass(label),
             device_class: teleinfoService.getHADeviceClass(label),
@@ -62,6 +62,30 @@ async function publishConfigurationForHassDiscovery({
     return Promise.all(promises);
 }
 
+async function publishTempoConfigurationForHassDiscovery({ client, tempoData }) {
+    const promises = Object.keys(tempoData).map(async (label) => {
+        const discoveryTopic = `${hassDiscoveryPrefix}/sensor/${mqttBaseTopic}/tempo_${label.toLowerCase()}/config`;
+        log.info(`Publish configuration for tempo data ${label} for discovery to topic [${discoveryTopic}]`);
+        const stateTopic = getFrameTopic('tempo');
+        return client.publish(discoveryTopic, JSON.stringify({
+            unique_id: label,
+            name: label,
+            state_topic: stateTopic,
+            value_template: `{{ value_json.${label} }}`,
+            device: {
+                identifiers: ['tempo'],
+                manufacturer: 'EDF',
+                model: 'Tempo',
+                name: 'Linky Tempo',
+            },
+        }), {
+            retain: true,
+        });
+    });
+    return Promise.all(promises);
+}
+
 module.exports = {
     publishConfigurationForHassDiscovery,
+    publishTempoConfigurationForHassDiscovery,
 };

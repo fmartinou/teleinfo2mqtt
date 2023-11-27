@@ -19,6 +19,8 @@
 | **MQTT_TLS_CA_CHAIN**            | :white_circle: | MQTT CA chain location when TLS is used                                | any valid file path                                                              |                            |
 | **MQTT_TLS_REJECT_UNAUTHORIZED** | :white_circle: | Reject when server certificate does not match the CA                   | `true`, `false`                                                                  | `true`                     |
 | **SERIAL**                       | :white_circle: | Serial Port location                                                   | any valid serial port location                                                   | `/dev/ttyUSB0`             |
+| **TEMPO_ENABLED**                | :white_circle: | Fetch additional EDF Tempo data                                        | `true`, `false`                                                                  | `false`                    |
+| **TEMPO_INTERVAL_MINUTE**        | :white_circle: | Interval in minutes between 2 EDF tempo API calls                      | from `1` to `Infinity`                                                           | `false`                    |
 | **TIC_MODE**                     | :white_circle: | TIC Mode                                                               | `history`, `standard`                                                            | `history`                  |
 | **TZ**                           | :white_circle: | Timezone (for logs...)                                                 | [supported values](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) | `utc`                      |
 

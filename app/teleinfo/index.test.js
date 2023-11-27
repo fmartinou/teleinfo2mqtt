@@ -1,12 +1,12 @@
-const SerialPort = require('@serialport/stream');
-const SerialPortMockBinding = require('@serialport/binding-mock');
+const { SerialPortStream } = require('@serialport/stream');
+const { MockBinding } = require('@serialport/binding-mock');
 const HistoryTicMode = require('./history/HistoryTicMode');
 const StandardTicMode = require('./standard/StandardTicMode');
 const teleinfo = require('.');
 
 beforeEach(() => {
-    SerialPort.Binding = SerialPortMockBinding;
-    SerialPortMockBinding.createPort('/dev/ttyUSB0');
+    SerialPortStream.Binding = MockBinding;
+    MockBinding.createPort('/dev/ttyUSB0');
 });
 
 test.each([
@@ -15,7 +15,11 @@ test.each([
 ])(
     'connect should init $instance service when ticMode is $ticMode',
     async ({ ticMode, instance }) => {
-        const service = await teleinfo.connect({ ticMode, SerialPortClass: SerialPort });
+        const service = await teleinfo.connect({
+            ticMode,
+            SerialPortClass: SerialPortStream,
+            BindingClass: MockBinding,
+        });
         expect(service).toBeInstanceOf(instance);
     },
 );
