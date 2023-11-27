@@ -1,6 +1,6 @@
 # Changelog
 
-## dev
+## 9.0.1
 - :fire: Fix TEMPO_ENABLED configuration parsing error on hassio
 
 ## 9.0.0
