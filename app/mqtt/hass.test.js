@@ -17,14 +17,14 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         unique_id: 'ADCO',
         name: 'ADCO',
         state_topic: 'teleinfo/012345678912',
-        value_template: '{% if \'ADCO\' in value_json %}{{ value_json.ADCO.raw }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'ADCO\' in value_json %}{{ value_json.ADCO.raw }}{% endif %}',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -33,14 +33,14 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         name: 'ADIR1',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
-        value_template: '{% if \'ADIR1\' in value_json %}{{ value_json.ADIR1.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'ADIR1\' in value_json %}{{ value_json.ADIR1.value }}{% endif %}',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -49,14 +49,14 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         name: 'ADIR2',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
-        value_template: '{% if \'ADIR2\' in value_json %}{{ value_json.ADIR2.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'ADIR2\' in value_json %}{{ value_json.ADIR2.value }}{% endif %}',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -65,14 +65,14 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         name: 'ADIR3',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
-        value_template: '{% if \'ADIR3\' in value_json %}{{ value_json.ADIR3.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'ADIR3\' in value_json %}{{ value_json.ADIR3.value }}{% endif %}',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -81,15 +81,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         name: 'ADPS',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
-        value_template: '{% if \'ADPS\' in value_json %}{{ value_json.ADPS.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'ADPS\' in value_json %}{{ value_json.ADPS.value }}{% endif %}',
         unit_of_measurement: 'A',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -99,15 +99,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
-        value_template: '{% if \'BASE\' in value_json %}{{ value_json.BASE.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'BASE\' in value_json %}{{ value_json.BASE.value }}{% endif %}',
         unit_of_measurement: 'Wh',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -117,15 +117,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
-        value_template: '{% if \'BBRHCJB\' in value_json %}{{ value_json.BBRHCJB.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'BBRHCJB\' in value_json %}{{ value_json.BBRHCJB.value }}{% endif %}',
         unit_of_measurement: 'Wh',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -135,15 +135,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
-        value_template: '{% if \'BBRHCJR\' in value_json %}{{ value_json.BBRHCJR.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'BBRHCJR\' in value_json %}{{ value_json.BBRHCJR.value }}{% endif %}',
         unit_of_measurement: 'Wh',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -153,15 +153,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
-        value_template: '{% if \'BBRHCJW\' in value_json %}{{ value_json.BBRHCJW.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'BBRHCJW\' in value_json %}{{ value_json.BBRHCJW.value }}{% endif %}',
         unit_of_measurement: 'Wh',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -171,15 +171,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
-        value_template: '{% if \'BBRHPJB\' in value_json %}{{ value_json.BBRHPJB.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'BBRHPJB\' in value_json %}{{ value_json.BBRHPJB.value }}{% endif %}',
         unit_of_measurement: 'Wh',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -189,15 +189,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
-        value_template: '{% if \'BBRHPJR\' in value_json %}{{ value_json.BBRHPJR.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'BBRHPJR\' in value_json %}{{ value_json.BBRHPJR.value }}{% endif %}',
         unit_of_measurement: 'Wh',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -207,15 +207,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
-        value_template: '{% if \'BBRHPJW\' in value_json %}{{ value_json.BBRHPJW.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'BBRHPJW\' in value_json %}{{ value_json.BBRHPJW.value }}{% endif %}',
         unit_of_measurement: 'Wh',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -223,14 +223,14 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         unique_id: 'DEMAIN',
         name: 'DEMAIN',
         state_topic: 'teleinfo/012345678912',
-        value_template: '{% if \'DEMAIN\' in value_json %}{{ value_json.DEMAIN.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'DEMAIN\' in value_json %}{{ value_json.DEMAIN.value }}{% endif %}',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -240,15 +240,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
-        value_template: '{% if \'EJPHN\' in value_json %}{{ value_json.EJPHN.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'EJPHN\' in value_json %}{{ value_json.EJPHN.value }}{% endif %}',
         unit_of_measurement: 'Wh',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -258,15 +258,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
-        value_template: '{% if \'EJPHPM\' in value_json %}{{ value_json.EJPHPM.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'EJPHPM\' in value_json %}{{ value_json.EJPHPM.value }}{% endif %}',
         unit_of_measurement: 'Wh',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -276,15 +276,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
-        value_template: '{% if \'HCHC\' in value_json %}{{ value_json.HCHC.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'HCHC\' in value_json %}{{ value_json.HCHC.value }}{% endif %}',
         unit_of_measurement: 'Wh',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -294,15 +294,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'total_increasing',
         device_class: 'energy',
-        value_template: '{% if \'HCHP\' in value_json %}{{ value_json.HCHP.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'HCHP\' in value_json %}{{ value_json.HCHP.value }}{% endif %}',
         unit_of_measurement: 'Wh',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -310,14 +310,14 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         unique_id: 'HHPHC',
         name: 'HHPHC',
         state_topic: 'teleinfo/012345678912',
-        value_template: '{% if \'HHPHC\' in value_json %}{{ value_json.HHPHC.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'HHPHC\' in value_json %}{{ value_json.HHPHC.value }}{% endif %}',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -327,15 +327,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'measurement',
         device_class: 'current',
-        value_template: '{% if \'IINST\' in value_json %}{{ value_json.IINST.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'IINST\' in value_json %}{{ value_json.IINST.value }}{% endif %}',
         unit_of_measurement: 'A',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -345,15 +345,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'measurement',
         device_class: 'current',
-        value_template: '{% if \'IINST1\' in value_json %}{{ value_json.IINST1.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'IINST1\' in value_json %}{{ value_json.IINST1.value }}{% endif %}',
         unit_of_measurement: 'A',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -363,15 +363,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'measurement',
         device_class: 'current',
-        value_template: '{% if \'IINST2\' in value_json %}{{ value_json.IINST2.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'IINST2\' in value_json %}{{ value_json.IINST2.value }}{% endif %}',
         unit_of_measurement: 'A',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -381,15 +381,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'measurement',
         device_class: 'current',
-        value_template: '{% if \'IINST3\' in value_json %}{{ value_json.IINST3.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'IINST3\' in value_json %}{{ value_json.IINST3.value }}{% endif %}',
         unit_of_measurement: 'A',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -398,15 +398,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         name: 'IMAX',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
-        value_template: '{% if \'IMAX\' in value_json %}{{ value_json.IMAX.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'IMAX\' in value_json %}{{ value_json.IMAX.value }}{% endif %}',
         unit_of_measurement: 'A',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -415,15 +415,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         name: 'IMAX1',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
-        value_template: '{% if \'IMAX1\' in value_json %}{{ value_json.IMAX1.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'IMAX1\' in value_json %}{{ value_json.IMAX1.value }}{% endif %}',
         unit_of_measurement: 'A',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -432,15 +432,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         name: 'IMAX2',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
-        value_template: '{% if \'IMAX2\' in value_json %}{{ value_json.IMAX2.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'IMAX2\' in value_json %}{{ value_json.IMAX2.value }}{% endif %}',
         unit_of_measurement: 'A',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -449,15 +449,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         name: 'IMAX3',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
-        value_template: '{% if \'IMAX3\' in value_json %}{{ value_json.IMAX3.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'IMAX3\' in value_json %}{{ value_json.IMAX3.value }}{% endif %}',
         unit_of_measurement: 'A',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -466,15 +466,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         name: 'ISOUSC',
         state_topic: 'teleinfo/012345678912',
         device_class: 'current',
-        value_template: '{% if \'ISOUSC\' in value_json %}{{ value_json.ISOUSC.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'ISOUSC\' in value_json %}{{ value_json.ISOUSC.value }}{% endif %}',
         unit_of_measurement: 'A',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -482,14 +482,14 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         unique_id: 'MOTDETAT',
         name: 'MOTDETAT',
         state_topic: 'teleinfo/012345678912',
-        value_template: '{% if \'MOTDETAT\' in value_json %}{{ value_json.MOTDETAT.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'MOTDETAT\' in value_json %}{{ value_json.MOTDETAT.value }}{% endif %}',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -497,14 +497,14 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         unique_id: 'OPTARIF',
         name: 'OPTARIF',
         state_topic: 'teleinfo/012345678912',
-        value_template: '{% if \'OPTARIF\' in value_json %}{{ value_json.OPTARIF.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'OPTARIF\' in value_json %}{{ value_json.OPTARIF.value }}{% endif %}',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -514,15 +514,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         state_topic: 'teleinfo/012345678912',
         state_class: 'measurement',
         device_class: 'apparent_power',
-        value_template: '{% if \'PAPP\' in value_json %}{{ value_json.PAPP.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'PAPP\' in value_json %}{{ value_json.PAPP.value }}{% endif %}',
         unit_of_measurement: 'VA',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -530,15 +530,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         unique_id: 'PEJP',
         name: 'PEJP',
         state_topic: 'teleinfo/012345678912',
-        value_template: '{% if \'PEJP\' in value_json %}{{ value_json.PEJP.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'PEJP\' in value_json %}{{ value_json.PEJP.value }}{% endif %}',
         unit_of_measurement: 'min',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -547,15 +547,15 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         name: 'PMAX',
         state_topic: 'teleinfo/012345678912',
         device_class: 'power',
-        value_template: '{% if \'PMAX\' in value_json %}{{ value_json.PMAX.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'PMAX\' in value_json %}{{ value_json.PMAX.value }}{% endif %}',
         unit_of_measurement: 'W',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -563,14 +563,14 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         unique_id: 'PPOT',
         name: 'PPOT',
         state_topic: 'teleinfo/012345678912',
-        value_template: '{% if \'PPOT\' in value_json %}{{ value_json.PPOT.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'PPOT\' in value_json %}{{ value_json.PPOT.value }}{% endif %}',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 
@@ -578,14 +578,14 @@ test('publishConfigurationForDiscovery should be called as expected', async () =
         unique_id: 'PTEC',
         name: 'PTEC',
         state_topic: 'teleinfo/012345678912',
-        value_template: '{% if \'PTEC\' in value_json %}{{ value_json.PTEC.value }}{% else %}\'\'{% endif %}',
+        value_template: '{% if \'PTEC\' in value_json %}{{ value_json.PTEC.value }}{% endif %}',
         device: {
             identifiers: [
                 '012345678912',
             ],
             manufacturer: 'Enedis',
-            model: 'linky_012345678912',
-            name: 'Linky 012345678912',
+            model: 'teleinfo_012345678912',
+            name: 'Teleinfo 012345678912',
         },
     }), { retain: true });
 });
