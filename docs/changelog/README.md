@@ -1,6 +1,6 @@
 # Changelog
 
-## dev
+## 9.0.2
 - :fire: Fix segmentation fault on arm devices
 - :fire: Fix broken HASS entity ids
 
