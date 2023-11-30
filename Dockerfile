@@ -16,9 +16,10 @@ COPY app/package*.json app/index.js ./
 
 RUN apk update
 RUN apk add --no-cache --virtual build_tools make gcc g++ python3 linux-headers udev
-# RUN npm ci --omit=dev --no-audit --omit=optional --no-update-notifier
+RUN npm ci --omit=dev --no-audit --omit=optional --no-update-notifier
 
-RUN npm install --verbose
+# Do not used prebuilt packages because of issues with serialport on arm
+RUN npm rebuild --build-from-source
 
 RUN apk del build_tools
 
