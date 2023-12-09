@@ -38,7 +38,8 @@ async function publishConfigurationForHassDiscovery({
     client, id, teleinfoService,
 }) {
     const promises = teleinfoService.getLabels().map(async (label) => {
-        const discoveryTopic = `${hassDiscoveryPrefix}/sensor/${mqttBaseTopic}/${id}_${label.toLowerCase()}/config`;
+        const labelSanitized = label.replace(/-/g, '_minus_').replace(/\+/g, '_plus_').toLowerCase();
+        const discoveryTopic = `${hassDiscoveryPrefix}/sensor/${mqttBaseTopic}/${id}_${labelSanitized}/config`;
         log.info(`Publish configuration for tag ${label} for discovery to topic [${discoveryTopic}]`);
         const stateTopic = getFrameTopic(id);
         return client.publish(discoveryTopic, JSON.stringify({

@@ -1,5 +1,8 @@
 # Changelog
 
+## dev
+- :fire: Fix invalid topic names for some `standard` labels causing HA discovery failures (`̀pjourf+1`...)
+
 ## 9.0.2
 - :fire: Fix segmentation fault on arm devices
 - :fire: Fix broken HASS entity ids
