@@ -1,6 +1,6 @@
 # Changelog
 
-## dev
+## 9.0.3
 - :fire: Fix invalid topic names for some `standard` labels causing HA discovery failures (`̀pjourf+1`...)
 
 ## 9.0.2
