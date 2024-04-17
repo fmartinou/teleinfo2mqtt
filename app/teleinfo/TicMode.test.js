@@ -73,7 +73,7 @@ test('processData should parse frame lines without timestamp when called', async
     jest.spyOn(ticMode, 'checkValue').mockImplementation(() => true);
     jest.spyOn(ticMode, 'isFrameStart').mockImplementation(() => false);
     jest.spyOn(ticMode, 'isFrameEnd').mockImplementation(() => false);
-    ticMode.processData('LABEL VALUE CHECKSUM');
+    ticMode.processData('LABEL VALUE =');
     expect(ticMode.currentFrame.LABEL).toEqual({
         raw: 'VALUE',
         value: 'VALUE',
@@ -88,7 +88,7 @@ test('processData should parse frame lines with timestamp and DST when called', 
     jest.spyOn(ticMode, 'isFrameEnd').mockImplementation(() => false);
     jest.spyOn(ticMode, 'getValue').mockImplementation(({ lineItems }) => lineItems[2]);
     jest.spyOn(ticMode, 'getTimestamp').mockImplementation(({ lineItems }) => lineItems[1]);
-    ticMode.processData('LABEL H081225223518 VALUE CHECKSUM');
+    ticMode.processData('LABEL H081225223518 VALUE L');
     expect(ticMode.currentFrame.LABEL).toEqual({
         raw: 'VALUE',
         value: 'VALUE',
@@ -106,7 +106,7 @@ test('processData should parse frame lines with timestamp and no DST when called
     jest.spyOn(ticMode, 'isFrameEnd').mockImplementation(() => false);
     jest.spyOn(ticMode, 'getValue').mockImplementation(({ lineItems }) => lineItems[2]);
     jest.spyOn(ticMode, 'getTimestamp').mockImplementation(({ lineItems }) => lineItems[1]);
-    ticMode.processData('LABEL  230214060000 VALUE CHECKSUM');
+    ticMode.processData('LABEL  230214060000 VALUE O');
     expect(ticMode.currentFrame.LABEL).toEqual({
         raw: 'VALUE',
         value: 'VALUE',
@@ -156,7 +156,7 @@ test('processData should publish event when frame ends', async () => {
     jest.spyOn(ticMode, 'checkValue').mockImplementation(() => true);
     jest.spyOn(ticMode, 'isFrameStart').mockImplementation(() => false);
     jest.spyOn(ticMode, 'isFrameEnd').mockImplementation(() => true);
-    ticMode.processData('LABEL VALUE CHECKSUM');
+    ticMode.processData('LABEL VALUE =');
     expect(ticMode.eventEmitter.emit).toHaveBeenCalledWith('frame', { CURRENT: 'CURRENT' });
 });
 
@@ -189,7 +189,7 @@ test('processData should reset frame when frame starts', async () => {
     jest.spyOn(ticMode, 'checkValue').mockImplementation(() => true);
     jest.spyOn(ticMode, 'isFrameStart').mockImplementation(() => true);
     jest.spyOn(ticMode, 'isFrameEnd').mockImplementation(() => false);
-    ticMode.processData('LABEL VALUE CHECKSUM');
+    ticMode.processData('LABEL VALUE =');
     expect(ticMode.previousFrame).toStrictEqual({ CURRENT: 'CURRENT' });
     expect(ticMode.currentFrame).toStrictEqual({
         LABEL: {
