@@ -101,6 +101,16 @@ class TicMode {
 
         const label = lineItems[0];
         const value = this.getValue({ label, lineItems });
+        const checksum = lineItems.slice(-1);
+
+        // Is checksum valid ?
+        const checksumData = dataStr.substring(0, dataStr.length - checksum.length);
+        log.debug(`Checksum Data String ${checksumData}`);
+        const calculatedChecksum = this.calculateChecksum(checksumData);
+        if (calculatedChecksum !== checksum.toString()) {
+            log.warn(`Invalid checksum for label ${label} [${checksum}]. Should be [${calculatedChecksum}]`);
+            return;
+        }
 
         // Is the value valid?
         const previousValue = this.previousFrame[label]
@@ -337,6 +347,19 @@ class TicMode {
      */
     getDataDelimiter() {
         return /\s+/;
+    }
+
+    /**
+     * Calculate checksum based on input string
+     * @param {string} strData
+     * @returns {string}
+     */
+    calculateChecksum(strData) {
+        let checksum = 0;
+        for (let i = 0; i < strData.length; i += 1) { checksum += strData.charCodeAt(i); }
+        // eslint-disable-next-line no-bitwise
+        checksum = (checksum & 63) + 32;
+        return String.fromCharCode(checksum);
     }
 }
 

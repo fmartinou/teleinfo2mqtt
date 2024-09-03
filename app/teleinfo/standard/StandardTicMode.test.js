@@ -153,10 +153,10 @@ test.each([
 );
 
 test.each([
-    { data: 'EASF06\t000000000\tx', parsedFrame: { EASF06: { raw: '000000000', value: 0 } } },
-    { data: 'NGTF\tH PLEINE/CREUSE\tx', parsedFrame: { NGTF: { raw: 'H PLEINE/CREUSE', value: 'H PLEINE/CREUSE' } } },
+    { data: 'EASF06\t000000000\t\'', parsedFrame: { EASF06: { raw: '000000000', value: 0 } } },
+    { data: 'NGTF\tH PLEINE/CREUSE\t<', parsedFrame: { NGTF: { raw: 'H PLEINE/CREUSE', value: 'H PLEINE/CREUSE' } } },
     { data: 'SMAXSN\tE220609060531\t02740\t9', parsedFrame: { SMAXSN: { raw: '02740', value: 2740, timestamp: { date: '2022-06-09T06:05:31.000Z', dst: 'summer' } } } },
-    { data: 'DATE\tE220609060531\t\tL', parsedFrame: { DATE: { raw: '', value: '', timestamp: { date: '2022-06-09T06:05:31.000Z', dst: 'summer' } } } },
+    { data: 'DATE\tE220609060531\t\t@', parsedFrame: { DATE: { raw: '', value: '', timestamp: { date: '2022-06-09T06:05:31.000Z', dst: 'summer' } } } },
 ])(
     'processData should process frame as expected',
     ({ data, parsedFrame }) => {
