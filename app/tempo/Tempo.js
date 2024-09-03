@@ -3,9 +3,8 @@ const { EventEmitter } = require('events');
 const deepEqual = require('deep-equal');
 const log = require('../log');
 
-// EDF public api endpoints
-const DAY_COLOR_ENDPOINT = 'https://particulier.edf.fr/services/rest/referentiel/searchTempoStore';
-const DAY_COLOR_REMAINING = 'https://particulier.edf.fr/services/rest/referentiel/getNbTempoDays?TypeAlerte=TEMPO';
+const API_ENDPOINT = 'https://www.api-couleur-tempo.fr/api';
+
 const TEMPO_EVENT = 'tempo-change';
 
 // EDF tempo total days
@@ -83,28 +82,39 @@ class Tempo {
      */
     static async fetch() {
         return {
-            ...await Tempo.getDayColor(),
-            ...await Tempo.getDayColorRemaining(),
+            ...await Tempo.getToday(),
+            ...await Tempo.getTomorrow(),
+            // Disabled for now; waiting for a replacement solution
+            // ...await Tempo.getDayColorRemaining(),
         };
     }
 
     /**
-     * Get day color using edf api.
-     * @returns {Promise<{today: string, tomorrow: string}>}
+     * Get today color.
+     * @returns {Promise<{today: string}>}
      */
-    static async getDayColor() {
-        const dayColorResponse = await axios.get(DAY_COLOR_ENDPOINT, {
-            params: {
-                dateRelevant: new Date().toISOString().split('T')[0],
-            },
-        });
-        if (dayColorResponse.status === 200) {
+    static async getToday() {
+        const response = await axios.get(`${API_ENDPOINT}/jourTempo/today`);
+        if (response.status === 200) {
             return {
-                today: Tempo.formatDayColor(dayColorResponse.data.couleurJourJ),
-                tomorrow: Tempo.formatDayColor(dayColorResponse.data.couleurJourJ1),
+                today: Tempo.formatDayColorCode(response.data.codeJour),
             };
         }
-        throw new Error(`Error on getDayColor api call (${dayColorResponse.status})`);
+        throw new Error(`Error on jourTempo/today api call (${response.status})`);
+    }
+
+    /**
+     * Get tomorrow color.
+     * @returns {Promise<{tomorrow: string}>}
+     */
+    static async getTomorrow() {
+        const response = await axios.get(`${API_ENDPOINT}/jourTempo/tomorrow`);
+        if (response.status === 200) {
+            return {
+                tomorrow: Tempo.formatDayColorCode(response.data.codeJour),
+            };
+        }
+        throw new Error(`Error on jourTempo/tomorrow api call (${response.status})`);
     }
 
     /**
@@ -112,7 +122,7 @@ class Tempo {
      * @returns {Promise}
      */
     static async getDayColorRemaining() {
-        const dayColorRemainingResponse = await axios.get(DAY_COLOR_REMAINING);
+        const dayColorRemainingResponse = await axios.get(`${API_ENDPOINT}/joursTempo`);
         if (dayColorRemainingResponse.status === 200) {
             return {
                 blue_total: BLUE_TOTAL_DAYS,
@@ -146,14 +156,14 @@ class Tempo {
 
     /**
      * Format the dayColor returned by edf.
-     * @param dayColor the dayColor
+     * @param dayColorCode the dayColorCode
      * @returns {string} the dayColor formatted
      */
-    static formatDayColor(dayColor) {
-        switch (dayColor.replace(/TEMPO_/g, '')) {
-        case 'BLEU': return 'blue';
-        case 'BLANC': return 'white';
-        case 'ROUGE': return 'red';
+    static formatDayColorCode(dayColorCode) {
+        switch (dayColorCode) {
+        case 1: return 'blue';
+        case 2: return 'white';
+        case 3: return 'red';
         default: return 'unknown';
         }
     }
