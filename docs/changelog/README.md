@@ -1,7 +1,10 @@
 # Changelog
 
+## 9.0.4
+- :fire: Fix tempo today/tomorrow value retrieval (remaining days per color has been temporary disabled; waiting for a solution)
+
 ## 9.0.3
-- :fire: Fix invalid topic names for some `standard` labels causing HA discovery failures (`̀pjourf+1`...)
+- :fire: Fix invalid topic names for some `standard` labels causing HA discovery failures (`pjourf+1`...)
 
 ## 9.0.2
 - :fire: Fix segmentation fault on arm devices
