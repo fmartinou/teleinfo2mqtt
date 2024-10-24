@@ -29,8 +29,8 @@ jobs:
     - run: "(cd app && npm ci)"
     - run: "(cd app && npm run lint)"
     - run: "(cd app && npm test)"
-    - run: "(cd app && ./cc-test-reporter after-build -t lcov --debug --exit-code $?)"
-      if: "${{ success() }}"
+    #- run: "(cd app && ./cc-test-reporter after-build -t lcov --debug --exit-code $?)"
+    #  if: "${{ success() }}"
     - run: if [ "${{ github.ref }}" == "master" ] ; then export IMAGE_VERSION=latest; fi
       if: "${{ success() }}"
     - run: if [ ! -z "${{ github.ref }}" ] ; then export IMAGE_VERSION=${{ github.ref }}; fi
