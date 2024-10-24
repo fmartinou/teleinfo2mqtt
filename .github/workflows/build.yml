@@ -41,5 +41,5 @@ jobs:
       if: "${{ success() }}"
     - run: make prepare
       if: "${{ success() }}"
-    - run: make build IMAGE_NAME=$DOCKERHUB_USERNAME/teleinfo2mqtt IMAGE_VERSION=$IMAGE_VERSION PLATFORMS=linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/amd64
+    - run: make build IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/teleinfo2mqtt IMAGE_VERSION=$IMAGE_VERSION PLATFORMS=linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/amd64
       if: "${{ success() }}"
