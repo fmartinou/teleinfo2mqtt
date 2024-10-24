@@ -10,7 +10,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - name: nvm install
+    - name: node install
       run: |
         sudo apt update
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
@@ -29,7 +29,7 @@ jobs:
     - run: "(cd app && npm ci)"
     - run: "(cd app && npm run lint)"
     - run: "(cd app && npm test)"
-    - run: "(cd app && ./cc-test-reporter after-build -t lcov --debug --exit-code $TRAVIS_TEST_RESULT)"
+    - run: "(cd app && ./cc-test-reporter after-build -t lcov --debug --exit-code $?)"
       if: "${{ success() }}"
     - run: if [ "${{ github.ref }}" == "master" ] ; then export IMAGE_VERSION=latest; fi
       if: "${{ success() }}"
