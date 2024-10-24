@@ -10,6 +10,10 @@ jobs:
     runs-on: # this agent type is not supported: [jammy]
              ubuntu-latest
     steps:
+    - name: nvm install
+      run: |
+        sudo apt update
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
     - name: checkout
       uses: actions/checkout@v4.1.0
     - run: export IMAGE_VERSION=${TRAVIS_BRANCH//\//\_}
