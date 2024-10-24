@@ -9,6 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: export
+      run: export
     - name: node install
       run: |
         sudo apt update
@@ -25,7 +27,7 @@ jobs:
     - run: "(cd app && npm ci)"
     - run: "(cd app && npm run lint)"
     - run: "(cd app && npm test)"
-    - run: if [ "${ github.ref_name }" == "master" ] ; then export IMAGE_VERSION=latest; fi
+    - run: if [ "${{ github.ref_name }}" == "master" ] ; then export IMAGE_VERSION=latest; fi
       if: "${{ success() }}"
     - run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login --username "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
       if: "${{ success() }}"
