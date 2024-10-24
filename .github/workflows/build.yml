@@ -1,5 +1,6 @@
 name: Build, Test and Package teleinfo2mqtt
 on:
+  push:
   workflow_dispatch:
 env:
   NODE_VERSION: '18'
@@ -7,13 +8,13 @@ env:
   IMAGE_VERSION: develop
 jobs:
   test:
-    runs-on: # this agent type is not supported: [jammy]
-             ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
     - name: nvm install
       run: |
-        sudo apt update
+        apt update
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+        source ~/.bashrc
         nvm install $NODE_VERSION
     - name: checkout
       uses: actions/checkout@v4.1.0
