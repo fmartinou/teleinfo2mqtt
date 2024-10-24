@@ -25,7 +25,7 @@ jobs:
     - run: "(cd app && npm ci)"
     - run: "(cd app && npm run lint)"
     - run: "(cd app && npm test)"
-    - run: if [ "${{ env.GITHUB_REF_NAME }}" == "master" ] ; then export IMAGE_VERSION=latest; fi
+    - run: if [ "${GITHUB_REF_NAME}" == "master" ] ; then export IMAGE_VERSION=latest; fi
       if: "${{ success() }}"
     #- run: if [ ! -z "${{ env.GITHUB_REF_NAME }}" ] ; then export IMAGE_VERSION=${{ env.GITHUB_REF_NAME }}; fi
     #  if: "${{ success() }}"
