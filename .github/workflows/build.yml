@@ -21,19 +21,16 @@ jobs:
         nvm install $NODE_VERSION
     - name: checkout
       uses: actions/checkout@v4.1.0
-    - run: export IMAGE_VERSION=${TRAVIS_BRANCH//\//\_}
     - run: export IMAGE_VERSION=${IMAGE_VERSION//\#/\_}
     - run: docker run --rm --privileged multiarch/qemu-user-static --credential yes --persistent yes
     - run: "(cd app && npm ci)"
     - run: "(cd app && npm run lint)"
     - run: "(cd app && npm test)"
-    - run: if [ "${{ github.ref_name }}" == "master" ] ; then export IMAGE_VERSION=latest; fi
-      if: "${{ success() }}"
     - run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login --username "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
       if: "${{ success() }}"
     - run: docker version
       if: "${{ success() }}"
     - run: make prepare
       if: "${{ success() }}"
-    - run: make build IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/teleinfo2mqtt IMAGE_VERSION=$IMAGE_VERSION PLATFORMS=linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/amd64
+    - run: make build IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/teleinfo2mqtt IMAGE_VERSION=${{  github.ref_name }} PLATFORMS=linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/amd64
       if: "${{ success() }}"
