@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 env:
   NODE_VERSION: '18'
-  CC_TEST_REPORTER_ID: 5167fc209c026a59fa2f9e21c7e21efa2ce09989a62ca8bc775f2240d8b9f662
+  #CC_TEST_REPORTER_ID: 5167fc209c026a59fa2f9e21c7e21efa2ce09989a62ca8bc775f2240d8b9f662
   IMAGE_VERSION: develop
 jobs:
   build:
