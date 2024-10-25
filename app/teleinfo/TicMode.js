@@ -87,7 +87,7 @@ class TicMode {
      * @param data
      */
     processData(data) {
-        const dataStr = data.toString('utf-8').trim().replace(/\u0002|\u0003/g, '');
+        const dataStr = data.toString('utf-8').trim().replace(/\x02|\x03/g, '');
         log.debug(`Raw frame [${dataStr}]`);
 
         // Split line `${label} ${timestamp?} ${value} ${checksum}
