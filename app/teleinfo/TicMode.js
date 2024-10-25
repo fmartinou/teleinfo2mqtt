@@ -87,7 +87,7 @@ class TicMode {
      * @param data
      */
     processData(data) {
-        const dataStr = data.toString('utf-8').trim();
+        const dataStr = data.toString('utf-8').trim().replace(/\u0002|\u0003/g, '');
         log.debug(`Raw frame [${dataStr}]`);
 
         // Split line `${label} ${timestamp?} ${value} ${checksum}
@@ -109,7 +109,7 @@ class TicMode {
         log.debug(`Checksum Data String [${checksumData}] (${checksumDataLength})`);
         const calculatedChecksum = this.calculateChecksum(checksumData);
         if (calculatedChecksum !== checksum.toString()) {
-            log.warn(`Invalid checksum for label ${label} [${checksum}]. Should be [${calculatedChecksum}]`);
+            log.warn(`Invalid checksum for label ${label} [${checksumData}] [${checksum}]. Should be [${calculatedChecksum}]`);
             return;
         }
 
