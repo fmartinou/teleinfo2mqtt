@@ -87,14 +87,14 @@ class TicMode {
      * @param data
      */
     processData(data) {
-        const dataStr = data.toString('utf-8');
+        const dataStr = data.toString('utf-8').trim();
         log.debug(`Raw frame [${dataStr}]`);
 
         // Split line `${label} ${timestamp?} ${value} ${checksum}
         const lineItems = dataStr.split(this.getDataDelimiter());
         log.debug(`Split frame [${lineItems.toString()}]`);
 
-        if (lineItems.length < 3) {
+        if (lineItems.length < 3 || lineItems.length > 4) {
             log.warn(`Corrupted line received [${dataStr}]`);
             return;
         }
@@ -105,7 +105,8 @@ class TicMode {
 
         // Is checksum valid ?
         const checksumData = dataStr.substring(0, dataStr.length - checksum.length);
-        log.debug(`Checksum Data String ${checksumData}`);
+        const checksumDataLength = checksumData.length;
+        log.debug(`Checksum Data String [${checksumData}] (${checksumDataLength})`);
         const calculatedChecksum = this.calculateChecksum(checksumData);
         if (calculatedChecksum !== checksum.toString()) {
             log.warn(`Invalid checksum for label ${label} [${checksum}]. Should be [${calculatedChecksum}]`);
