@@ -1,6 +1,8 @@
 name: Build, Test and Package teleinfo2mqtt
 on:
   push:
+    branches:
+      - '**'
   workflow_dispatch:
 env:
   NODE_VERSION: '18'
