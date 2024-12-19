@@ -5,7 +5,6 @@ const { EventEmitter } = require('events');
 const { emitInterval, serial } = require('../config');
 const log = require('../log');
 
-
 const CENTURY = '20';
 const TIMESTAMP_REGEX = /^(?<dst>H|E|\s?)(?<year>\d{2})(?<month>\d{2})(?<day>\d{2})(?<hour>\d{2})(?<min>\d{2})(?<second>\d{2})$/;
 
@@ -89,13 +88,13 @@ class TicMode {
      * @param data
      */
     processData(data) {
-        //if (log.level === 0) {
-        fs.appendFile('/data/data.log', `${data}\n`, (err) => {
-            if (err) {
-                log.error(err);
-            }
-        });
-        //}
+        if (log.level === 0) {
+            fs.appendFile('/data/data.log', `${data}\n`, (err) => {
+                if (err) {
+                    log.error(err);
+                }
+            });
+        }
         const dataStr = data.toString('utf-8').replace(/\x02|\x03/g, '').trim();
         log.debug(`Raw frame [${dataStr}]`);
 
