@@ -88,7 +88,8 @@ class TicMode {
      * @param data
      */
     processData(data) {
-        if (log.level() === 'DEBUG') {
+        if (log.level() === 20) {
+            log.debug('Writing frame raw data to data.log file.')
             fs.appendFile('/data/data.log', `${data}\n`, (err) => {
                 if (err) {
                     log.error(err);
