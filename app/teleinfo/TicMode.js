@@ -88,7 +88,7 @@ class TicMode {
      * @param data
      */
     processData(data) {
-        if (log.level() == 'DEBUG') {
+        if (log.level() === 'DEBUG') {
             fs.appendFile('/data/data.log', `${data}\n`, (err) => {
                 if (err) {
                     log.error(err);
