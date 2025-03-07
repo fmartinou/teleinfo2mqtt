@@ -73,7 +73,7 @@ class TicMode {
             log.error(`Error when connecting to serial port [${connectionError.message}]`);
             reject(connectionError);
         } else {
-            log.info(`Connected to port [${serial}]`);
+            log.info(`Connected to port [${serial}] with log level ${log.level()}`);
             const parser = this.serialPort.pipe(new ReadlineParser());
 
             // Process data and errors
@@ -88,7 +88,7 @@ class TicMode {
      * @param data
      */
     processData(data) {
-        if (log.level === 0) {
+        if (log.level() == 'DEBUG') {
             fs.appendFile('/data/data.log', `${data}\n`, (err) => {
                 if (err) {
                     log.error(err);
