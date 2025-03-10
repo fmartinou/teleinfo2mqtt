@@ -63,7 +63,7 @@ async function disconnect(force = false) {
  */
 async function publishHealthCheck(teleinfoService) {
     try {
-        await client.publish(`${mqttBaseTopic}/status`, { state: 'up', satistics: teleinfoService.getStats() });
+        await client.publish(`${mqttBaseTopic}/status`, JSON.stringify({ state: 'up', satistics: teleinfoService.getStats() }));
     } catch (e) {
         log.warn(`Unable to publish frame to ${mqttBaseTopic}/status (${e.message})`);
     }

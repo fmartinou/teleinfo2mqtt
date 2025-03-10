@@ -92,8 +92,9 @@ class TicMode {
      * @param data
      */
     processData(data) {
+        log.debug(`Raw frame (${data.length}) [${data}]`);
         const dataStr = data.toString('utf-8').trim();
-        log.debug(`Raw frame (${dataStr.length}) [${dataStr}]`);
+        log.debug(`Trim frame (${dataStr.length}) [${dataStr}]`);
 
         // escape ETXSTX line
         if (dataStr.match(/(\u0002|\u0003)$/)) {

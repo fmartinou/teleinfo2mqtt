@@ -155,6 +155,7 @@ test.each([
 );
 
 test.each([
+    { data: 'ERQ4\t005446257\t_', parsedFrame: { ERQ4: { raw: '005446257', value: 5446257 } } },
     { data: 'VTIC\t02\tJ\r', parsedFrame: { VTIC: { raw: '02', value: 2 } } },
     { data: 'EASF07\t000000000\t(', parsedFrame: { EASF07: { raw: '000000000', value: 0 } } },
     { data: 'NGTF\tH PLEINE/CREUSE\t<', parsedFrame: { NGTF: { raw: 'H PLEINE/CREUSE', value: 'H PLEINE/CREUSE' } } },
