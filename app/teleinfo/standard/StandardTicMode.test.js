@@ -155,6 +155,7 @@ test.each([
 );
 
 test.each([
+    { data: 'VTIC\t02\tJ\r', parsedFrame: { VTIC: { raw: '02', value: 2 } } },
     { data: 'EASF07\t000000000\t(', parsedFrame: { EASF07: { raw: '000000000', value: 0 } } },
     { data: 'NGTF\tH PLEINE/CREUSE\t<', parsedFrame: { NGTF: { raw: 'H PLEINE/CREUSE', value: 'H PLEINE/CREUSE' } } },
     { data: 'SMAXSN\tE220609060531\t02740\t9', parsedFrame: { SMAXSN: { raw: '02740', value: 2740, timestamp: { date: '2022-06-09T06:05:31.000Z', dst: 'summer' } } } },
