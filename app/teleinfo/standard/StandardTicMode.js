@@ -1,4 +1,4 @@
-const TicMode = require('../TicMode').default;
+const TicMode = require('../TicMode');
 
 class StandardTicMode extends TicMode {
     static TIC_MODE = 'standard';

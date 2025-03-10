@@ -6,7 +6,6 @@ const log = require('../log');
 
 const CENTURY = '20';
 const TIMESTAMP_REGEX = /^(?<dst>H|E|\s?)(?<year>\d{2})(?<month>\d{2})(?<day>\d{2})(?<hour>\d{2})(?<min>\d{2})(?<second>\d{2})$/;
-const FRAME_KO_PROPERTY = 'failed';
 
 /**
  * Abstract TicMode service class.
@@ -19,6 +18,7 @@ class TicMode {
         this.serialPort = undefined;
         this.previousFrame = {};
         this.currentFrame = {};
+        this.currentFailed = false;
         this.eventEmitter = new EventEmitter();
         this.lastEmitTime = Date.now();
         this.lastFrameSent = {};
@@ -106,7 +106,7 @@ class TicMode {
 
         if (lineItems.length < 3 || lineItems.length > 4) {
             log.warn(`Corrupted line received [${dataStr}]`);
-            this.currentFrame[FRAME_KO_PROPERTY] = true;
+            this.currentFailed = true;
             return;
         }
 
@@ -121,7 +121,7 @@ class TicMode {
         const calculatedChecksum = this.calculateChecksum(checksumData);
         if (calculatedChecksum !== checksum.toString()) {
             log.warn(`Invalid checksum for label ${label} [${checksumData}] [${checksum}]. Should be [${calculatedChecksum}]`);
-            this.currentFrame[FRAME_KO_PROPERTY] = true;
+            this.currentFailed = true;
             return;
         }
 
@@ -130,7 +130,7 @@ class TicMode {
             ? this.previousFrame[label].value : undefined;
         if (!this.checkValue({ label, previousValue, value })) {
             log.warn(`Invalid value received for label ${label} [${value}]`);
-            this.currentFrame[FRAME_KO_PROPERTY] = true;
+            this.currentFailed = true;
             return;
         }
         log.debug(`Value for label ${label} = ${value}`);
@@ -145,15 +145,15 @@ class TicMode {
             log.debug(`Frame parsed [${frameItem}]`);
         } catch (e) {
             log.warn(`Error on parsing the value [${value}] and the timestamp [${timestampStr}] for label [${label}]: [${e.message}]`);
-            this.currentFrame[FRAME_KO_PROPERTY] = true;
+            this.currentFailed = true;
             return;
         }
 
         // Frame end? -> Dispatch frame event
         if (this.isFrameEnd(label)) {
             const frameSize = Object.keys(this.currentFrame).length - 1;
-            log.debug(`Frame size : ${frameSize} - ${this.currentFrame[FRAME_KO_PROPERTY]}`);
-            if (!this.currentFrame[FRAME_KO_PROPERTY]) {
+            log.debug(`Frame size : ${frameSize} - ${this.currentFailed}`);
+            if (!this.currentFailed) {
                 // Don't emit a second frame in emit interval
                 const currentTime = Date.now();
                 log.debug(`Current time : ${currentTime} - Last emit time : ${this.lastEmitTime}`);
@@ -171,7 +171,7 @@ class TicMode {
                 this.stats.failed += 1;
             }
             if (!this.isFrameStart(label)) {
-                this.currentFrame[FRAME_KO_PROPERTY] = true;
+                this.currentFailed = true;
                 return;
             }
         }
@@ -180,7 +180,7 @@ class TicMode {
         if (this.isFrameStart(label)) {
             this.previousFrame = this.currentFrame;
             this.currentFrame = {};
-            this.currentFrame[FRAME_KO_PROPERTY] = false;
+            this.currentFailed = false;
         }
 
         // Add the new item to the current frame
@@ -397,4 +397,4 @@ class TicMode {
     }
 }
 
-export default TicMode;
+module.exports = TicMode;

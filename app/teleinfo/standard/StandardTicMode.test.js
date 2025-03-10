@@ -1,7 +1,6 @@
 const fs = require('fs');
 const readline = require('readline');
 const StandardTicMode = require('./StandardTicMode');
-const { ticMode } = require('../../config');
 
 test('doesMatchMode should return true when standard', () => {
     expect(StandardTicMode.doesMatchMode('standard')).toBeTruthy();
@@ -156,7 +155,7 @@ test.each([
 );
 
 test.each([
-    { data: 'EASF07\t000000000\t(\r', parsedFrame: { EASF07: { raw: '000000000', value: 0 } } },
+    { data: 'EASF07\t000000000\t(', parsedFrame: { EASF07: { raw: '000000000', value: 0 } } },
     { data: 'NGTF\tH PLEINE/CREUSE\t<', parsedFrame: { NGTF: { raw: 'H PLEINE/CREUSE', value: 'H PLEINE/CREUSE' } } },
     { data: 'SMAXSN\tE220609060531\t02740\t9', parsedFrame: { SMAXSN: { raw: '02740', value: 2740, timestamp: { date: '2022-06-09T06:05:31.000Z', dst: 'summer' } } } },
     { data: 'DATE\tE220609060531\t\t@', parsedFrame: { DATE: { raw: '', value: '', timestamp: { date: '2022-06-09T06:05:31.000Z', dst: 'summer' } } } },
@@ -172,7 +171,7 @@ test.each([
 test('process Standard Data file', async () => {
     const stm = new StandardTicMode();
     const onFrameMockHandler = jest.fn();
-    ticMode.onFrame(onFrameMockHandler);
+    stm.onFrame(onFrameMockHandler);
     const lineReader = readline.createInterface({
         input: fs.createReadStream('../test/standard.frames.log'),
     });
@@ -182,5 +181,5 @@ test('process Standard Data file', async () => {
         stm.processData(data);
     }
     expect(onFrameMockHandler).toHaveBeenCalledTimes(6);
-    expect(ticMode.stats).toEqual({ dispatched: 6, failed: 3 });
+    expect(stm.stats).toEqual({ dispatched: 6, failed: 3 });
 });
