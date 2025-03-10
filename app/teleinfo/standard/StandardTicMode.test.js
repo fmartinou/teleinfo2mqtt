@@ -1,4 +1,7 @@
+const fs = require('fs');
+const readline = require('readline');
 const StandardTicMode = require('./StandardTicMode');
+const { ticMode } = require('../../config');
 
 test('doesMatchMode should return true when standard', () => {
     expect(StandardTicMode.doesMatchMode('standard')).toBeTruthy();
@@ -160,8 +163,24 @@ test.each([
 ])(
     'processData should process frame as expected',
     ({ data, parsedFrame }) => {
-        const ticMode = new StandardTicMode();
-        ticMode.processData(data);
-        expect(ticMode.currentFrame).toEqual(parsedFrame);
+        const stm = new StandardTicMode();
+        stm.processData(data);
+        expect(stm.currentFrame).toEqual(parsedFrame);
     },
 );
+
+test('process Standard Data file', async () => {
+    const stm = new StandardTicMode();
+    const onFrameMockHandler = jest.fn();
+    ticMode.onFrame(onFrameMockHandler);
+    const lineReader = readline.createInterface({
+        input: fs.createReadStream('../test/standard.frames.log'),
+    });
+    // eslint-disable-next-line no-restricted-syntax
+    for await (const data of lineReader) {
+        stm.lastEmitTime = -(10 ** 10); // force emit
+        stm.processData(data);
+    }
+    expect(onFrameMockHandler).toHaveBeenCalledTimes(6);
+    expect(ticMode.stats).toEqual({ dispatched: 6, failed: 3 });
+});

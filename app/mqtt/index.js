@@ -28,7 +28,7 @@ let discoveryConfigurationPublished = false;
 let discoveryTempoConfigurationPublished = false;
 
 /**
- * MQT Client.
+ * MQTT Client.
  */
 let client;
 
@@ -59,10 +59,11 @@ async function disconnect(force = false) {
 
 /**
  * Publish healthcheck to MQTT broker.
+ * @param teleinfoService
  */
-async function publishHealthCheck() {
+async function publishHealthCheck(teleinfoService) {
     try {
-        await client.publish(`${mqttBaseTopic}/status`, 'up');
+        await client.publish(`${mqttBaseTopic}/status`, { state: 'up', satistics: teleinfoService.getStats() });
     } catch (e) {
         log.warn(`Unable to publish frame to ${mqttBaseTopic}/status (${e.message})`);
     }
@@ -98,7 +99,7 @@ async function publishFrame({ frame, teleinfoService }) {
         log.debug(frame);
         try {
             await client.publish(frameTopic, JSON.stringify(frame));
-            await publishHealthCheck();
+            await publishHealthCheck(teleinfoService);
         } catch (e) {
             log.warn(`Unable to publish frame to ${frameTopic} (${e.message})`);
         }

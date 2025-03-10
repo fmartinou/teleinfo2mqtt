@@ -1,4 +1,3 @@
-const fs = require('fs');
 const SerialPort = require('serialport');
 const { ReadlineParser } = require('@serialport/parser-readline');
 const { EventEmitter } = require('events');
@@ -7,6 +6,7 @@ const log = require('../log');
 
 const CENTURY = '20';
 const TIMESTAMP_REGEX = /^(?<dst>H|E|\s?)(?<year>\d{2})(?<month>\d{2})(?<day>\d{2})(?<hour>\d{2})(?<min>\d{2})(?<second>\d{2})$/;
+const FRAME_KO_PROPERTY = 'failed';
 
 /**
  * Abstract TicMode service class.
@@ -22,6 +22,10 @@ class TicMode {
         this.eventEmitter = new EventEmitter();
         this.lastEmitTime = Date.now();
         this.lastFrameSent = {};
+        this.stats = {
+            dispatched: 0,
+            failed: 0,
+        };
 
         // Graceful exit
         process.on('SIGTERM', () => this.disconnect());
@@ -73,7 +77,7 @@ class TicMode {
             log.error(`Error when connecting to serial port [${connectionError.message}]`);
             reject(connectionError);
         } else {
-            log.info(`Connected to port [${serial}] with log level ${log.level()}`);
+            log.info(`Connected to port [${serial}]`);
             const parser = this.serialPort.pipe(new ReadlineParser());
 
             // Process data and errors
@@ -88,16 +92,13 @@ class TicMode {
      * @param data
      */
     processData(data) {
-        if (log.level() === 20) {
-            log.debug('Writing frame raw data to data.log file.');
-            fs.appendFile('/data/data.log', `${data}\n`, (err) => {
-                if (err) {
-                    log.error(err);
-                }
-            });
+        const dataStr = data.toString('utf-8');
+        log.debug(`Raw frame (${dataStr.length}) [${dataStr}]`);
+
+        // escape ETXSTX line
+        if (dataStr.match(/(\u0002|\u0003)$/)) {
+            return;
         }
-        const dataStr = data.toString('utf-8').replace(/\x02|\x03/g, '').trim();
-        log.debug(`Raw frame [${dataStr}]`);
 
         // Split line `${label} ${timestamp?} ${value} ${checksum}
         const lineItems = dataStr.split(this.getDataDelimiter());
@@ -105,6 +106,7 @@ class TicMode {
 
         if (lineItems.length < 3 || lineItems.length > 4) {
             log.warn(`Corrupted line received [${dataStr}]`);
+            this.currentFrame[FRAME_KO_PROPERTY] = true;
             return;
         }
 
@@ -119,6 +121,7 @@ class TicMode {
         const calculatedChecksum = this.calculateChecksum(checksumData);
         if (calculatedChecksum !== checksum.toString()) {
             log.warn(`Invalid checksum for label ${label} [${checksumData}] [${checksum}]. Should be [${calculatedChecksum}]`);
+            this.currentFrame[FRAME_KO_PROPERTY] = true;
             return;
         }
 
@@ -127,6 +130,7 @@ class TicMode {
             ? this.previousFrame[label].value : undefined;
         if (!this.checkValue({ label, previousValue, value })) {
             log.warn(`Invalid value received for label ${label} [${value}]`);
+            this.currentFrame[FRAME_KO_PROPERTY] = true;
             return;
         }
         log.debug(`Value for label ${label} = ${value}`);
@@ -141,22 +145,33 @@ class TicMode {
             log.debug(`Frame parsed [${frameItem}]`);
         } catch (e) {
             log.warn(`Error on parsing the value [${value}] and the timestamp [${timestampStr}] for label [${label}]: [${e.message}]`);
+            this.currentFrame[FRAME_KO_PROPERTY] = true;
             return;
         }
 
         // Frame end? -> Dispatch frame event
         if (this.isFrameEnd(label)) {
-            // Don't emit a second frame in emit interval
-            const currentTime = Date.now();
-            if (currentTime - this.lastEmitTime > emitInterval * 1000) {
-                log.debug(`Dispatch frame ${JSON.stringify(this.currentFrame)}`);
-                this.eventEmitter.emit('frame', this.currentFrame);
-                this.lastEmitTime = currentTime;
-                this.lastFrameSent = this.currentFrame;
+            const frameSize = Object.keys(this.currentFrame).length - 1;
+            log.debug(`Frame size : ${frameSize} - ${this.currentFrame[FRAME_KO_PROPERTY]}`);
+            if (!this.currentFrame[FRAME_KO_PROPERTY]) {
+                // Don't emit a second frame in emit interval
+                const currentTime = Date.now();
+                log.debug(`Current time : ${currentTime} - Last emit time : ${this.lastEmitTime}`);
+                if (currentTime - this.lastEmitTime > emitInterval * 1000) {
+                    log.debug(`Dispatch frame ${JSON.stringify(this.currentFrame)}`);
+                    this.eventEmitter.emit('frame', this.currentFrame);
+                    this.lastEmitTime = currentTime;
+                    this.lastFrameSent = this.currentFrame;
+                    this.stats.dispatched += 1;
+                } else {
+                    log.debug(`Ignoring MQTT emission because of emit interval (Emit interval : ${emitInterval} - Last emit time : ${this.lastEmitTime} - Current time : ${currentTime}`);
+                }
             } else {
-                log.debug(`Ignoring MQTT emission because of emit interval (Emit interval : ${emitInterval} - Last emit time : ${this.lastEmitTime} - Current time : ${currentTime}`);
+                log.debug(`Ignoring MQTT emission because frame is incomplete (Frame size : ${frameSize})`);
+                this.stats.failed += 1;
             }
             if (!this.isFrameStart(label)) {
+                this.currentFrame[FRAME_KO_PROPERTY] = true;
                 return;
             }
         }
@@ -165,6 +180,7 @@ class TicMode {
         if (this.isFrameStart(label)) {
             this.previousFrame = this.currentFrame;
             this.currentFrame = {};
+            this.currentFrame[FRAME_KO_PROPERTY] = false;
         }
 
         // Add the new item to the current frame
@@ -302,6 +318,14 @@ class TicMode {
     }
 
     /**
+     * Get stats
+     * @returns {Object}
+     * */
+    getStats() {
+        return this.stats;
+    }
+
+    /**
      * Is it the end of the frame?
      * @param label
      */
@@ -373,4 +397,4 @@ class TicMode {
     }
 }
 
-module.exports = TicMode;
+export default TicMode;
