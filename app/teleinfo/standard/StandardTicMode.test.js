@@ -179,9 +179,9 @@ test('process Standard Data file', async () => {
     });
     // eslint-disable-next-line no-restricted-syntax
     for await (const data of lineReader) {
-        stm.lastEmitTime = -(10 ** 10); // force emit
+        stm.lastEmitTime = Date.parse('2020-12-31');
         stm.processData(data);
     }
     expect(onFrameMockHandler).toHaveBeenCalledTimes(6);
-    expect(stm.stats).toEqual({ dispatched: 6, failed: 3 });
+    expect(stm.stats).toEqual({ ok: 6, dispatched: 6, failed: 3 });
 });

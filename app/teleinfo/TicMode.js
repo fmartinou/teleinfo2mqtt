@@ -23,6 +23,7 @@ class TicMode {
         this.lastEmitTime = Date.now();
         this.lastFrameSent = {};
         this.stats = {
+            ok: 0,
             dispatched: 0,
             failed: 0,
         };
@@ -167,8 +168,9 @@ class TicMode {
                 } else {
                     log.debug(`Ignoring MQTT emission because of emit interval (Emit interval : ${emitInterval} - Last emit time : ${this.lastEmitTime} - Current time : ${currentTime}`);
                 }
+                this.stats.ok += 1;
             } else {
-                log.debug(`Ignoring MQTT emission because frame is incomplete (Frame size : ${frameSize})`);
+                log.debug('Ignoring MQTT emission because of frame failed');
                 this.stats.failed += 1;
             }
             if (!this.isFrameStart(label)) {
