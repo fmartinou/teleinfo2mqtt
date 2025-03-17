@@ -48,5 +48,5 @@ test('publishHealthCheck should be called as expected', () => {
     });
     moduleToTest.__set__('discoveryConfigurationPublished', true);
     moduleToTest.publishHealthCheck(new HistoryTicMode());
-    expect(moduleToTest.__get__('client').publish).toHaveBeenCalledWith('teleinfo/status', '{"state":"up","satistics":{"ok":0,"dispatched":0,"failed":0}}');
+    expect(moduleToTest.__get__('client').publish).toHaveBeenCalledWith('teleinfo/status', '{"state":"up","statistics":{"ok":0,"dispatched":0,"failed":0}}');
 });

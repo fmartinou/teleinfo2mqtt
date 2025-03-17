@@ -94,7 +94,7 @@ class TicMode {
      */
     processData(data) {
         log.debug(`Raw frame (${data.length}) [${data}]`);
-        const dataStr = data.toString('utf-8').trim();
+        const dataStr = data.toString('utf-8').replace(/\r$/, '');
         log.debug(`Trim frame (${dataStr.length}) [${dataStr}]`);
 
         // escape ETXSTX line
