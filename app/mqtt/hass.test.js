@@ -1311,7 +1311,7 @@ test('publishConfigurationForDiscovery should be called as expected for standard
         state_topic: 'teleinfo/012345678912',
         device_class: 'apparent_power',
         value_template: '{% if \'PCOUP\' in value_json %}{{ value_json.PCOUP.value }}{% endif %}',
-        unit_of_measurement: 'kVA',
+        unit_of_measurement: 'VA',
         device: {
             identifiers: [
                 '012345678912',
@@ -1358,7 +1358,7 @@ test('publishConfigurationForDiscovery should be called as expected for standard
         state_topic: 'teleinfo/012345678912',
         device_class: 'apparent_power',
         value_template: '{% if \'PREF\' in value_json %}{{ value_json.PREF.value }}{% endif %}',
-        unit_of_measurement: 'kVA',
+        unit_of_measurement: 'VA',
         device: {
             identifiers: [
                 '012345678912',
