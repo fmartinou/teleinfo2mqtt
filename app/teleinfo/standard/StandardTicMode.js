@@ -406,10 +406,6 @@ class StandardTicMode extends TicMode {
         case 'CCASN-1':
         case 'CCAIN':
         case 'CCAIN-1':
-        case 'ERQ1':
-        case 'ERQ2':
-        case 'ERQ3':
-        case 'ERQ4':
             return 'power';
         default:
             return undefined;

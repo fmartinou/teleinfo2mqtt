@@ -1037,7 +1037,6 @@ test('publishConfigurationForDiscovery should be called as expected for standard
         unique_id: 'ERQ1',
         name: 'ERQ1',
         state_topic: 'teleinfo/012345678912',
-        device_class: 'power',
         value_template: '{% if \'ERQ1\' in value_json %}{{ value_json.ERQ1.value }}{% endif %}',
         unit_of_measurement: 'VArh',
         device: {
@@ -1054,7 +1053,6 @@ test('publishConfigurationForDiscovery should be called as expected for standard
         unique_id: 'ERQ2',
         name: 'ERQ2',
         state_topic: 'teleinfo/012345678912',
-        device_class: 'power',
         value_template: '{% if \'ERQ2\' in value_json %}{{ value_json.ERQ2.value }}{% endif %}',
         unit_of_measurement: 'VArh',
         device: {
@@ -1071,7 +1069,6 @@ test('publishConfigurationForDiscovery should be called as expected for standard
         unique_id: 'ERQ3',
         name: 'ERQ3',
         state_topic: 'teleinfo/012345678912',
-        device_class: 'power',
         value_template: '{% if \'ERQ3\' in value_json %}{{ value_json.ERQ3.value }}{% endif %}',
         unit_of_measurement: 'VArh',
         device: {
@@ -1088,7 +1085,6 @@ test('publishConfigurationForDiscovery should be called as expected for standard
         unique_id: 'ERQ4',
         name: 'ERQ4',
         state_topic: 'teleinfo/012345678912',
-        device_class: 'power',
         value_template: '{% if \'ERQ4\' in value_json %}{{ value_json.ERQ4.value }}{% endif %}',
         unit_of_measurement: 'VArh',
         device: {
