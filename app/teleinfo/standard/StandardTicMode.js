@@ -407,6 +407,11 @@ class StandardTicMode extends TicMode {
         case 'CCAIN':
         case 'CCAIN-1':
             return 'power';
+        case 'ERQ1':
+        case 'ERQ2':
+        case 'ERQ3':
+        case 'ERQ4':
+            return 'reactive_energy';
         default:
             return undefined;
         }
@@ -516,7 +521,7 @@ class StandardTicMode extends TicMode {
         case 'ERQ2':
         case 'ERQ3':
         case 'ERQ4':
-            return 'VArh';
+            return 'varh';
         default:
             return undefined;
         }
