@@ -12,4 +12,5 @@ build:
 	docker buildx build --push \
 		--platform ${PLATFORMS} \
 		--build-arg BASE_IMAGE=${BASE_IMAGE} \
+		--build-arg IMAGE_VERSION=${IMAGE_VERSION} \
 		-t ${IMAGE_NAME}:${IMAGE_VERSION} .
