@@ -73,7 +73,7 @@ async function publishConfigurationForHassDiscovery({
         const discoveryTopic = `${hassDiscoveryPrefix}/sensor/${mqttBaseTopic}/${id}_${labelSanitized}/config`;
         log.info(`Publish configuration for tag ${label} for discovery to topic [${discoveryTopic}]`);
         const stateTopic = getFrameTopic(id);
-        let discoveryMessage = {
+        const discoveryMessage = {
             unique_id: label,
             name: label,
             state_topic: stateTopic,
@@ -88,7 +88,7 @@ async function publishConfigurationForHassDiscovery({
                 name: `Teleinfo ${id}`,
             },
         };
-        if ("STGE" === label) {
+        if (label === 'STGE') {
             discoveryMessage.json_attributes_topic = stateTopic;
             discoveryMessage.json_attributes_template = getSTGEAttributeTemplate(label);
         }
