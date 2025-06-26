@@ -55,34 +55,23 @@ jobs:
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
           chmod +x ./cc-test-reporter
           ./cc-test-reporter before-build
-      - name: Download coverage
-        uses: actions/github-script@v7
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
         with:
-          script: |
-            const ref = context.payload.pull_request ? context.payload.pull_request.head.sha : context.payload.before;
-            let artifacts = await github.rest.actions.listWorkflowRunArtifacts({
-               owner: context.repo.owner,
-               repo: context.repo.repo,
-               run_id: ref,
-            });
-            let matchArtifact = artifacts.data.artifacts.filter((artifact) => {
-              return artifact.name == "coverage"
-            })[0];
-            let download = await github.rest.actions.downloadArtifact({
-               owner: context.repo.owner,
-               repo: context.repo.repo,
-               artifact_id: matchArtifact.id,
-               archive_format: 'zip',
-            });
-            const fs = require('fs');
-            const path = require('path');
-            const temp = '${{ runner.temp }}/artifacts';
-            if (!fs.existsSync(temp)){
-              fs.mkdirSync(temp);
-            }
-            fs.writeFileSync(path.join(temp, 'coverage.zip'), Buffer.from(download.data));
-      - name: Unzip coverage
-        run: unzip coverage.zip -d coverage
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: ./app/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Linter
+        run: npm run lint
+
+      - name: Run UT
+        run: npm test
+
       - name: Code Climate test reporter
         env:
 #          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
