@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       node-version: ${{ steps.node-version.outputs.node-version }}
-      node-version-next: ${{ steps.node-version.outputs.node-version-next }}
+      node-version-next: ${{ steps.node-version-next.outputs.node-version-next }}
     steps:
       - name: Define Node versions
         id: node-version
