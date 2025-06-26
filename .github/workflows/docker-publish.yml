@@ -20,11 +20,11 @@ jobs:
       - name: Define Node versions
         id: node-version
         run: |
-          echo 'node-version=["$NODE_VERSION"]' >> "$GITHUB_OUTPUT"
+          echo "node-version=[ $NODE_VERSION ]" >> "$GITHUB_OUTPUT"
       - name: Define next Node versions
         id: node-version-next
         run: |
-          echo 'node-version-next=["$NODE_VERSION_NEXT"]' >> "$GITHUB_OUTPUT"
+          echo "node-version-next=[ $NODE_VERSION_NEXT ]" >> "$GITHUB_OUTPUT"
   test:
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental }}
