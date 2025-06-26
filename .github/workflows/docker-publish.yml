@@ -73,6 +73,7 @@ jobs:
           platforms: ${{ matrix.platforms }}
           tags: ghcr.io/${{ env.REPO }}:${{ github.ref_name }},ghcr.io/${{ env.REPO }}:latest-dev${{ github.event.action == 'released' && format(',ghcr.io/{0}:latest', env.REPO) || '' }}
           build-args: |
-            BUILD_DATE=${{ github.event.repository.updated_at }}
-            BUILD_REF=$(git rev-parse --short HEAD)
-            BUILD_VERSION=${{ github.ref_name }}
+            IMAGE_DATE=${{ github.event.repository.updated_at }}
+            IMAGE_REF=$(git rev-parse --short HEAD)
+            IMAGE_VERSION=${{ github.ref_name }}
+            IMAGE_NAME=${{ env.REPO }}
