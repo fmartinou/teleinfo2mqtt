@@ -15,7 +15,7 @@ jobs:
     defaults:
       run:
         working-directory: ./app
-    name: test/node ${{ matrix.node-version }}
+    name: Test with node ${{ matrix.node-version }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -39,7 +39,7 @@ jobs:
   coverage:
     needs: [ test ]
     if: ${{ needs.test.result == 'success' }}
-    name: coverage
+    name: Test Coverage
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -47,26 +47,51 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-          cache-dependency-path: ./app/package-lock.json
-
-      - run: npm install -g yarn
-      - run: yarn install
-      - run: yarn build
-      - uses: paambaati/codeclimate-action@v9.0.0
+      - name: Set up Code Climate test reporter
         env:
+#          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
           CC_TEST_REPORTER_ID: 5167fc209c026a59fa2f9e21c7e21efa2ce09989a62ca8bc775f2240d8b9f662
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          ./cc-test-reporter before-build
+      - name: Download coverage
+        uses: actions/github-script@v7
         with:
-          coverageCommand: yarn coverage
+          script: |
+            var artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: ${{github.event.workflow_run.id }},
+            });
+            var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "coverage"
+            })[0];
+            var download = await github.rest.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+            var fs = require('fs');
+            fs.writeFileSync('${{github.workspace}}/coverage.zip', Buffer.from(download.data));
+      - name: Unzip coverage
+        run: |
+          mkdir coverage
+          cd coverage
+          unzip ../coverage.zip
+      - name: Code Climate test reporter
+        env:
+#          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+          CC_TEST_REPORTER_ID: 5167fc209c026a59fa2f9e21c7e21efa2ce09989a62ca8bc775f2240d8b9f662
+          GIT_BRANCH: ${{github.event.workflow_run.head_branch }}
+          GIT_COMMIT_SHA: ${{github.event.workflow_run.head_commit.id }}
+        run: ./cc-test-reporter after-build -t lcov --debug --exit-code $?
 
   build-and-push-image:
     needs: test
     if: ${{ needs.test.result == 'success' }}
+    name: Build ${{ (github.event.action == 'released' || github.event.action == 'prereleased') && 'and push ' || '' }}image for ${{ matrix.platforms }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
