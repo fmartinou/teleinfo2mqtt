@@ -1,0 +1,82 @@
+name: App-build-test-push
+
+on:
+  push:
+  release:
+    types: [released, prereleased]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        node-version: ['20.x', '22.x']
+    defaults:
+      run:
+        working-directory: ./app
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+    #  - run: npm config set package-lock true
+    #  - run: echo 'package-lock=true'>> .npmrc
+    #  - run: npm install -g npm@latest
+    #  - run: npm i -g npm-upgrade
+
+      - name: Install dependencies
+        run: npm ci
+ #     - run: npm run build --if-present
+
+      - name: Run Linter
+        run: npm run lint
+
+      - name: Run UT
+        run: npm test
+
+  build-and-push-image:
+    needs: test
+    if: ${{ needs.test.result == 'success' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - linux/386
+          - linux/amd64
+          - linux/arm/v6
+          - linux/arm/v7
+          - linux/arm64/v8
+    permissions:
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3.3.0
+        with:
+          registry: https://ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lowercase repo name
+        run: |
+          echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: ${{ github.event.action == 'released' || github.event.action == 'prereleased' }}
+          platforms: ${{ matrix.platforms }}
+          tags: ghcr.io/${{ env.REPO }}:${{ github.ref_name }},ghcr.io/${{ env.REPO }}:latest-dev${{ github.event.action == 'released' && format(',ghcr.io/{0}:latest', env.REPO) || '' }}
+          build-args: |
+            BUILD_DATE=${{ github.event.repository.updated_at }}
+            BUILD_REF=$(git rev-parse --short HEAD)
+            BUILD_VERSION=${{ github.ref_name }}
