@@ -5,13 +5,22 @@ on:
   release:
     types: [released, prereleased]
 
+env:
+  NODE_VERSION: 20
+  NODE_VERSION_NEXT: 22
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: true
       matrix:
-        node-version: [ 20, 22 ]
+        node-version: [ $NODE_VERSION ]
+        experimental: [ false ]
+        include:
+          - node-version: $NODE_VERSION_NEXT
+            experimental: true
     defaults:
       run:
         working-directory: ./app
@@ -59,7 +68,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: $NODE_VERSION
           cache: 'npm'
           cache-dependency-path: ./app/package-lock.json
 
