@@ -59,27 +59,29 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            var artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+            let artifacts = await github.rest.actions.listWorkflowRunArtifacts({
                owner: context.repo.owner,
                repo: context.repo.repo,
                run_id: context.payload.workflow_run.id,
             });
-            var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+            let matchArtifact = artifacts.data.artifacts.filter((artifact) => {
               return artifact.name == "coverage"
             })[0];
-            var download = await github.rest.actions.downloadArtifact({
+            let download = await github.rest.actions.downloadArtifact({
                owner: context.repo.owner,
                repo: context.repo.repo,
                artifact_id: matchArtifact.id,
                archive_format: 'zip',
             });
-            var fs = require('fs');
-            fs.writeFileSync('${{ github.workspace }}/coverage.zip', Buffer.from(download.data));
+            const fs = require('fs');
+            const path = require('path');
+            const temp = '${{ runner.temp }}/artifacts';
+            if (!fs.existsSync(temp)){
+              fs.mkdirSync(temp);
+            }
+            fs.writeFileSync(path.join(temp, 'coverage.zip'), Buffer.from(download.data));
       - name: Unzip coverage
-        run: |
-          mkdir coverage
-          cd coverage
-          unzip ../coverage.zip
+        run: unzip coverage.zip -d coverage
       - name: Code Climate test reporter
         env:
 #          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
