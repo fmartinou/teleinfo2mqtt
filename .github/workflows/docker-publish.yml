@@ -83,7 +83,7 @@ jobs:
   build-and-push-image:
     needs: test
     if: ${{ needs.test.result == 'success' }}
-    name: Build ${{ (github.event.action == 'released' || github.event.action == 'prereleased') && 'and push ' || '' }}image for ${{ matrix.platforms }}
+    name: Build ${{ (github.event.action == 'released' || github.event.action == 'prereleased') && 'and push ' || '' }}image for ${{ matrix.platform }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -116,7 +116,7 @@ jobs:
         with:
           context: .
           push: ${{ github.event.action == 'released' || github.event.action == 'prereleased' }}
-          platforms: ${{ matrix.platforms }}
+          platforms: ${{ matrix.platform }}
           tags: ghcr.io/${{ env.REPO }}:${{ github.ref_name }},ghcr.io/${{ env.REPO }}:develop${{ github.event.action == 'released' && format(',ghcr.io/{0}:latest', env.REPO) || '' }}
           build-args: |
             IMAGE_DATE=${{ github.event.repository.updated_at }}
