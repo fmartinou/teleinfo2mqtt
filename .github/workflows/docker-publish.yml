@@ -15,6 +15,7 @@ jobs:
     defaults:
       run:
         working-directory: ./app
+    name: test/node ${{ matrix.node-version }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -34,6 +35,34 @@ jobs:
 
       - name: Run UT
         run: npm test
+
+  coverage:
+    needs: [ test ]
+    if: ${{ needs.test.result == 'success' }}
+    name: coverage
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: ./app/package-lock.json
+
+      - run: npm install -g yarn
+      - run: yarn install
+      - run: yarn build
+      - uses: paambaati/codeclimate-action@v2.2.4
+        env:
+          CC_TEST_REPORTER_ID: 5167fc209c026a59fa2f9e21c7e21efa2ce09989a62ca8bc775f2240d8b9f662
+        with:
+          coverageCommand: yarn coverage
 
   build-and-push-image:
     needs: test
@@ -71,7 +100,7 @@ jobs:
           context: .
           push: ${{ github.event.action == 'released' || github.event.action == 'prereleased' }}
           platforms: ${{ matrix.platforms }}
-          tags: ghcr.io/${{ env.REPO }}:${{ github.ref_name }},ghcr.io/${{ env.REPO }}:latest-dev${{ github.event.action == 'released' && format(',ghcr.io/{0}:latest', env.REPO) || '' }}
+          tags: ghcr.io/${{ env.REPO }}:${{ github.ref_name }},ghcr.io/${{ env.REPO }}:develop${{ github.event.action == 'released' && format(',ghcr.io/{0}:latest', env.REPO) || '' }}
           build-args: |
             IMAGE_DATE=${{ github.event.repository.updated_at }}
             IMAGE_REF=$(git rev-parse --short HEAD)
