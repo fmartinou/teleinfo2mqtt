@@ -1,0 +1,155 @@
+name: App-build-test-push
+
+on:
+  push:
+  release:
+    types: [released, prereleased]
+
+env:
+  NODE_VERSION: 20
+  NODE_VERSION_NEXT: 22
+
+jobs:
+
+  define-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      node-version: ${{ steps.node-version.outputs.node-version }}
+      node-version-next: ${{ steps.node-version-next.outputs.node-version-next }}
+    steps:
+      - name: Define Node versions
+        id: node-version
+        run: |
+          echo "node-version=[ $NODE_VERSION ]" >> "$GITHUB_OUTPUT"
+      - name: Define next Node versions
+        id: node-version-next
+        run: |
+          echo "node-version-next=$NODE_VERSION_NEXT" >> "$GITHUB_OUTPUT"
+  test:
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
+    needs:
+    - define-matrix
+    strategy:
+      fail-fast: true
+      matrix:
+        node-version: ${{ fromJSON(needs.define-matrix.outputs.node-version) }}
+        experimental: [ false ]
+        include:
+          - node-version: ${{ fromJSON(needs.define-matrix.outputs.node-version-next) }}
+            experimental: true
+    defaults:
+      run:
+        working-directory: ./app
+    name: Test with node ${{ matrix.node-version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: ./app/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Linter
+        run: npm run lint
+
+      - name: Run UT
+        run: npm test
+
+  coverage:
+    needs: [ test ]
+    if: ${{ needs.test.result == 'success' }}
+    name: Test Coverage
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Code Climate test reporter
+        env:
+#          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+          CC_TEST_REPORTER_ID: 5167fc209c026a59fa2f9e21c7e21efa2ce09989a62ca8bc775f2240d8b9f662
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          ./cc-test-reporter before-build
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ./app/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Linter
+        run: npm run lint
+
+      - name: Run UT
+        run: npm test
+
+      - name: Code Climate test reporter
+        env:
+#          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+          CC_TEST_REPORTER_ID: 5167fc209c026a59fa2f9e21c7e21efa2ce09989a62ca8bc775f2240d8b9f662
+          GIT_BRANCH: ${{github.event.workflow_run.head_branch }}
+          GIT_COMMIT_SHA: ${{github.event.workflow_run.head_commit.id }}
+        run: ./cc-test-reporter after-build -t lcov --debug --exit-code $?
+
+  build-and-push-image:
+    needs: test
+    if: ${{ needs.test.result == 'success' }}
+    name: Build ${{ (github.event.action == 'released' || github.event.action == 'prereleased') && 'and push ' || '' }}image
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        continue-on-error: true
+        uses: docker/login-action@v3.3.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3.3.0
+        with:
+          registry: https://ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lowercase repo name
+        run: |
+          echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: ${{ github.event.action == 'released' || github.event.action == 'prereleased' }}
+          platforms: linux/amd64, linux/arm/v6, linux/arm/v7, linux/arm64
+          tags: ghcr.io/${{ env.REPO }}:${{ github.ref_name }},ghcr.io/${{ env.REPO }}:develop${{ github.event.action == 'released' && format(',ghcr.io/{0}:latest', env.REPO) || '' }}
+          build-args: |
+            IMAGE_DATE=${{ github.event.repository.updated_at }}
+            IMAGE_REF=$(git rev-parse --short HEAD)
+            IMAGE_VERSION=${{ github.ref_name }}
+            IMAGE_NAME=${{ env.REPO }}
