@@ -1,6 +1,7 @@
 # Changelog
 
 ## 9.0.5 (wip)
+- :star: Decode `STGE` label and expose as HASS attributes
 - :fire: Fix "kVA is not valid" in HASS"
 - :fire: Fix "VArh is not valid" in HASS"
 - :fire: Fix "kVA & VArh is not a valid unit & will stop working in HA Core 2025.7.0"
