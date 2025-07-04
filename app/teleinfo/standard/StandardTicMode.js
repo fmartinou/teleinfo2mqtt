@@ -230,8 +230,6 @@ class StandardTicMode extends TicMode {
         case 'NJOURF':
         case 'NJOURF+1':
         case 'NTARF':
-        case 'PCOUP':
-        case 'PREF':
         case 'VTIC':
             return value.length === 2;
         case 'IRMS1':
@@ -264,6 +262,8 @@ class StandardTicMode extends TicMode {
         case 'SMAXSN2-1':
         case 'SMAXSN3':
         case 'SMAXSN3-1':
+        case 'PCOUP':
+        case 'PREF':
             return value.length === 5;
         case 'STGE':
             return value.length === 8;
