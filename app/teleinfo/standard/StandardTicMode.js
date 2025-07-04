@@ -163,10 +163,8 @@ class StandardTicMode extends TicMode {
         case 'NJOURF':
         case 'NJOURF+1':
         case 'NTARF':
-        case 'PCOUP':
         case 'PJOURF+1':
         case 'PPOINTE':
-        case 'PREF':
         case 'PRM':
         case 'RELAIS':
         case 'SINSTI':
@@ -180,6 +178,9 @@ class StandardTicMode extends TicMode {
         case 'URMS3':
         case 'VTIC':
             return lineItems[1];
+        case 'PCOUP':
+        case 'PREF':
+            return lineItems[1] ? `${lineItems[1]}000` : lineItems[1];
         case 'CCAIN':
         case 'CCAIN-1':
         case 'CCASN':
@@ -405,11 +406,12 @@ class StandardTicMode extends TicMode {
         case 'CCASN-1':
         case 'CCAIN':
         case 'CCAIN-1':
+            return 'power';
         case 'ERQ1':
         case 'ERQ2':
         case 'ERQ3':
         case 'ERQ4':
-            return 'power';
+            return 'reactive_energy';
         default:
             return undefined;
         }
@@ -494,7 +496,6 @@ class StandardTicMode extends TicMode {
             return 'V';
         case 'PREF':
         case 'PCOUP':
-            return 'kVA';
         case 'SINSTS':
         case 'SINSTS1':
         case 'SINSTS2':
@@ -520,7 +521,7 @@ class StandardTicMode extends TicMode {
         case 'ERQ2':
         case 'ERQ3':
         case 'ERQ4':
-            return 'VArh';
+            return 'varh';
         default:
             return undefined;
         }
