@@ -1,5 +1,10 @@
 # Changelog
 
+## 9.0.5 (wip)
+- :fire: Fix "kVA is not valid" in HASS"
+- :fire: Fix "VArh is not valid" in HASS"
+- :fire: Fix "kVA & VArh is not a valid unit & will stop working in HA Core 2025.7.0"
+
 ## 9.0.4
 - :fire: Fix tempo today/tomorrow value retrieval (remaining days per color has been temporary disabled; waiting for a solution)
 
