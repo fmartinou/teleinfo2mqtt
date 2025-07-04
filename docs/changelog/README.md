@@ -1,6 +1,6 @@
 # Changelog
 
-## 9.0.5 (wip)
+## 9.0.5
 - :star: Decode `STGE` label and expose as HASS attributes
 - :fire: Fix "kVA is not valid" in HASS"
 - :fire: Fix "VArh is not valid" in HASS"
