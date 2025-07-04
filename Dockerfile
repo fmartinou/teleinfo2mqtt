@@ -26,6 +26,17 @@ RUN apk del build_tools
 # Release stage
 FROM base as release
 
+ARG IMAGE_VERSION
+
+# OCI Meta information
+LABEL \
+    org.opencontainers.image.authors="fmartinou (https://github.com/fmartinou)" \
+    org.opencontainers.image.source="https://github.com/fmartinou/teleinfo2mqtt" \
+    org.opencontainers.image.version=${IMAGE_VERSION} \
+    org.opencontainers.image.title="teleinfo2mqtt" \
+    org.opencontainers.image.description="teleinfo2mqtt allows you to read Teleinfo frames from a Serial port and publish them to an Mqtt broker." \
+    org.opencontainers.image.licenses="MIT"
+
 ## Copy node_modules
 COPY --from=dependencies /home/node/app/node_modules ./node_modules
 
