@@ -29,6 +29,37 @@ function getValueTemplate({ label, idLabel }) {
 }
 
 /**
+ * Get STGE attribute template.
+ * @param label
+ * @returns {string}
+ */
+function getSTGEAttributeTemplate(label) {
+    return `{%- if '${label}' in value_json -%}
+    {%- set stge = int(value_json.${label}.value, base=16) -%}
+    {%- set tempo_today = (stge // (2**24)) | bitwise_and(3) -%}
+    {%- set tempo_tomorrow = (stge // (2**26)) | bitwise_and(3) -%}
+    {{ {
+        'contact_sec': ("on" if (((stge // (2**0)) | bitwise_and(1)) == 0) else "off"),
+        'organe_de_coupure': ((stge // (2**1)) | bitwise_and(0b111)) == 0,
+        'etat_cache_borne_distributeur_closed': (stge | bitwise_and(0b10000)) == 0,
+        'overvoltage': (stge | bitwise_and(0b1000000)) != 0,
+        'overload': (stge | bitwise_and(0b10000000)) != 0,
+        'consuming': (stge | bitwise_and(0b100000000)) == 0,
+        'producing': (stge | bitwise_and(0b100000000)) != 0,
+        'active_energy_positive': (stge | bitwise_and(0b1000000000)) == 0,
+        'idx_tarif_fournisseur': stge | bitwise_and(0x00003C00)//(2**10),
+        'idx_tarif_distributeur': stge | bitwise_and(0x0000C000)//(2**14),
+        'clock_ok': (stge | bitwise_and(2**16)) == 0,
+        'teleinfo_mode': "historique" if (( stge // (2**17)) | bitwise_and(1) == 0) else "standard",
+        'euridis_com_enabled': (stge // (2**19)) | bitwise_and(1) == 1,
+        'euridis_com_secured': (stge // (2**20)) | bitwise_and(1) == 1,
+        'tempo_today': "bleu" if tempo_today == 0b01 else ("blanc" if tempo_today == 0b10 else ("rouge" if tempo_today == 0b11 else "inconnu")),
+        'tempo_tomorrow': "bleu" if tempo_tomorrow == 0b01 else ("blanc" if tempo_tomorrow == 0b10 else ("rouge" if tempo_tomorrow == 0b11 else "inconnu"))
+    } | tojson }}
+    {%- endif -%}`;
+}
+
+/**
  * Publish Configuration for home-assistant discovery.
  * @param client
  * @param id
@@ -42,7 +73,7 @@ async function publishConfigurationForHassDiscovery({
         const discoveryTopic = `${hassDiscoveryPrefix}/sensor/${mqttBaseTopic}/${id}_${labelSanitized}/config`;
         log.info(`Publish configuration for tag ${label} for discovery to topic [${discoveryTopic}]`);
         const stateTopic = getFrameTopic(id);
-        return client.publish(discoveryTopic, JSON.stringify({
+        const discoveryMessage = {
             unique_id: label,
             name: label,
             state_topic: stateTopic,
@@ -56,7 +87,12 @@ async function publishConfigurationForHassDiscovery({
                 model: `teleinfo_${id}`,
                 name: `Teleinfo ${id}`,
             },
-        }), {
+        };
+        if (label === 'STGE') {
+            discoveryMessage.json_attributes_topic = stateTopic;
+            discoveryMessage.json_attributes_template = getSTGEAttributeTemplate(label);
+        }
+        return client.publish(discoveryTopic, JSON.stringify(discoveryMessage), {
             retain: true,
         });
     });
