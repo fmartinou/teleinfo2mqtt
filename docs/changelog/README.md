@@ -1,5 +1,8 @@
 # Changelog
 
+## 9.0.6
+- :fire: Fix `PREF` and `PCOUP` value parsing
+
 ## 9.0.5
 - :star: Decode `STGE` label and expose as HASS attributes
 - :fire: Fix "kVA is not valid" in HASS"
