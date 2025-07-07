@@ -2,6 +2,8 @@ name: App-build-test-push
 
 on:
   push:
+    tags-ignore:
+      - '**'
   release:
     types: [released, prereleased]
 
