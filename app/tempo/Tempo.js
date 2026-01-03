@@ -84,8 +84,7 @@ class Tempo {
         return {
             ...await Tempo.getToday(),
             ...await Tempo.getTomorrow(),
-            // Disabled for now; waiting for a replacement solution
-            // ...await Tempo.getDayColorRemaining(),
+            ...await Tempo.getDayColorRemaining(),
         };
     }
 
@@ -122,21 +121,21 @@ class Tempo {
      * @returns {Promise}
      */
     static async getDayColorRemaining() {
-        const dayColorRemainingResponse = await axios.get(`${API_ENDPOINT}/joursTempo`);
-        if (dayColorRemainingResponse.status === 200) {
+        const statsResponse = await axios.get(`${API_ENDPOINT}/stats`);
+        if (statsResponse.status === 200) {
             return {
                 blue_total: BLUE_TOTAL_DAYS,
-                blue_elapsed: BLUE_TOTAL_DAYS - dayColorRemainingResponse.data.PARAM_NB_J_BLEU,
-                blue_remaining: dayColorRemainingResponse.data.PARAM_NB_J_BLEU,
+                blue_elapsed: statsResponse.data.joursBleusConsommes,
+                blue_remaining: statsResponse.data.joursBleusRestants,
                 white_total: WHITE_TOTAL_DAYS,
-                white_elapsed: WHITE_TOTAL_DAYS - dayColorRemainingResponse.data.PARAM_NB_J_BLANC,
-                white_remaining: dayColorRemainingResponse.data.PARAM_NB_J_BLANC,
-                red_remaining: dayColorRemainingResponse.data.PARAM_NB_J_ROUGE,
+                white_elapsed: statsResponse.data.joursBlancsConsommes,
+                white_remaining: statsResponse.data.joursBlancsConsommes,
+                red_remaining: statsResponse.data.joursRougesConsommes,
                 red_total: RED_TOTAL_DAYS,
-                red_elapsed: RED_TOTAL_DAYS - dayColorRemainingResponse.data.PARAM_NB_J_ROUGE,
+                red_elapsed: statsResponse.data.joursRougesConsommes,
             };
         }
-        throw new Error(`Error on getDayColorRemaining api call (${dayColorRemainingResponse.status})`);
+        throw new Error(`Error on getDayColorRemaining api call (${statsResponse.status})`);
     }
 
     /**
