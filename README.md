@@ -4,7 +4,6 @@
 ![License](https://img.shields.io/github/license/fmartinou/teleinfo2mqtt)
 [![CI](https://github.com/fmartinou/teleinfo2mqtt/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/fmartinou/teleinfo2mqtt/actions/workflows/docker-publish.yml)
 ![Maintainability](https://img.shields.io/codeclimate/maintainability/fmartinou/teleinfo2mqtt)
-![Coverage](https://img.shields.io/codeclimate/coverage/fmartinou/teleinfo2mqtt)
 ![GitHub release](https://img.shields.io/github/release/fmartinou/teleinfo2mqtt.svg)
 
 ![](docs/teleinfo2mqtt-logo-250.png)

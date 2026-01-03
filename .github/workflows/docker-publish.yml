@@ -78,14 +78,6 @@ jobs:
       - name: Run UT
         run: npm test
 
-      - name: Code Climate test reporter
-        env:
-#          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-          CC_TEST_REPORTER_ID: 5167fc209c026a59fa2f9e21c7e21efa2ce09989a62ca8bc775f2240d8b9f662
-          GIT_BRANCH: ${{github.event.workflow_run.head_branch }}
-          GIT_COMMIT_SHA: ${{github.event.workflow_run.head_commit.id }}
-        run: ./cc-test-reporter after-build -t lcov --debug --exit-code $?
-
   build-and-push-image:
     needs: test
     if: ${{ needs.test.result == 'success' }}
