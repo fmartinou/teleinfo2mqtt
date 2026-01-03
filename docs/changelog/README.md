@@ -2,6 +2,7 @@
 
 ## dev
 - :star: Reintroducing 'remaining days per color'
+- :fire: Add retain flag for tempo values avoiding undefined values until next day
 - :lock: Upgrade dependencies
 - :lock: Adding github ci
 

@@ -111,7 +111,7 @@ async function publishTempoData({ tempoData }) {
         discoveryTempoConfigurationPublished = true;
     }
     try {
-        await client.publish(getFrameTopic('tempo'), JSON.stringify(tempoData));
+        await client.publish(getFrameTopic('tempo'), JSON.stringify(tempoData), { retain: true });
     } catch (e) {
         log.warn(`Unable to publish tempo data (${e.message})`);
     }
