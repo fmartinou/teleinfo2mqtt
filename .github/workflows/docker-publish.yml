@@ -2,8 +2,7 @@ name: App-build-test-push
 
 on:
   push:
-  release:
-    types: [released, prereleased]
+  workflow_dispatch:
 
 env:
   NODE_VERSION: 20
@@ -90,7 +89,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Log in to Docker Hub
-        continue-on-error: true
+        # fail if Docker Hub login fails
         uses: docker/login-action@v3.3.0
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
@@ -107,6 +106,11 @@ jobs:
         run: |
           echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
 
+      - name: Set Docker tag
+        run: |
+          TAG="$(echo '${{ github.ref_name }}' | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9._-]+/-/g' | sed -E 's/^-+|-+$//g')"
+          echo "DOCKER_TAG=$TAG" >> $GITHUB_ENV
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         
@@ -119,7 +123,7 @@ jobs:
           context: .
           push: true
           platforms: linux/amd64, linux/arm/v6, linux/arm/v7, linux/arm64
-          tags: "ghcr.io/${{ env.REPO }}:${{ github.ref_name }}${{ startsWith(github.ref, 'refs/tags/') && format(',ghcr.io/{0}:latest', env.REPO) || '' }}"
+          tags: "ghcr.io/${{ env.REPO }}:${{ env.DOCKER_TAG }},docker.io/${{ secrets.DOCKER_USERNAME }}/${{ env.REPO }}:${{ env.DOCKER_TAG }}${{ startsWith(github.ref, 'refs/tags/') && format(',ghcr.io/{0}:latest,docker.io/{1}/{0}:latest', env.REPO, secrets.DOCKER_USERNAME) || '' }}"
           build-args: |
             IMAGE_DATE=${{ github.event.repository.updated_at }}
             IMAGE_REF=$(git rev-parse --short HEAD)
