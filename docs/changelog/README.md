@@ -1,8 +1,9 @@
 # Changelog
 
-## 9.0.6
+## dev
 - :star: Reintroducing 'remaining days per color'
 - :lock: Upgrade dependencies
+- :lock: Adding github ci
 
 ## 9.0.6
 - :fire: Fix `PREF` and `PCOUP` value parsing
