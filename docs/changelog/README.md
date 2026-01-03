@@ -1,6 +1,6 @@
 # Changelog
 
-## dev
+## 9.1.0
 - :star: Reintroducing 'remaining days per color'
 - :fire: Add retain flag for tempo values avoiding undefined values until next day
 - :lock: Upgrade dependencies
