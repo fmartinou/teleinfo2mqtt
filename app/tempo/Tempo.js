@@ -129,10 +129,10 @@ class Tempo {
                 blue_remaining: statsResponse.data.joursBleusRestants,
                 white_total: WHITE_TOTAL_DAYS,
                 white_elapsed: statsResponse.data.joursBlancsConsommes,
-                white_remaining: statsResponse.data.joursBlancsConsommes,
-                red_remaining: statsResponse.data.joursRougesConsommes,
+                white_remaining: statsResponse.data.joursBlancsRestants,
                 red_total: RED_TOTAL_DAYS,
                 red_elapsed: statsResponse.data.joursRougesConsommes,
+                red_remaining: statsResponse.data.joursRougesRestants,
             };
         }
         throw new Error(`Error on getDayColorRemaining api call (${statsResponse.status})`);
