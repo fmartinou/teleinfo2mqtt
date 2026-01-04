@@ -1,5 +1,8 @@
 # Changelog
 
+## 9.1.1
+- :fire: Fix Tempo white/red remaining days
+
 ## 9.1.0
 - :star: Reintroducing 'remaining days per color'
 - :fire: Add retain flag for tempo values avoiding undefined values until next day
