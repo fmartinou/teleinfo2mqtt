@@ -25,7 +25,7 @@
   "dependencies": {
     "@serialport/parser-readline": "13.0.0",
     "async-mqtt": "2.6.3",
-    "axios": "1.13.2",
+    "axios": "1.13.5",
     "bunyan": "1.8.15",
     "deep-equal": "2.2.3",
     "moment": "2.30.1",
